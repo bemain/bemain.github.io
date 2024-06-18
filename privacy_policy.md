@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Privacy Policy
-permalink: /privacy_policy/
+permalink: /privacy
 ---
 
 This app, Musician’s Toolbox, offers a set of tools for musicians, including but not limited to a Metronome, a Tuner and a Music player (for transcribing songs).
