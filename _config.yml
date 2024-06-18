@@ -9,7 +9,7 @@ minima:
     - { platform: github,  user_url: "https://github.com/BeMain" }
 
 header_pages:
-  - PRIVACY_POLICY.md
+  - privacy_policy.md
 
 author: Benjamin Agardh
 email: bemain.dev@gmail.com
