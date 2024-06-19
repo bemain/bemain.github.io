@@ -14,11 +14,11 @@ permalink: /
     <a href="https://apps.apple.com/us/app/musicians-toolbox/id1670009655?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1679443200" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 </p>
 
-Pick a song from YouTube or your device. Musician's Toolbox...
-★ Removes instruments or voice for karaoke
-★ Shows chords to play along
-★ Changes pitch and speed
-★ Also features Tuner & Metronome
+Pick a song from YouTube or your device. Musician's Toolbox... \
+ ★ Removes instruments or voice for karaoke \
+ ★ Shows chords to play along \
+ ★ Changes pitch and speed \
+ ★ Also features Tuner & Metronome
 
 ...with a beautiful and simple-to-use UI.
 
