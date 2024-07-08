@@ -1,9 +1,18 @@
+---
+title: Oxdjupet Lajv
+home_url: /lajv
+header_pages:
+  - lajv/privacy_policy.md
+---
+
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: " en" }}">
 
 {%- include head.html -%}
 
 <body>
+
+    {%- include header.html -%}
 
     <main class="page-content" aria-label="Content">
         <div class="wrapper">
@@ -20,6 +29,8 @@
             </article>
         </div>
     </main>
+
+    {%- include footer.html -%}
 
 </body>
 
