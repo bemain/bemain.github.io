@@ -1,5 +1,5 @@
-title: Musician's Toolbox
-description: The all-in-one tool for musicians
+title: BeMain Dev
+description: Young solo developer doing programming in my free time. Beyond coding, I love music, reading and roleplaying.
 url: https://bemain.github.io/
 
 theme: minima
@@ -8,9 +8,6 @@ minima:
   # TODO: Fix social links, and add Google Play and App Store
   social_links:
     - { platform: github,  user_url: "https://github.com/BeMain" }
-
-header_pages:
-  - privacy_policy.md
 
 author: 
   name: Benjamin Agardh
