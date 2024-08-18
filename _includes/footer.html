@@ -3,10 +3,8 @@
 
     <div class="wrapper">
 
-        <h2 class="footer-heading">{{ layout.title | default: site.title | escape }}</h2>
-
         <div class="footer-col-wrapper">
-            <div class="footer-col footer-col-1">
+            <div class="footer-col">
                 {%- if site.author %}
                 <ul class="contact-list">
                     {% if site.author.name -%}
@@ -18,8 +16,7 @@
                 </ul>
                 {%- endif %}
             </div>
-            <div class="footer-col footer-col-2"></div>
-            <div class="footer-col footer-col-3">
+            <div class="footer-col">
                 <p>{{ layout.description | default: site.description | escape }}</p>
             </div>
         </div>

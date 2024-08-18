@@ -1,4 +1,4 @@
-title: BeMain Dev
+title: Benjamin Agardh
 description: Young solo developer doing programming in my free time. Beyond coding, I love music, reading and roleplaying.
 url: https://bemain.github.io/
 
@@ -8,6 +8,10 @@ minima:
   # TODO: Fix social links, and add Google Play and App Store
   social_links:
     - { platform: github,  user_url: "https://github.com/BeMain" }
+    - { platform: linkedin, user_url: "https://www.linkedin.com/in/benjamin-agardh" }
+
+header_pages:
+-
 
 author: 
   name: Benjamin Agardh
