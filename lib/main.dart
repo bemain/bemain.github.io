@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/butterfly_nodegraph.dart';
+import 'package:portfolio/nodegraph_painter.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,10 +11,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+        body: CustomPaint(
+          size: Size(300, 300),
+          painter: NodepathPainter(
+            nodepath: butterflyNodegraph,
+            nodeRadius: 1.0,
+          ),
         ),
       ),
     );
