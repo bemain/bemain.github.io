@@ -1,61 +1,35 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:portfolio/nodegraph_widget.dart';
 
-class Node {
-  Node({
-    required this.offset,
-    this.color,
-  });
-
-  /// The position of the node relative to the size of the canvas.
-  /// Should be between 0 and 1.
-  final Offset offset;
-
-  final Color? color;
-}
-
-class Nodegraph {
-  Nodegraph({
-    required this.nodes,
-    required this.paths,
-    this.color = Colors.grey,
-  });
-
-  final List<Node> nodes;
-  final List<(int, int)> paths;
-
-  /// Fallback color. To override this for a specific node, set [Node.color].
-  final Color color;
-}
-
-class NodepathPainter extends CustomPainter {
-  NodepathPainter({
-    required this.nodepath,
+class NodegraphPainter extends CustomPainter {
+  NodegraphPainter({
+    required this.nodegraph,
     this.nodeRadius = 3.0,
     this.pathWidth = 2.0,
   });
 
-  final Nodegraph nodepath;
+  final Nodegraph nodegraph;
 
   final double nodeRadius;
   final double pathWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
-    for ((int, int) path in nodepath.paths) {
+    for ((int, int) path in nodegraph.paths) {
       final (from, to) = path;
 
       final Offset fromOffset =
-          nodepath.nodes[from].offset.scale(size.width, size.height);
+          nodegraph.nodes[from].offset.scale(size.width, size.height);
       final Offset toOffset =
-          nodepath.nodes[to].offset.scale(size.width, size.height);
+          nodegraph.nodes[to].offset.scale(size.width, size.height);
 
       final Paint paint = Paint()
         ..shader = LinearGradient(
                 colors: [
-              nodepath.nodes[from].color ?? nodepath.color,
-              nodepath.nodes[to].color ?? nodepath.color,
+              nodegraph.nodes[from].color ?? nodegraph.color,
+              nodegraph.nodes[to].color ?? nodegraph.color,
             ],
                 transform: GradientRotation(atan2(
                     toOffset.dy - fromOffset.dy, toOffset.dx - fromOffset.dx)))
@@ -66,11 +40,11 @@ class NodepathPainter extends CustomPainter {
       canvas.drawLine(fromOffset, toOffset, paint);
     }
 
-    for (Node node in nodepath.nodes) {
+    for (Node node in nodegraph.nodes) {
       final Offset nodeOffset = node.offset.scale(size.width, size.height);
 
       final Paint paint = Paint()
-        ..color = node.color ?? nodepath.color
+        ..color = node.color ?? nodegraph.color
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(nodeOffset, nodeRadius, paint);
@@ -78,8 +52,8 @@ class NodepathPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant NodepathPainter oldDelegate) {
-    return oldDelegate.nodepath.nodes != nodepath.nodes ||
-        oldDelegate.nodepath.nodes != nodepath.nodes;
+  bool shouldRepaint(covariant NodegraphPainter oldDelegate) {
+    return oldDelegate.nodegraph.nodes != nodegraph.nodes ||
+        oldDelegate.nodegraph.nodes != nodegraph.nodes;
   }
 }

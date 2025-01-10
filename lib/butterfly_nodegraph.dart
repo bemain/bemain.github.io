@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/nodegraph_painter.dart';
+import 'package:portfolio/nodegraph_widget.dart';
 
 extension ColorMap on Map<Offset, Color> {
   /// Calculate the color at a [point] by using 2D interpolation.
