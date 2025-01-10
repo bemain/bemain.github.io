@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:portfolio/nodegraph_painter.dart';
+import 'package:portfolio/nodegraph/nodegraph_painter.dart';
 
 class Node {
   Node({

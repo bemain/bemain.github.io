@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/butterfly_nodegraph.dart';
-import 'package:portfolio/nodegraph_widget.dart';
+import 'package:portfolio/nodegraph/butterfly_nodegraph.dart';
+import 'package:portfolio/nodegraph/nodegraph_widget.dart';
 
 void main() {
   runApp(const MainApp());
