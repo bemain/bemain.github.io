@@ -89,25 +89,31 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
 
   @override
   Widget build(BuildContext context) {
-    Size size = Size.square(400);
-    return AnimatedBuilder(
-      animation: Listenable.merge(_offsetAnimations),
-      builder: (context, child) {
-        final List<Node> nodes = widget.nodegraph.nodes
-            .map((node) => Node(
-                  offset: node.offset +
-                      _offsetAnimations[widget.nodegraph.nodes.indexOf(node)]
-                          .value
-                          .scale(1 / size.width, 1 / size.height),
-                  color: node.color,
-                ))
-            .toList();
-        return CustomPaint(
-          size: size,
-          painter: NodegraphPainter(
-            nodegraph: widget.nodegraph.copyWith(nodes: nodes),
-            nodeRadius: 1.0,
-          ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        Size size = Size.square(constraints.biggest.shortestSide);
+
+        return AnimatedBuilder(
+          animation: Listenable.merge(_offsetAnimations),
+          builder: (context, child) {
+            final List<Node> nodes = widget.nodegraph.nodes
+                .map((node) => Node(
+                      offset: node.offset +
+                          _offsetAnimations[
+                                  widget.nodegraph.nodes.indexOf(node)]
+                              .value
+                              .scale(1 / size.width, 1 / size.height),
+                      color: node.color,
+                    ))
+                .toList();
+            return CustomPaint(
+              size: size,
+              painter: NodegraphPainter(
+                nodegraph: widget.nodegraph.copyWith(nodes: nodes),
+                nodeRadius: 1.0,
+              ),
+            );
+          },
         );
       },
     );
