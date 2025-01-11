@@ -12,17 +12,6 @@ class TitleSection extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (windowSize) {
       case WindowSize.compact:
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: _buildTitle(),
-            ),
-            _buildSubtitle(context),
-            const SizedBox(height: 24),
-          ],
-        );
-
       case WindowSize.medium:
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,9 +21,14 @@ class TitleSection extends StatelessWidget {
             ),
             _buildSubtitle(context),
             const SizedBox(height: 48),
-            ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 320.0),
-              child: NodegraphWidget(nodegraph: butterflyNodegraph),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 280),
+                  child: NodegraphWidget(nodegraph: butterflyNodegraph),
+                ),
+              ),
             ),
             const SizedBox(height: 24),
           ],
