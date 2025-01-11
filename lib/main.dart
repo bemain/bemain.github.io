@@ -21,9 +21,7 @@ class MainApp extends StatelessWidget {
       theme: theme.copyWith(
         textTheme: GoogleFonts.openSansTextTheme(theme.textTheme),
       ),
-      home: Scaffold(
-        body: Frontpage(),
-      ),
+      home: Frontpage(),
     );
   }
 }
