@@ -10,68 +10,69 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    switch (windowSize) {
-      case WindowSize.compact:
-      case WindowSize.medium:
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: _buildTitle(),
+    return Padding(
+        padding: windowSize.padding,
+        child: switch (windowSize) {
+          WindowSize.compact || WindowSize.medium => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: _buildTitle(),
+                ),
+                _buildSubtitle(context),
+                const SizedBox(height: 48),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 280),
+                      child: NodegraphWidget(nodegraph: butterflyNodegraph),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+              ],
             ),
-            _buildSubtitle(context),
-            const SizedBox(height: 48),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 280),
-                  child: NodegraphWidget(nodegraph: butterflyNodegraph),
+          WindowSize.expanded ||
+          WindowSize.large ||
+          WindowSize.extraLarge =>
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 1024),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(maxWidth: 320),
+                            child:
+                                NodegraphWidget(nodegraph: butterflyNodegraph),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            _buildTitle(),
+                            _buildSubtitle(context),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-          ],
-        );
-
-      case WindowSize.expanded:
-      case WindowSize.large:
-      case WindowSize.extraLarge:
-        return Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 1024),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 320),
-                        child: NodegraphWidget(nodegraph: butterflyNodegraph),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        _buildTitle(),
-                        _buildSubtitle(context),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-    }
+        });
   }
 
   Widget _buildTitle({String text = "Benjamin Agardh"}) {

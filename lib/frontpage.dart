@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/projects_section.dart';
 import 'package:portfolio/title_section.dart';
 
 class Frontpage extends StatelessWidget {
@@ -22,14 +23,12 @@ class Frontpage extends StatelessWidget {
         ),
       ],
       smallBody: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: ListView(
-            children: [
-              SizedBox(height: 48),
-              TitleSection(windowSize: WindowSize.compact),
-            ],
-          ),
+        return ListView(
+          children: [
+            SizedBox(height: 48),
+            TitleSection(windowSize: WindowSize.compact),
+            ProjectsSection(windowSize: WindowSize.compact),
+          ],
         );
       },
       body: (context) {
@@ -39,41 +38,36 @@ class Frontpage extends StatelessWidget {
             children: [
               const SizedBox(height: 102),
               TitleSection(windowSize: WindowSize.medium),
+              ProjectsSection(windowSize: WindowSize.medium),
             ],
           ),
         );
       },
       mediumLargeBody: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              SizedBox(height: 48),
-              TitleSection(windowSize: WindowSize.expanded),
-            ],
-          ),
+        return ListView(
+          children: [
+            SizedBox(height: 48),
+            TitleSection(windowSize: WindowSize.expanded),
+            ProjectsSection(windowSize: WindowSize.expanded),
+          ],
         );
       },
       largeBody: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              SizedBox(height: 48),
-              TitleSection(windowSize: WindowSize.large),
-            ],
-          ),
+        return ListView(
+          children: [
+            SizedBox(height: 48),
+            TitleSection(windowSize: WindowSize.large),
+            ProjectsSection(windowSize: WindowSize.large),
+          ],
         );
       },
       extraLargeBody: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              SizedBox(height: 48),
-              TitleSection(windowSize: WindowSize.extraLarge),
-            ],
-          ),
+        return ListView(
+          children: [
+            SizedBox(height: 48),
+            TitleSection(windowSize: WindowSize.extraLarge),
+            ProjectsSection(windowSize: WindowSize.extraLarge),
+          ],
         );
       },
     );
