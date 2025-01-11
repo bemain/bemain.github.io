@@ -43,36 +43,39 @@ class TitleSection extends StatelessWidget {
       case WindowSize.expanded:
       case WindowSize.large:
       case WindowSize.extraLarge:
-        RenderBox? box = context.findRenderObject() as RenderBox?;
-        Offset position = box?.localToGlobal(Offset.zero) ?? Offset.zero;
-        double width = MediaQuery.of(context).size.width;
-        return Row(
-          children: [
-            SizedBox(
-              width: width / 2 - position.dx,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 320.0),
-                    child: NodegraphWidget(nodegraph: butterflyNodegraph),
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 1024),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 320),
+                        child: NodegraphWidget(nodegraph: butterflyNodegraph),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(width: 24),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Center(
-                    child: _buildTitle(),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        _buildTitle(),
+                        _buildSubtitle(context),
+                      ],
+                    ),
                   ),
-                  _buildSubtitle(context),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         );
     }
   }
@@ -100,13 +103,10 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Blending elegant UI and cutting-edge technology",
   }) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 512.0),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.headlineLarge,
-        textAlign: TextAlign.center,
-      ),
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.headlineLarge,
+      textAlign: TextAlign.center,
     );
   }
 }
