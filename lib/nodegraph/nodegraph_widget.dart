@@ -4,16 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/nodegraph/nodegraph_painter.dart';
 
 class Node {
+  /// A node in the nodegraph, between which paths can be drawn.
   Node({
     required this.offset,
     this.color,
+    this.isStationary = false,
   });
 
   /// The position of the node relative to the size of the canvas.
   /// Should be between 0 and 1.
   final Offset offset;
 
+  /// The color of the node. If `null`, the [Nodegraph.color] will be used.
   final Color? color;
+
+  /// If true, the node is unaffected by wiggling when rendered using the [NodegraphWidget].
+  final bool isStationary;
+
+  Node copyWith({
+    Offset? offset,
+    Color? color,
+    bool? isStationary,
+  }) {
+    return Node(
+      offset: offset ?? this.offset,
+      color: color ?? this.color,
+      isStationary: isStationary ?? this.isStationary,
+    );
+  }
 }
 
 class Nodegraph {
@@ -23,14 +41,20 @@ class Nodegraph {
     this.color = Colors.grey,
   });
 
+  /// The nodes in the nodegraph.
   final List<Node> nodes;
+
+  /// The paths between the nodes in the nodegraph. Each path is a tuple of two node indices.
   final List<(int, int)> paths;
 
   /// Fallback color. To override this for a specific node, set [Node.color].
   final Color color;
 
-  Nodegraph copyWith(
-      {List<Node>? nodes, List<(int, int)>? paths, Color? color}) {
+  Nodegraph copyWith({
+    List<Node>? nodes,
+    List<(int, int)>? paths,
+    Color? color,
+  }) {
     return Nodegraph(
       nodes: nodes ?? this.nodes,
       paths: paths ?? this.paths,
@@ -96,16 +120,18 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
         return AnimatedBuilder(
           animation: Listenable.merge(_offsetAnimations),
           builder: (context, child) {
-            final List<Node> nodes = widget.nodegraph.nodes
-                .map((node) => Node(
-                      offset: node.offset +
-                          _offsetAnimations[
-                                  widget.nodegraph.nodes.indexOf(node)]
-                              .value
-                              .scale(1 / size.width, 1 / size.height),
-                      color: node.color,
-                    ))
-                .toList();
+            final List<Node> nodes = widget.nodegraph.nodes.map((node) {
+              if (node.isStationary) return node;
+
+              final Offset wiggleOffset =
+                  _offsetAnimations[widget.nodegraph.nodes.indexOf(node)]
+                      .value
+                      .scale(1 / size.width, 1 / size.height);
+
+              return node.copyWith(
+                offset: node.offset + wiggleOffset,
+              );
+            }).toList();
             return CustomPaint(
               size: size,
               painter: NodegraphPainter(

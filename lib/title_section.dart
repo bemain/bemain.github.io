@@ -17,7 +17,7 @@ class TitleSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Center(
-                  child: _buildTitle(),
+                  child: _buildTitle(context),
                 ),
                 _buildSubtitle(context),
                 const SizedBox(height: 48),
@@ -62,7 +62,7 @@ class TitleSection extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
-                            _buildTitle(),
+                            _buildTitle(context),
                             _buildSubtitle(context),
                           ],
                         ),
@@ -75,7 +75,10 @@ class TitleSection extends StatelessWidget {
         });
   }
 
-  Widget _buildTitle({String text = "Benjamin Agardh"}) {
+  Widget _buildTitle(
+    BuildContext context, {
+    String text = "Benjamin Agardh",
+  }) {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
       shaderCallback: (bounds) => LinearGradient(
@@ -86,10 +89,10 @@ class TitleSection extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 48.0,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontSize: 48.0,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     );
   }
@@ -100,7 +103,7 @@ class TitleSection extends StatelessWidget {
   }) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headlineLarge,
+      style: Theme.of(context).textTheme.headlineMedium,
       textAlign: TextAlign.center,
     );
   }

@@ -26,64 +26,64 @@ extension ColorMap on Map<Offset, Color> {
   }
 }
 
-final List<Offset> butterflyNodeOffsets = [
-  Offset(0.0, 0.0), // 0
-  Offset(0.043, 0.120),
-  Offset(0.099, 0.092),
-  Offset(0.196, 0.155),
-  Offset(0.010, 0.358),
-  Offset(0.095, 0.526),
-  Offset(0.206, 0.535),
-  Offset(0.236, 0.260),
-  Offset(0.308, 0.321),
-  Offset(0.384, 0.147),
-  Offset(0.497, 0.028), // 10
-  Offset(0.584, 0.023),
-  Offset(0.570, 0.180),
-  Offset(0.405, 0.390),
-  Offset(0.596, 0.257),
-  Offset(0.656, 0.352),
-  Offset(0.293, 0.557),
-  Offset(0.397, 0.533),
-  Offset(0.317, 0.732),
-  Offset(0.378, 0.657),
-  Offset(0.656, 0.518), // 20
-  Offset(0.798, 0.523),
-  Offset(0.884, 0.609),
-  Offset(0.644, 0.709),
-  Offset(0.762, 0.660),
-  Offset(0.911, 0.724),
-  Offset(0.491, 0.857),
-  Offset(0.832, 0.844),
-  Offset(0.911, 0.839),
-  Offset(0.646, 0.909),
-  Offset(0.779, 0.921), // 30
-  Offset(0.875, 0.914),
-  Offset(0.372, 0.825),
-  Offset(0.358, 0.858),
-  Offset(0.442, 0.858),
-  Offset(0.491, 0.882),
-  Offset(0.533, 0.928),
-  Offset(0.594, 0.951),
-  Offset(0.565, 0.979),
-  Offset(0.466, 0.932),
-  Offset(0.414, 0.888), // 40
-  Offset(0.684, 0.432),
-  Offset(0.298, 0.778),
-  Offset(0.292, 0.795),
-  Offset(0.301, 0.816),
-  Offset(0.269, 0.817),
-  Offset(0.150, 0.769),
-  Offset(0.157, 0.784),
-  Offset(0.064, 0.749),
-  Offset(0.059, 0.731), // 50
-  Offset(0.033, 0.747),
-  Offset(0.220, 0.721),
-  Offset(0.210, 0.732),
-  Offset(0.135, 0.665),
-  Offset(0.138, 0.648),
-  Offset(0.110, 0.662),
-  Offset(0.295, 0.785),
+final List<Node> butterflyNodes = [
+  Node(offset: Offset(0.0, 0.0), color: Colors.transparent), // 0
+  Node(offset: Offset(0.043, 0.120)),
+  Node(offset: Offset(0.099, 0.092)),
+  Node(offset: Offset(0.196, 0.155)),
+  Node(offset: Offset(0.010, 0.358)),
+  Node(offset: Offset(0.095, 0.526)),
+  Node(offset: Offset(0.206, 0.535)),
+  Node(offset: Offset(0.236, 0.260)),
+  Node(offset: Offset(0.308, 0.321)),
+  Node(offset: Offset(0.384, 0.147)),
+  Node(offset: Offset(0.497, 0.028)), // 10
+  Node(offset: Offset(0.584, 0.023)),
+  Node(offset: Offset(0.570, 0.180)),
+  Node(offset: Offset(0.405, 0.390)),
+  Node(offset: Offset(0.596, 0.257)),
+  Node(offset: Offset(0.656, 0.352)),
+  Node(offset: Offset(0.293, 0.557)),
+  Node(offset: Offset(0.397, 0.533)),
+  Node(offset: Offset(0.317, 0.732)),
+  Node(offset: Offset(0.378, 0.657)),
+  Node(offset: Offset(0.656, 0.518)), // 20
+  Node(offset: Offset(0.798, 0.523)),
+  Node(offset: Offset(0.884, 0.609)),
+  Node(offset: Offset(0.644, 0.709)),
+  Node(offset: Offset(0.762, 0.660)),
+  Node(offset: Offset(0.911, 0.724)),
+  Node(offset: Offset(0.491, 0.857)),
+  Node(offset: Offset(0.832, 0.844)),
+  Node(offset: Offset(0.911, 0.839)),
+  Node(offset: Offset(0.646, 0.909)),
+  Node(offset: Offset(0.779, 0.921)), // 30
+  Node(offset: Offset(0.875, 0.914)),
+  Node(offset: Offset(0.372, 0.825)),
+  Node(offset: Offset(0.358, 0.858)),
+  Node(offset: Offset(0.442, 0.858)),
+  Node(offset: Offset(0.491, 0.882)),
+  Node(offset: Offset(0.533, 0.928)),
+  Node(offset: Offset(0.594, 0.951)),
+  Node(offset: Offset(0.565, 0.979)),
+  Node(offset: Offset(0.466, 0.932)),
+  Node(offset: Offset(0.414, 0.888)), // 40
+  Node(offset: Offset(0.684, 0.432)),
+  Node(offset: Offset(0.298, 0.778)),
+  Node(offset: Offset(0.292, 0.795)),
+  Node(offset: Offset(0.301, 0.816)),
+  Node(offset: Offset(0.269, 0.817)),
+  Node(offset: Offset(0.150, 0.769)),
+  Node(offset: Offset(0.157, 0.784)),
+  Node(offset: Offset(0.064, 0.749)),
+  Node(offset: Offset(0.059, 0.731)), // 50
+  Node(offset: Offset(0.033, 0.747)),
+  Node(offset: Offset(0.220, 0.721)),
+  Node(offset: Offset(0.210, 0.732)),
+  Node(offset: Offset(0.135, 0.665)),
+  Node(offset: Offset(0.138, 0.648)),
+  Node(offset: Offset(0.110, 0.662)),
+  Node(offset: Offset(0.295, 0.785)),
 ];
 
 final List<(int, int)> _butterflyPaths = [
@@ -200,10 +200,14 @@ final Map<Offset, Color> _butterflyColorMap = {
 };
 
 final Nodegraph butterflyNodegraph = Nodegraph(
-  nodes: butterflyNodeOffsets.map((offset) {
-    final Color color = _butterflyColorMap.colorAt(offset);
-    return Node(offset: offset, color: color);
+  nodes: butterflyNodes.map((node) {
+    // Apply gradient color to nodes
+    final Color color = _butterflyColorMap.colorAt(node.offset).withAlpha(255);
+    return Node(
+      offset: node.offset,
+      color: node.color ?? color,
+      isStationary: butterflyNodes.indexOf(node) >= 32,
+    );
   }).toList(),
   paths: _butterflyPaths,
-  color: Colors.grey,
 );
