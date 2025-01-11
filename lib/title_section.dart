@@ -20,17 +20,7 @@ class TitleSection extends StatelessWidget {
                   child: _buildTitle(context),
                 ),
                 _buildSubtitle(context),
-                const SizedBox(height: 48),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 280),
-                      child: NodegraphWidget(nodegraph: butterflyNodegraph),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
+                _buildButterfly(context),
               ],
             ),
           WindowSize.expanded ||
@@ -43,24 +33,13 @@ class TitleSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: 320),
-                            child:
-                                NodegraphWidget(nodegraph: butterflyNodegraph),
-                          ),
-                        ),
-                      ),
+                      child: _buildButterfly(context),
                     ),
                     const SizedBox(width: 24),
                     Expanded(
                       child: Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             _buildTitle(context),
                             _buildSubtitle(context),
@@ -86,13 +65,15 @@ class TitleSection extends StatelessWidget {
       ).createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              fontSize: 48.0,
-              fontWeight: FontWeight.bold,
-            ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 16),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
       ),
     );
   }
@@ -101,10 +82,25 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Blending elegant UI and cutting-edge technology",
   }) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.headlineMedium,
-      textAlign: TextAlign.center,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 480),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.headlineMedium,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget _buildButterfly(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 320),
+          child: NodegraphWidget(nodegraph: butterflyNodegraph),
+        ),
+      ),
     );
   }
 }

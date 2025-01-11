@@ -27,7 +27,7 @@ class Frontpage extends StatelessWidget {
           children: [
             SizedBox(height: 48),
             TitleSection(windowSize: WindowSize.compact),
-            SizedBox(height: 24),
+            Divider(),
             ProjectsSection(windowSize: WindowSize.compact),
           ],
         );
@@ -39,7 +39,7 @@ class Frontpage extends StatelessWidget {
             children: [
               const SizedBox(height: 102),
               TitleSection(windowSize: WindowSize.medium),
-              SizedBox(height: 24),
+              Divider(),
               ProjectsSection(windowSize: WindowSize.medium),
             ],
           ),
@@ -50,7 +50,7 @@ class Frontpage extends StatelessWidget {
           children: [
             SizedBox(height: 48),
             TitleSection(windowSize: WindowSize.expanded),
-            SizedBox(height: 24),
+            Divider(),
             ProjectsSection(windowSize: WindowSize.expanded),
           ],
         );
@@ -60,7 +60,7 @@ class Frontpage extends StatelessWidget {
           children: [
             SizedBox(height: 48),
             TitleSection(windowSize: WindowSize.large),
-            SizedBox(height: 24),
+            Divider(),
             ProjectsSection(windowSize: WindowSize.large),
           ],
         );
@@ -70,7 +70,7 @@ class Frontpage extends StatelessWidget {
           children: [
             SizedBox(height: 48),
             TitleSection(windowSize: WindowSize.extraLarge),
-            SizedBox(height: 24),
+            Divider(),
             ProjectsSection(windowSize: WindowSize.extraLarge),
           ],
         );
