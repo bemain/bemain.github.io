@@ -19,6 +19,7 @@ class TitleSection extends StatelessWidget {
               child: _buildTitle(),
             ),
             _buildSubtitle(context),
+            const SizedBox(height: 24),
           ],
         );
 
@@ -26,7 +27,6 @@ class TitleSection extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 24),
             Center(
               child: _buildTitle(),
             ),

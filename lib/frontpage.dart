@@ -26,6 +26,7 @@ class Frontpage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: ListView(
             children: [
+              SizedBox(height: 48),
               TitleSection(windowSize: WindowSize.compact),
             ],
           ),
@@ -36,6 +37,7 @@ class Frontpage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: ListView(
             children: [
+              const SizedBox(height: 102),
               TitleSection(windowSize: WindowSize.medium),
             ],
           ),
@@ -46,6 +48,7 @@ class Frontpage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: ListView(
             children: [
+              SizedBox(height: 48),
               TitleSection(windowSize: WindowSize.expanded),
             ],
           ),
@@ -56,6 +59,7 @@ class Frontpage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: ListView(
             children: [
+              SizedBox(height: 48),
               TitleSection(windowSize: WindowSize.large),
             ],
           ),
@@ -66,6 +70,7 @@ class Frontpage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: ListView(
             children: [
+              SizedBox(height: 48),
               TitleSection(windowSize: WindowSize.extraLarge),
             ],
           ),
