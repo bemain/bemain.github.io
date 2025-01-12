@@ -19,19 +19,10 @@ class MainApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
     );
-    final ThemeData darkTheme = ThemeData.from(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: seedColor,
-        brightness: Brightness.dark,
-      ),
-    );
 
     return MaterialApp(
       theme: theme.copyWith(
         textTheme: GoogleFonts.openSansTextTheme(theme.textTheme),
-      ),
-      darkTheme: darkTheme.copyWith(
-        textTheme: GoogleFonts.openSansTextTheme(darkTheme.textTheme),
       ),
       home: Frontpage(),
     );
