@@ -35,7 +35,7 @@ class Frontpage extends StatelessWidget {
       drawer: _buildDrawer(context, windowSize),
       body: ListView(
         children: [
-          SizedBox(height: 48),
+          const SizedBox(height: 48),
           SizedBox(
             height: MediaQuery.sizeOf(context).height -
                 MediaQuery.paddingOf(context).top -
@@ -46,7 +46,6 @@ class Frontpage extends StatelessWidget {
           ),
           AboutMeSection(windowSize: windowSize),
           ProjectsSection(windowSize: windowSize),
-          const SizedBox(height: 24),
           // TODO: Create proper footer
           Container(
             color: Theme.of(context).colorScheme.surfaceContainer,

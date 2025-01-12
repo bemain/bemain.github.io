@@ -67,12 +67,11 @@ class ProjectsSection extends StatelessWidget {
     switch (windowSize) {
       case WindowSize.compact:
         return Padding(
-          padding: windowSize.padding,
+          padding: windowSize.padding.add(EdgeInsets.symmetric(vertical: 32)),
           child: Column(
             children: [
-              const SizedBox(height: 16),
               _buildTitle(context),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               for (final Project project in projects)
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
@@ -84,10 +83,9 @@ class ProjectsSection extends StatelessWidget {
 
       default:
         return Padding(
-          padding: windowSize.padding,
+          padding: windowSize.padding.add(EdgeInsets.symmetric(vertical: 32)),
           child: Column(
             children: [
-              const SizedBox(height: 16),
               _buildTitle(context),
               const SizedBox(height: 24),
               GridView.extent(

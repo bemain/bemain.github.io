@@ -54,59 +54,64 @@ class AboutMeSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildText(context),
-            SizedBox(height: 32),
+            _buildTitle(context),
+            const SizedBox(height: 12),
+            Center(
+              child: _buildDescription(context),
+            ),
+            const SizedBox(height: 32),
             _buildCharacteristics(context),
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             _buildPortrait(context),
           ],
         );
 
       default:
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
+            // TODO: Center-align these two columns
             Flexible(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildText(context),
-                  SizedBox(height: 32),
+                  _buildTitle(context),
+                  const SizedBox(height: 12),
+                  _buildDescription(context),
+                  const SizedBox(height: 32),
                   _buildCharacteristics(context),
                 ],
               ),
             ),
-            _buildPortrait(context),
+            Flexible(
+              child: _buildPortrait(context),
+            ),
           ],
         );
     }
   }
 
-  Widget _buildText(BuildContext context) {
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      "Hi, I'm Benjamin!",
+      style: Theme.of(context).textTheme.titleLarge,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildDescription(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.sizeOf(context).width / 2.2,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "Hi, I'm Benjamin!",
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 12),
-          ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 380),
-            child: Text(
-              """I'm driven by the challenge of creating intuitive user experiences powered by cutting-edge technology.""",
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-              textAlign: TextAlign.center,
+      constraints: BoxConstraints(maxWidth: 380),
+      child: Text(
+        """I'm driven by the challenge of creating intuitive user experiences powered by cutting-edge technology.""",
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurfaceVariant
+                  .withAlpha(0xaa),
             ),
-          ),
-        ],
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -117,7 +122,6 @@ class AboutMeSection extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 24,
           children: [
             for (final characteristic in characteristics)
