@@ -45,6 +45,17 @@ class Frontpage extends StatelessWidget {
           ),
           const Divider(),
           ProjectsSection(windowSize: windowSize),
+          SizedBox(height: 24),
+          // TODO: Create proper footer
+          Container(
+            color: Theme.of(context).colorScheme.surfaceContainer,
+            child: Padding(
+              padding: windowSize.padding.add(
+                EdgeInsets.symmetric(vertical: 8),
+              ),
+              child: Text("Benjamin Agardh"),
+            ),
+          )
         ],
       ),
     );

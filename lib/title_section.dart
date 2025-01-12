@@ -69,6 +69,11 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Benjamin Agardh",
   }) {
+    final TextStyle? textStyle = switch (windowSize) {
+      WindowSize.compact => Theme.of(context).textTheme.displaySmall,
+      _ => Theme.of(context).textTheme.displayMedium,
+    };
+
     return ShaderMask(
       blendMode: BlendMode.srcIn,
       shaderCallback: (bounds) => LinearGradient(
@@ -81,9 +86,9 @@ class TitleSection extends StatelessWidget {
         child: Text(
           text,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: textStyle?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -93,11 +98,21 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Blending elegant UI and cutting-edge technology",
   }) {
+    final TextStyle? textStyle = switch (windowSize) {
+      WindowSize.compact => Theme.of(context).textTheme.headlineSmall,
+      _ => Theme.of(context).textTheme.headlineMedium,
+    };
+
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 480),
+      constraints: BoxConstraints(
+        maxWidth: switch (windowSize) {
+          WindowSize.compact => 360,
+          _ => 480,
+        },
+      ),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.headlineMedium,
+        style: textStyle,
         textAlign: TextAlign.center,
       ),
     );

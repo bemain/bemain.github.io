@@ -91,7 +91,7 @@ class ProjectsSection extends StatelessWidget {
               _buildTitle(context),
               const SizedBox(height: 24),
               GridView.extent(
-                childAspectRatio: 1.618 / 2,
+                childAspectRatio: 0.9,
                 maxCrossAxisExtent: 360,
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
@@ -108,9 +108,12 @@ class ProjectsSection extends StatelessWidget {
     }
   }
 
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildTitle(
+    BuildContext context, {
+    String text = "Some of my recent projects",
+  }) {
     return Text(
-      "Some of my recent projects",
+      text,
       style: Theme.of(context).textTheme.titleLarge,
       textAlign: TextAlign.center,
     );
