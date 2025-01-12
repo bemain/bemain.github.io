@@ -71,11 +71,7 @@ class ProjectsSection extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 12),
-              Text(
-                "Some of my latest projects",
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
+              _buildTitle(context),
               const SizedBox(height: 16),
               for (final Project project in projects)
                 Padding(
@@ -92,11 +88,7 @@ class ProjectsSection extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 12),
-              Text(
-                "Some of my latest projects",
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
+              _buildTitle(context),
               const SizedBox(height: 24),
               GridView.extent(
                 childAspectRatio: 1.618 / 2,
@@ -114,6 +106,14 @@ class ProjectsSection extends StatelessWidget {
           ),
         );
     }
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      "Some of my recent projects",
+      style: Theme.of(context).textTheme.titleLarge,
+      textAlign: TextAlign.center,
+    );
   }
 
   Widget _buildProjectCard(BuildContext context, Project project) {
