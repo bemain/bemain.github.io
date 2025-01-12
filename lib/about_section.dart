@@ -76,20 +76,21 @@ class AboutMeSection extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // TODO: Center-align these two columns
-            Flexible(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildTitle(context),
-                  const SizedBox(height: 12),
-                  _buildDescription(context),
-                  const SizedBox(height: 32),
-                  _buildCharacteristics(context),
-                ],
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTitle(context),
+                const SizedBox(height: 12),
+                _buildDescription(context),
+                const SizedBox(height: 32),
+                _buildCharacteristics(context),
+              ],
             ),
             Flexible(
-              child: _buildPortrait(context),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 360),
+                child: _buildPortrait(context),
+              ),
             ),
           ],
         );
@@ -174,9 +175,12 @@ class AboutMeSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(16),
       child: Center(
-        child: CircleAvatar(
-          maxRadius: 160,
-          foregroundImage: AssetImage("assets/me/portrait2.jpg"),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: CircleAvatar(
+            maxRadius: 160,
+            foregroundImage: AssetImage("assets/me/portrait2.jpg"),
+          ),
         ),
       ),
     );
