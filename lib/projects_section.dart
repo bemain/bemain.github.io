@@ -48,7 +48,7 @@ class ProjectsSection extends StatelessWidget {
     Project(
       title: "Dirma",
       description:
-          "The website for the Swedish company Dirma, built using TypeScript and Next.js.",
+          "A website for the Swedish company Dirma, built using TypeScript and Next.js.",
       image: NetworkImage("https://picsum.photos/1024/1024"),
       startDate: DateTime(2023),
       endDate: DateTime(2023),
@@ -66,12 +66,11 @@ class ProjectsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (windowSize) {
       case WindowSize.compact:
-        return Container(
-          padding: windowSize.padding.add(
-            EdgeInsets.only(top: windowSize.horizontalMargin),
-          ),
+        return Padding(
+          padding: windowSize.padding,
           child: Column(
             children: [
+              const SizedBox(height: 12),
               Text(
                 "Some of my latest projects",
                 style: Theme.of(context).textTheme.titleLarge,
@@ -81,44 +80,77 @@ class ProjectsSection extends StatelessWidget {
               for (final Project project in projects)
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8),
-                  child: Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: InkWell(
-                      onTap: () => print("Tapped on ${project.title}"),
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Card.filled(
-                              clipBehavior: Clip.antiAlias,
-                              elevation: 0,
-                              child: AspectRatio(
-                                aspectRatio: 1.618,
-                                child: Image(
-                                  image: project.image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 6),
-                              child: _buildProjectText(context, project),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: _buildProjectCard(context, project),
                 ),
             ],
           ),
         );
+
       default:
-        return Placeholder();
+        return Padding(
+          padding: windowSize.padding,
+          child: Column(
+            children: [
+              const SizedBox(height: 12),
+              Text(
+                "Some of my latest projects",
+                style: Theme.of(context).textTheme.titleLarge,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              GridView.extent(
+                childAspectRatio: 1.618 / 2,
+                maxCrossAxisExtent: 360,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  for (final Project project in projects)
+                    _buildProjectCard(context, project),
+                ],
+              ),
+            ],
+          ),
+        );
     }
+  }
+
+  Widget _buildProjectCard(BuildContext context, Project project) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => print("Tapped on ${project.title}"),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                child: Card.filled(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 0,
+                  child: AspectRatio(
+                    aspectRatio: 1.618,
+                    child: Image(
+                      image: project.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: _buildProjectText(context, project),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildProjectText(BuildContext context, Project project) {

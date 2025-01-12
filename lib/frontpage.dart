@@ -33,16 +33,13 @@ class Frontpage extends StatelessWidget {
         );
       },
       body: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              const SizedBox(height: 102),
-              TitleSection(windowSize: WindowSize.medium),
-              Divider(),
-              ProjectsSection(windowSize: WindowSize.medium),
-            ],
-          ),
+        return ListView(
+          children: [
+            const SizedBox(height: 102),
+            TitleSection(windowSize: WindowSize.medium),
+            Divider(),
+            ProjectsSection(windowSize: WindowSize.medium),
+          ],
         );
       },
       mediumLargeBody: (context) {
