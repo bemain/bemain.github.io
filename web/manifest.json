@@ -1,11 +1,11 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Benjamin Agardh",
+    "short_name": "Benjamin Agardh",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#A9A9A9",
+    "theme_color": "#FF5722",
+    "description": "Benjamin Agardh's portfolio website.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
