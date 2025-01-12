@@ -70,7 +70,7 @@ class ProjectsSection extends StatelessWidget {
           padding: windowSize.padding,
           child: Column(
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildTitle(context),
               const SizedBox(height: 16),
               for (final Project project in projects)
@@ -87,7 +87,7 @@ class ProjectsSection extends StatelessWidget {
           padding: windowSize.padding,
           child: Column(
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _buildTitle(context),
               const SizedBox(height: 24),
               GridView.extent(

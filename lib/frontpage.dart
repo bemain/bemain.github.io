@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio/about_section.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/projects_section.dart';
 import 'package:portfolio/title_section.dart';
@@ -43,9 +44,9 @@ class Frontpage extends StatelessWidget {
                 MediaQuery.paddingOf(context).bottom,
             child: TitleSection(windowSize: windowSize),
           ),
-          const Divider(),
+          AboutMeSection(windowSize: windowSize),
           ProjectsSection(windowSize: windowSize),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           // TODO: Create proper footer
           Container(
             color: Theme.of(context).colorScheme.surfaceContainer,
