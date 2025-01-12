@@ -72,11 +72,13 @@ class Frontpage extends StatelessWidget {
 
       default:
         return AppBar(
-          title: Text("Benjamin Agardh"),
           actions: [
             for (final destination in destinations)
               TextButton.icon(
                 onPressed: () {},
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.all(24),
+                ),
                 label: destination.label,
                 icon: destination.icon,
               ),

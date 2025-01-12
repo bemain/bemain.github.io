@@ -22,6 +22,8 @@ class TitleSection extends StatelessWidget {
                     _buildTitle(context),
                     _buildSubtitle(context),
                     _buildButterfly(context),
+                    const SizedBox(height: 8),
+                    _buildContactButton(context),
                   ],
                 ),
               ),
@@ -50,6 +52,8 @@ class TitleSection extends StatelessWidget {
                             children: <Widget>[
                               _buildTitle(context),
                               _buildSubtitle(context),
+                              const SizedBox(height: 32),
+                              _buildContactButton(context),
                             ],
                           ),
                         ),
@@ -126,6 +130,19 @@ class TitleSection extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: 320),
           child: NodegraphWidget(nodegraph: butterflyNodegraph),
         ),
+      ),
+    );
+  }
+
+  Widget _buildContactButton(BuildContext context) {
+    return Center(
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          fixedSize: Size.fromHeight(48),
+          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(),
+        ),
+        onPressed: () {},
+        child: Text("Get in touch"),
       ),
     );
   }

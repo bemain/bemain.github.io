@@ -75,7 +75,6 @@ class AboutMeSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // TODO: Center-align these two columns
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -109,7 +108,7 @@ class AboutMeSection extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 380),
       child: Text(
-        """I'm driven by the challenge of creating intuitive user experiences powered by cutting-edge technology.""",
+        """I'm driven by the challenge of creating intuitive user experiences powered by innovative technology.""",
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Theme.of(context)
                   .colorScheme
@@ -127,6 +126,7 @@ class AboutMeSection extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 24,
           children: [
             for (final characteristic in characteristics)
