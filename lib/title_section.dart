@@ -10,66 +10,58 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RenderBox? box = context.findRenderObject() as RenderBox?;
-    final Offset position = box?.localToGlobal(Offset.zero) ?? Offset.zero;
-
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height -
-          position.dy -
-          MediaQuery.paddingOf(context).bottom,
-      child: Padding(
-        padding: windowSize.padding,
-        child: switch (windowSize) {
-          WindowSize.compact || WindowSize.medium => Column(
-              children: [
-                Expanded(
-                  child: Column(
+    return Padding(
+      padding: windowSize.padding,
+      child: switch (windowSize) {
+        WindowSize.compact || WindowSize.medium => Column(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildTitle(context),
+                    _buildSubtitle(context),
+                    _buildButterfly(context),
+                  ],
+                ),
+              ),
+              _buildDownArrow(context),
+            ],
+          ),
+        WindowSize.expanded ||
+        WindowSize.large ||
+        WindowSize.extraLarge =>
+          Column(
+            children: [
+              Expanded(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 1024),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildTitle(context),
-                      _buildSubtitle(context),
-                      _buildButterfly(context),
+                      Expanded(
+                        child: _buildButterfly(context),
+                      ),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              _buildTitle(context),
+                              _buildSubtitle(context),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                _buildDownArrow(context),
-              ],
-            ),
-          WindowSize.expanded ||
-          WindowSize.large ||
-          WindowSize.extraLarge =>
-            Column(
-              children: [
-                Expanded(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 1024),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: _buildButterfly(context),
-                        ),
-                        const SizedBox(width: 24),
-                        Expanded(
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                _buildTitle(context),
-                                _buildSubtitle(context),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                _buildDownArrow(context),
-              ],
-            ),
-        },
-      ),
+              ),
+              _buildDownArrow(context),
+            ],
+          ),
+      },
     );
   }
 

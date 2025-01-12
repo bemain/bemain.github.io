@@ -12,4 +12,14 @@ enum WindowSize {
   final double horizontalMargin;
 
   EdgeInsets get padding => EdgeInsets.symmetric(horizontal: horizontalMargin);
+
+  static WindowSize fromSize(Size size) {
+    return switch (size.width) {
+      < 600 => WindowSize.compact,
+      < 840 => WindowSize.medium,
+      < 1200 => WindowSize.expanded,
+      < 1600 => WindowSize.large,
+      _ => WindowSize.extraLarge,
+    };
+  }
 }
