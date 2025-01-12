@@ -10,48 +10,67 @@ class TitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    final Offset position = box?.localToGlobal(Offset.zero) ?? Offset.zero;
+
+    return SizedBox(
+      height: MediaQuery.sizeOf(context).height -
+          position.dy -
+          MediaQuery.paddingOf(context).bottom,
+      child: Padding(
         padding: windowSize.padding,
         child: switch (windowSize) {
           WindowSize.compact || WindowSize.medium => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: _buildTitle(context),
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildTitle(context),
+                      _buildSubtitle(context),
+                      _buildButterfly(context),
+                    ],
+                  ),
                 ),
-                _buildSubtitle(context),
-                _buildButterfly(context),
+                _buildDownArrow(context),
               ],
             ),
           WindowSize.expanded ||
           WindowSize.large ||
           WindowSize.extraLarge =>
-            Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 1024),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: _buildButterfly(context),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            _buildTitle(context),
-                            _buildSubtitle(context),
-                          ],
+            Column(
+              children: [
+                Expanded(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 1024),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: _buildButterfly(context),
                         ),
-                      ),
+                        const SizedBox(width: 24),
+                        Expanded(
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                _buildTitle(context),
+                                _buildSubtitle(context),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                _buildDownArrow(context),
+              ],
             ),
-        });
+        },
+      ),
+    );
   }
 
   Widget _buildTitle(
@@ -100,6 +119,17 @@ class TitleSection extends StatelessWidget {
           constraints: BoxConstraints(maxWidth: 320),
           child: NodegraphWidget(nodegraph: butterflyNodegraph),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDownArrow(BuildContext context) {
+    // TODO: Make this clickable
+    return Padding(
+      padding: EdgeInsets.all(24),
+      child: Icon(
+        Icons.keyboard_arrow_down,
+        size: 48,
       ),
     );
   }
