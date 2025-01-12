@@ -8,9 +8,13 @@ class Characteristic {
     required this.icon,
   });
 
+  /// Adjective describing the characteristic, preceding the title.
   final String adjective;
+
+  /// Title describing the characteristic.
   final String title;
 
+  /// Icon representing the characteristic.
   final Widget icon;
 }
 
@@ -23,7 +27,7 @@ class AboutMeSection extends StatelessWidget {
     Characteristic(
       adjective: "Swedish",
       title: "Engineering student",
-      icon: Icon(Icons.school),
+      icon: Icon(Icons.school_outlined),
     ),
     Characteristic(
       adjective: "Skilled",
@@ -32,8 +36,8 @@ class AboutMeSection extends StatelessWidget {
     ),
     Characteristic(
       adjective: "Passionate",
-      title: "Musician",
-      icon: Icon(Icons.music_note),
+      title: "Musician & Conductor",
+      icon: Icon(Icons.music_note_outlined),
     ),
   ];
 
