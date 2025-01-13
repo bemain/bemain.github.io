@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
-import 'package:portfolio/musbx/frontpage.dart';
-import 'package:portfolio/musbx/privacy.dart';
 
 void main() {
   runApp(const MainApp());
@@ -16,16 +14,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: "/",
       builder: (context, state) => Frontpage(),
-    ),
-    GoRoute(
-      path: "/musbx",
-      builder: (context, state) => MusbxFrontpage(),
-      routes: [
-        GoRoute(
-          path: "/privacy",
-          builder: (context, state) => MusbxPrivacyPolicy(),
-        ),
-      ],
     ),
   ],
 );
