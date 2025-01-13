@@ -15,13 +15,19 @@ class TitleSection extends StatelessWidget {
       child: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => Column(
             children: [
-              _buildTitle(context),
-              _buildSubtitle(context),
-              Flexible(
-                child: _buildButterfly(context),
+              Expanded(
+                child: Column(
+                  children: [
+                    _buildTitle(context),
+                    _buildSubtitle(context),
+                    Flexible(
+                      child: _buildButterfly(context),
+                    ),
+                    const SizedBox(height: 8),
+                    _buildContactButton(context),
+                  ],
+                ),
               ),
-              const SizedBox(height: 8),
-              _buildContactButton(context),
               _buildDownArrow(context),
             ],
           ),
