@@ -15,18 +15,13 @@ class TitleSection extends StatelessWidget {
       child: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => Column(
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildTitle(context),
-                    _buildSubtitle(context),
-                    _buildButterfly(context),
-                    const SizedBox(height: 8),
-                    _buildContactButton(context),
-                  ],
-                ),
+              _buildTitle(context),
+              _buildSubtitle(context),
+              Flexible(
+                child: _buildButterfly(context),
               ),
+              const SizedBox(height: 8),
+              _buildContactButton(context),
               _buildDownArrow(context),
             ],
           ),
@@ -37,26 +32,22 @@ class TitleSection extends StatelessWidget {
             children: [
               Expanded(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 1024),
+                  constraints: BoxConstraints(),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
+                      Flexible(
                         child: _buildButterfly(context),
                       ),
                       const SizedBox(width: 24),
-                      Expanded(
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              _buildTitle(context),
-                              _buildSubtitle(context),
-                              const SizedBox(height: 32),
-                              _buildContactButton(context),
-                            ],
-                          ),
-                        ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          _buildTitle(context),
+                          _buildSubtitle(context),
+                          const SizedBox(height: 32),
+                          _buildContactButton(context),
+                        ],
                       ),
                     ],
                   ),
@@ -123,14 +114,25 @@ class TitleSection extends StatelessWidget {
   }
 
   Widget _buildButterfly(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 320),
-          child: NodegraphWidget(nodegraph: butterflyNodegraph),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.biggest.shortestSide < 240) {
+          return const SizedBox(height: 24);
+        }
+
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 320),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Center(
+                child: NodegraphWidget(nodegraph: butterflyNodegraph),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -138,7 +140,7 @@ class TitleSection extends StatelessWidget {
     return Center(
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          fixedSize: Size.fromHeight(48),
+          padding: EdgeInsets.all(24),
           textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(),
         ),
         onPressed: () {},
