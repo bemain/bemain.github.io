@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
@@ -6,6 +7,7 @@ import 'package:portfolio/musbx/frontpage.dart';
 import 'package:portfolio/musbx/privacy.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const MainApp());
 }
 
