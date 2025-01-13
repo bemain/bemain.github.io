@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
 
@@ -7,6 +8,15 @@ void main() {
 }
 
 const Color seedColor = Colors.deepOrange;
+
+final GoRouter router = GoRouter(
+  routes: [
+    GoRoute(
+      path: "/",
+      builder: (context, state) => Frontpage(),
+    ),
+  ],
+);
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -20,11 +30,11 @@ class MainApp extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
+    return MaterialApp.router(
       theme: theme.copyWith(
         textTheme: GoogleFonts.openSansTextTheme(theme.textTheme),
       ),
-      home: Frontpage(),
+      routerConfig: router,
     );
   }
 }
