@@ -9,8 +9,8 @@ class Frontpage extends StatelessWidget {
 
   final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
-      icon: Icon(Icons.home),
-      label: Text("Home"),
+      icon: Icon(Icons.person),
+      label: Text("About me"),
     ),
     NavigationDrawerDestination(
       icon: Icon(Icons.work),
@@ -19,6 +19,9 @@ class Frontpage extends StatelessWidget {
   ];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final GlobalKey aboutMeKey = GlobalKey();
+  final GlobalKey projectsKey = GlobalKey();
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -33,30 +36,33 @@ class Frontpage extends StatelessWidget {
       key: scaffoldKey,
       appBar: _buildAppBar(context, windowSize),
       drawer: _buildDrawer(context, windowSize),
-      body: ListView(
-        children: [
-          const SizedBox(height: 48),
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height -
-                MediaQuery.paddingOf(context).top -
-                kToolbarHeight -
-                48 -
-                MediaQuery.paddingOf(context).bottom,
-            child: TitleSection(windowSize: windowSize),
-          ),
-          AboutMeSection(windowSize: windowSize),
-          ProjectsSection(windowSize: windowSize),
-          // TODO: Create proper footer
-          Container(
-            color: Theme.of(context).colorScheme.surfaceContainer,
-            child: Padding(
-              padding: windowSize.padding.add(
-                EdgeInsets.symmetric(vertical: 8),
-              ),
-              child: Text("Benjamin Agardh"),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 48),
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height -
+                  MediaQuery.paddingOf(context).top -
+                  kToolbarHeight -
+                  48 -
+                  MediaQuery.paddingOf(context).bottom,
+              child: TitleSection(windowSize: windowSize),
             ),
-          )
-        ],
+            AboutMeSection(key: aboutMeKey, windowSize: windowSize),
+            ProjectsSection(key: projectsKey, windowSize: windowSize),
+            // TODO: Create proper footer
+            Container(
+              color: Theme.of(context).colorScheme.surfaceContainer,
+              child: Padding(
+                padding: windowSize.padding.add(
+                  EdgeInsets.symmetric(vertical: 8),
+                ),
+                child: Text("Benjamin Agardh"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -75,7 +81,13 @@ class Frontpage extends StatelessWidget {
           actions: [
             for (final destination in destinations)
               TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  _scrollTo(switch (destinations.indexOf(destination)) {
+                    0 => aboutMeKey,
+                    1 => projectsKey,
+                    _ => throw "Invalid destination index",
+                  });
+                },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.all(24),
                 ),
@@ -91,36 +103,55 @@ class Frontpage extends StatelessWidget {
     switch (windowSize) {
       case WindowSize.compact:
       case WindowSize.medium:
-        return NavigationDrawer(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28, 24, 16, 16),
-            child: Text(
-              "Benjamin Agardh",
-              style: Theme.of(context).textTheme.titleMedium,
+        return NavigationDrawer(
+          selectedIndex: null,
+          onDestinationSelected: (value) {
+            _scrollTo(switch (value) {
+              0 => aboutMeKey,
+              1 => projectsKey,
+              _ => throw "Invalid destination index '$value'",
+            });
+            scaffoldKey.currentState?.closeDrawer();
+          },
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(28, 24, 16, 16),
+              child: Text(
+                "Benjamin Agardh",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
-          ),
-          ...destinations,
-          const Padding(
-            padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
-            child: Divider(),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
-            child: Text(
-              """Engineering student with a passion for technology, music, and coding.""",
-              style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurfaceVariant
-                        .withAlpha(0xaa),
-                  ),
+            ...destinations,
+            const Padding(
+              padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+              child: Divider(),
             ),
-          ),
-          // TODO: Add "get in touch" button
-        ]);
+            Padding(
+              padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
+              child: Text(
+                """Engineering student with a passion for technology, music, and coding.""",
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurfaceVariant
+                          .withAlpha(0xaa),
+                    ),
+              ),
+            ),
+            // TODO: Add "get in touch" button
+          ],
+        );
 
       default:
         return null;
     }
+  }
+
+  void _scrollTo(GlobalKey key) {
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 }
