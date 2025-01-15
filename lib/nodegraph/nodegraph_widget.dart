@@ -68,7 +68,7 @@ class NodegraphWidget extends StatefulWidget {
     super.key,
     required this.nodegraph,
     this.wiggleSpeed = const Duration(seconds: 1),
-    this.wiggleRadius = 2.0,
+    this.wiggleRadius = 3.0,
   });
 
   final Nodegraph nodegraph;
@@ -83,11 +83,23 @@ class NodegraphWidget extends StatefulWidget {
 class _NodegraphWidgetState extends State<NodegraphWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late List<Animation<Offset>> _offsetAnimations;
+  late Animation<double> _animation;
+
+  /// The offset of each node when it was given its last velocity.
+  late final List<Offset> _lastOffsets =
+      List.generate(widget.nodegraph.nodes.length, (_) => Offset.zero);
+
+  /// The current velocity of each node.
+  late final List<Offset> _velocities;
 
   @override
   void initState() {
     super.initState();
+
+    _velocities = List.generate(
+      widget.nodegraph.nodes.length,
+      (i) => _getRandomOffset() - _lastOffsets[i],
+    );
 
     _controller = AnimationController(
       duration: widget.wiggleSpeed,
@@ -95,14 +107,7 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
     )
       ..addListener(_onAnimationEnd)
       ..forward();
-
-    _offsetAnimations = List.generate(
-      widget.nodegraph.nodes.length,
-      (index) => Tween<Offset>(
-        begin: Offset.zero,
-        end: _getRandomOffset(),
-      ).animate(_controller),
-    );
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
   }
 
   @override
@@ -118,18 +123,18 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
         Size size = Size.square(constraints.biggest.shortestSide);
 
         return AnimatedBuilder(
-          animation: Listenable.merge(_offsetAnimations),
+          animation: _animation,
           builder: (context, child) {
             final List<Node> nodes = widget.nodegraph.nodes.map((node) {
               if (node.isStationary) return node;
 
+              final int index = widget.nodegraph.nodes.indexOf(node);
               final Offset wiggleOffset =
-                  _offsetAnimations[widget.nodegraph.nodes.indexOf(node)]
-                      .value
-                      .scale(1 / size.width, 1 / size.height);
+                  _lastOffsets[index] + _velocities[index] * _animation.value;
 
               return node.copyWith(
-                offset: node.offset + wiggleOffset,
+                offset: node.offset +
+                    wiggleOffset.scale(1 / size.width, 1 / size.height),
               );
             }).toList();
             return CustomPaint(
@@ -147,13 +152,10 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
 
   void _onAnimationEnd() {
     if (_controller.status == AnimationStatus.completed) {
-      _offsetAnimations = List.generate(
-        widget.nodegraph.nodes.length,
-        (i) => Tween<Offset>(
-          begin: _offsetAnimations[i].value, // Start from the current position
-          end: _getRandomOffset(),
-        ).animate(_controller),
-      );
+      for (int i = 0; i < widget.nodegraph.nodes.length; i++) {
+        _lastOffsets[i] += _velocities[i] * _animation.value;
+        _velocities[i] = _getRandomOffset() - _lastOffsets[i];
+      }
 
       _controller.reset();
       _controller.forward();
