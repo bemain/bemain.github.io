@@ -49,7 +49,7 @@ class ProjectsSection extends StatelessWidget {
       title: "Dirma",
       description:
           "A website for the Swedish company Dirma, built using TypeScript and Next.js.",
-      image: NetworkImage("https://picsum.photos/1024/1024"),
+      image: AssetImage("assets/projects/dirma.png"),
       startDate: DateTime(2023),
       endDate: DateTime(2023),
     ),
