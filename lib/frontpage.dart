@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/about_section.dart';
+import 'package:portfolio/contact_section.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/projects_section.dart';
 import 'package:portfolio/title_section.dart';
@@ -9,12 +10,16 @@ class Frontpage extends StatelessWidget {
 
   final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
-      icon: Icon(Icons.person),
+      icon: Icon(Icons.person_outline),
       label: Text("About me"),
     ),
     NavigationDrawerDestination(
-      icon: Icon(Icons.work),
+      icon: Icon(Icons.work_outline),
       label: Text("Projects"),
+    ),
+    NavigationDrawerDestination(
+      icon: Icon(Icons.mail_outline),
+      label: Text("Contact"),
     ),
   ];
 
@@ -22,6 +27,7 @@ class Frontpage extends StatelessWidget {
 
   final GlobalKey aboutMeKey = GlobalKey();
   final GlobalKey projectsKey = GlobalKey();
+  final GlobalKey contactKey = GlobalKey();
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -51,16 +57,7 @@ class Frontpage extends StatelessWidget {
             ),
             AboutMeSection(key: aboutMeKey, windowSize: windowSize),
             ProjectsSection(key: projectsKey, windowSize: windowSize),
-            // TODO: Create proper footer
-            Container(
-              color: Theme.of(context).colorScheme.surfaceContainer,
-              child: Padding(
-                padding: windowSize.padding.add(
-                  EdgeInsets.symmetric(vertical: 8),
-                ),
-                child: Text("Benjamin Agardh"),
-              ),
-            )
+            ContactSection(key: contactKey, windowSize: windowSize),
           ],
         ),
       ),
@@ -85,6 +82,7 @@ class Frontpage extends StatelessWidget {
                   _scrollTo(switch (destinations.indexOf(destination)) {
                     0 => aboutMeKey,
                     1 => projectsKey,
+                    2 => contactKey,
                     _ => throw "Invalid destination index",
                   });
                 },
@@ -109,6 +107,7 @@ class Frontpage extends StatelessWidget {
             _scrollTo(switch (value) {
               0 => aboutMeKey,
               1 => projectsKey,
+              2 => contactKey,
               _ => throw "Invalid destination index '$value'",
             });
             scaffoldKey.currentState?.closeDrawer();

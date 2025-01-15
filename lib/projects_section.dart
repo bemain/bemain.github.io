@@ -59,6 +59,7 @@ class ProjectsSection extends StatelessWidget {
           "A wireless hand controller for Märklin Sprint using Bluetooth LE.",
       image: AssetImage("assets/projects/car.png"),
       startDate: DateTime(2021),
+      endDate: DateTime(2022),
     ),
   ];
 
