@@ -42,10 +42,20 @@ class ContactSection extends StatelessWidget {
               color: subtitleColor,
             );
 
+    final double extraMargin = switch (windowSize) {
+      WindowSize.compact || WindowSize.medium => 0,
+      _ => 32,
+    };
+
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
-        padding: windowSize.padding.add(EdgeInsets.only(top: 32, bottom: 12)),
+        padding: windowSize.padding.add(EdgeInsets.only(
+          top: 32,
+          right: extraMargin,
+          bottom: 12,
+          left: extraMargin,
+        )),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 16,
@@ -59,15 +69,12 @@ class ContactSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        """Want to work together? Please get in touch! 
-I'm always eager to hear from and be inspired by fellow developers!""",
-                        style: descriptionStyle,
-                      ),
-                    ],
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 320),
+                    child: Text(
+                      """Want to work together, or just interested in knowing more about what I do? Don't hesitate to reach out! I'm always eager to hear from and be inspired by fellow developers.""",
+                      style: descriptionStyle,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 24),
