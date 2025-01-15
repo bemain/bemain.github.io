@@ -68,7 +68,7 @@ class NodegraphWidget extends StatefulWidget {
     super.key,
     required this.nodegraph,
     this.wiggleSpeed = const Duration(seconds: 1),
-    this.wiggleRadius = 3.0,
+    this.wiggleRadius = 5.0,
   });
 
   final Nodegraph nodegraph;
@@ -81,38 +81,50 @@ class NodegraphWidget extends StatefulWidget {
 }
 
 class _NodegraphWidgetState extends State<NodegraphWidget>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _animation;
+    with TickerProviderStateMixin {
+  /// The controllers responsible for animating the nodes.
+  late final List<AnimationController> _wiggleAnimations;
 
   /// The offset of each node when it was given its last velocity.
-  late final List<Offset> _lastOffsets =
+  late final List<Offset> _wiggleOffsets =
       List.generate(widget.nodegraph.nodes.length, (_) => Offset.zero);
 
   /// The current velocity of each node.
-  late final List<Offset> _velocities;
+  late final List<Offset> _wiggleVelocities = List.generate(
+    widget.nodegraph.nodes.length,
+    (i) => _getRandomOffset() - _wiggleOffsets[i],
+  );
 
   @override
   void initState() {
     super.initState();
 
-    _velocities = List.generate(
+    _wiggleAnimations = List.generate(
       widget.nodegraph.nodes.length,
-      (i) => _getRandomOffset() - _lastOffsets[i],
+      (i) => AnimationController(
+        duration: widget.wiggleSpeed,
+        vsync: this,
+      )
+        ..addStatusListener((AnimationStatus status) {
+          if (status == AnimationStatus.completed) {
+            _wiggleOffsets[i] +=
+                _wiggleVelocities[i] * _wiggleAnimations[i].value;
+            _wiggleVelocities[i] = _getRandomOffset() - _wiggleOffsets[i];
+            _wiggleAnimations[i]
+              ..duration = _getRandomDuration()
+              ..reset()
+              ..forward();
+          }
+        })
+        ..forward(),
     );
-
-    _controller = AnimationController(
-      duration: widget.wiggleSpeed,
-      vsync: this,
-    )
-      ..addListener(_onAnimationEnd)
-      ..forward();
-    _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    for (final controller in _wiggleAnimations) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -123,14 +135,14 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
         Size size = Size.square(constraints.biggest.shortestSide);
 
         return AnimatedBuilder(
-          animation: _animation,
+          animation: Listenable.merge(_wiggleAnimations),
           builder: (context, child) {
             final List<Node> nodes = widget.nodegraph.nodes.map((node) {
               if (node.isStationary) return node;
 
               final int index = widget.nodegraph.nodes.indexOf(node);
-              final Offset wiggleOffset =
-                  _lastOffsets[index] + _velocities[index] * _animation.value;
+              final Offset wiggleOffset = _wiggleOffsets[index] +
+                  _wiggleVelocities[index] * _wiggleAnimations[index].value;
 
               return node.copyWith(
                 offset: node.offset +
@@ -150,18 +162,17 @@ class _NodegraphWidgetState extends State<NodegraphWidget>
     );
   }
 
-  void _onAnimationEnd() {
-    if (_controller.status == AnimationStatus.completed) {
-      for (int i = 0; i < widget.nodegraph.nodes.length; i++) {
-        _lastOffsets[i] += _velocities[i] * _animation.value;
-        _velocities[i] = _getRandomOffset() - _lastOffsets[i];
-      }
-
-      _controller.reset();
-      _controller.forward();
-    }
+  /// Get a random duration that is relatively close to [widget.wiggleSpeed].
+  Duration _getRandomDuration() {
+    return widget.wiggleSpeed +
+        Duration(
+          microseconds: Random().nextInt(
+              (widget.wiggleSpeed * 2.5).inMicroseconds -
+                  widget.wiggleSpeed.inMicroseconds ~/ 2),
+        );
   }
 
+  /// Get a random offset within [widget.wiggleRadius].
   Offset _getRandomOffset() {
     return Offset(
       Random().nextDouble() * widget.wiggleRadius - widget.wiggleRadius / 2,
