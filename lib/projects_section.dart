@@ -33,9 +33,7 @@ class Project {
 }
 
 class ProjectsSection extends StatelessWidget {
-  const ProjectsSection({super.key, required this.windowSize});
-
-  final WindowSize windowSize;
+  const ProjectsSection({super.key});
 
   static final List<Project> projects = [
     Project(
@@ -65,6 +63,8 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     switch (windowSize) {
       case WindowSize.compact:
         return Padding(

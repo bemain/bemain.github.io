@@ -13,6 +13,10 @@ enum WindowSize {
 
   EdgeInsets get padding => EdgeInsets.symmetric(horizontal: horizontalMargin);
 
+  static WindowSize of(BuildContext context) {
+    return WindowSize.fromSize(MediaQuery.sizeOf(context));
+  }
+
   static WindowSize fromSize(Size size) {
     return switch (size.width) {
       < 600 => WindowSize.compact,

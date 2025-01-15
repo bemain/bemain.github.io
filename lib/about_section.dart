@@ -19,9 +19,7 @@ class Characteristic {
 }
 
 class AboutMeSection extends StatelessWidget {
-  const AboutMeSection({super.key, required this.windowSize});
-
-  final WindowSize windowSize;
+  const AboutMeSection({super.key});
 
   static final List<Characteristic> characteristics = [
     Characteristic(
@@ -43,6 +41,8 @@ class AboutMeSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     return Container(
       padding: windowSize.padding.add(EdgeInsets.symmetric(vertical: 32)),
       color: Theme.of(context).colorScheme.surfaceContainer,
@@ -51,7 +51,7 @@ class AboutMeSection extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    switch (windowSize) {
+    switch (WindowSize.of(context)) {
       case WindowSize.compact:
       case WindowSize.medium:
         return Column(

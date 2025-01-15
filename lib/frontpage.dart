@@ -25,9 +25,9 @@ class Frontpage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final GlobalKey aboutMeKey = GlobalKey();
-  final GlobalKey projectsKey = GlobalKey();
-  final GlobalKey contactKey = GlobalKey();
+  final GlobalKey aboutMeKey = GlobalKey(debugLabel: "aboutMeSection");
+  final GlobalKey projectsKey = GlobalKey(debugLabel: "projectsSection");
+  final GlobalKey contactKey = GlobalKey(debugLabel: "contactSection");
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -35,8 +35,7 @@ class Frontpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final WindowSize windowSize =
-        WindowSize.fromSize(MediaQuery.sizeOf(context));
+    final WindowSize windowSize = WindowSize.of(context);
 
     return Scaffold(
       key: scaffoldKey,
@@ -53,11 +52,11 @@ class Frontpage extends StatelessWidget {
                   kToolbarHeight -
                   48 -
                   MediaQuery.paddingOf(context).bottom,
-              child: TitleSection(windowSize: windowSize),
+              child: TitleSection(),
             ),
-            AboutMeSection(key: aboutMeKey, windowSize: windowSize),
-            ProjectsSection(key: projectsKey, windowSize: windowSize),
-            ContactSection(key: contactKey, windowSize: windowSize),
+            AboutMeSection(key: aboutMeKey),
+            ProjectsSection(key: projectsKey),
+            ContactSection(key: contactKey),
           ],
         ),
       ),

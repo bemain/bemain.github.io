@@ -4,12 +4,12 @@ import 'package:portfolio/nodegraph/butterfly_nodegraph.dart';
 import 'package:portfolio/nodegraph/nodegraph_widget.dart';
 
 class TitleSection extends StatelessWidget {
-  const TitleSection({super.key, required this.windowSize});
-
-  final WindowSize windowSize;
+  const TitleSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     return Padding(
       padding: windowSize.padding,
       child: switch (windowSize) {
@@ -70,6 +70,8 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Benjamin Agardh",
   }) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     final TextStyle? textStyle = switch (windowSize) {
       WindowSize.compact => Theme.of(context).textTheme.displaySmall,
       _ => Theme.of(context).textTheme.displayMedium,
@@ -99,6 +101,8 @@ class TitleSection extends StatelessWidget {
     BuildContext context, {
     String text = "Blending elegant UI and cutting-edge technology",
   }) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     final TextStyle? textStyle = switch (windowSize) {
       WindowSize.compact => Theme.of(context).textTheme.headlineSmall,
       _ => Theme.of(context).textTheme.headlineMedium,

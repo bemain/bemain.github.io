@@ -16,9 +16,7 @@ class SocialPlatform {
 }
 
 class ContactSection extends StatelessWidget {
-  const ContactSection({super.key, required this.windowSize});
-
-  final WindowSize windowSize;
+  const ContactSection({super.key});
 
   static final List<SocialPlatform> socialPlatforms = [
     SocialPlatform(
@@ -35,6 +33,8 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     final Color subtitleColor =
         Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
     final TextStyle? descriptionStyle =
