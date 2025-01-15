@@ -25,9 +25,9 @@ class Frontpage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final GlobalKey aboutMeKey = GlobalKey(debugLabel: "aboutMeSection");
-  final GlobalKey projectsKey = GlobalKey(debugLabel: "projectsSection");
-  final GlobalKey contactKey = GlobalKey(debugLabel: "contactSection");
+  final GlobalKey aboutMeSectionKey = GlobalKey(debugLabel: "aboutMeSection");
+  final GlobalKey projectsSectionKey = GlobalKey(debugLabel: "projectsSection");
+  final GlobalKey contactSectionKey = GlobalKey(debugLabel: "contactSection");
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -52,11 +52,15 @@ class Frontpage extends StatelessWidget {
                   kToolbarHeight -
                   48 -
                   MediaQuery.paddingOf(context).bottom,
-              child: TitleSection(),
+              child: TitleSection(
+                onGetInTouchPressed: () {
+                  _scrollTo(contactSectionKey);
+                },
+              ),
             ),
-            AboutMeSection(key: aboutMeKey),
-            ProjectsSection(key: projectsKey),
-            ContactSection(key: contactKey),
+            AboutMeSection(key: aboutMeSectionKey),
+            ProjectsSection(key: projectsSectionKey),
+            ContactSection(key: contactSectionKey),
           ],
         ),
       ),
@@ -79,9 +83,9 @@ class Frontpage extends StatelessWidget {
               TextButton.icon(
                 onPressed: () {
                   _scrollTo(switch (destinations.indexOf(destination)) {
-                    0 => aboutMeKey,
-                    1 => projectsKey,
-                    2 => contactKey,
+                    0 => aboutMeSectionKey,
+                    1 => projectsSectionKey,
+                    2 => contactSectionKey,
                     _ => throw "Invalid destination index",
                   });
                 },
@@ -104,9 +108,9 @@ class Frontpage extends StatelessWidget {
           selectedIndex: null,
           onDestinationSelected: (value) {
             _scrollTo(switch (value) {
-              0 => aboutMeKey,
-              1 => projectsKey,
-              2 => contactKey,
+              0 => aboutMeSectionKey,
+              1 => projectsSectionKey,
+              2 => contactSectionKey,
               _ => throw "Invalid destination index '$value'",
             });
             scaffoldKey.currentState?.closeDrawer();
@@ -136,7 +140,6 @@ class Frontpage extends StatelessWidget {
                     ),
               ),
             ),
-            // TODO: Add "get in touch" button
           ],
         );
 
@@ -148,7 +151,7 @@ class Frontpage extends StatelessWidget {
   void _scrollTo(GlobalKey key) {
     Scrollable.ensureVisible(
       key.currentContext!,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 400),
       curve: Curves.easeInOut,
     );
   }

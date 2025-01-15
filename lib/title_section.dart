@@ -4,7 +4,9 @@ import 'package:portfolio/nodegraph/butterfly_nodegraph.dart';
 import 'package:portfolio/nodegraph/nodegraph_widget.dart';
 
 class TitleSection extends StatelessWidget {
-  const TitleSection({super.key});
+  const TitleSection({super.key, this.onGetInTouchPressed});
+
+  final Function()? onGetInTouchPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,8 @@ class TitleSection extends StatelessWidget {
                       child: _buildButterfly(context),
                     ),
                     const SizedBox(height: 8),
-                    _buildContactButton(context),
+                    if (onGetInTouchPressed != null)
+                      _buildContactButton(context),
                   ],
                 ),
               ),
@@ -153,7 +156,9 @@ class TitleSection extends StatelessWidget {
           padding: EdgeInsets.all(24),
           textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(),
         ),
-        onPressed: () {},
+        onPressed: () {
+          onGetInTouchPressed?.call();
+        },
         child: Text("Get in touch"),
       ),
     );
