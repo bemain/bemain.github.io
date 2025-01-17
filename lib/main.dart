@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
+import 'package:portfolio/writing/article_page.dart';
+import 'package:portfolio/writing/writing_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,6 +17,21 @@ final GoRouter router = GoRouter(
       path: "/",
       builder: (context, state) => Frontpage(),
     ),
+    GoRoute(
+      path: "/writing",
+      builder: (context, state) {
+        return const WritingPage();
+      },
+      routes: [
+        GoRoute(
+          path: ":article",
+          builder: (context, state) {
+            final article = state.pathParameters["article"];
+            return ArticlePage(assetPath: "assets/writing/$article.md");
+          },
+        ),
+      ],
+    )
   ],
 );
 
