@@ -11,7 +11,7 @@ Det går inte att lära någon att leva, för livet är; lite som en Facebook-st
     att dokumentera,
     att fundera över relationer och vänner,
     att se de stora dragen när livet vänder,
-    att lägga allt i Guds händer,
+    att lägga allt i Herrens händer,
     att se det goda i livet, att minnas,
     att hantera det jag helst vill glömma,
     att uttrycka min frustration över sådant som inte borde få finnas,

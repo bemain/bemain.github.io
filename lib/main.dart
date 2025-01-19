@@ -25,9 +25,21 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           path: ":article",
+          redirect: (context, state) {
+            if (!articles.any(
+              (article) => article.id == state.pathParameters["article"],
+            )) {
+              return "/writing";
+            }
+
+            return null;
+          },
           builder: (context, state) {
-            final article = state.pathParameters["article"];
-            return ArticlePage(assetPath: "assets/writing/$article.md");
+            final Article article = articles.singleWhere(
+              (article) => article.id == state.pathParameters["article"],
+            );
+
+            return ArticlePage(article: article);
           },
         ),
       ],
