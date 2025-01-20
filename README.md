@@ -1,3 +1,3 @@
-# portfolio
+# My Portfolio Website
 
-A new Flutter project.
+My personal portfolio website, built using Flutter and hosted on GitHub Pages.
