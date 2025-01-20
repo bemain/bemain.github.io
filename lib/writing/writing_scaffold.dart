@@ -42,6 +42,13 @@ class WritingScaffold extends StatelessWidget {
     );
   }
 
+  void _onDestinationSelected(BuildContext context, int value) {
+    switch (value) {
+      case 0:
+        context.go("/");
+    }
+  }
+
   PreferredSizeWidget? _buildAppBar(BuildContext context) {
     switch (WindowSize.of(context)) {
       case WindowSize.compact:
@@ -62,12 +69,8 @@ class WritingScaffold extends StatelessWidget {
       case WindowSize.expanded:
         return NavigationRail(
           selectedIndex: null,
-          onDestinationSelected: (value) {
-            switch (value) {
-              case 0:
-                context.go("/");
-            }
-          },
+          onDestinationSelected: (value) =>
+              _onDestinationSelected(context, value),
           labelType: NavigationRailLabelType.all,
           leading: _buildHomeLogo(context, vertical: true),
           destinations: [
@@ -88,7 +91,8 @@ class WritingScaffold extends StatelessWidget {
           },
           elevation: 0,
           selectedIndex: null,
-          onDestinationSelected: (value) {},
+          onDestinationSelected: (value) =>
+              _onDestinationSelected(context, value),
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 24, 8, 8),
