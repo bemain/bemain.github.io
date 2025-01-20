@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:portfolio/layout.dart';
-import 'package:portfolio/writing/article_pane.dart';
+import 'package:portfolio/writing/article.dart';
 
 class ArticleList extends StatefulWidget {
   const ArticleList({super.key});
@@ -95,66 +95,30 @@ class _ArticleListState extends State<ArticleList> {
         onTap: () {
           context.go("/writing/${article.id}");
         },
-        child: switch (WindowSize.of(context)) {
-          WindowSize.compact => Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    child: Card.filled(
-                      clipBehavior: Clip.antiAlias,
-                      elevation: 0,
-                      child: AspectRatio(
-                        aspectRatio: 1.618,
-                        child: Image(
-                          // TODO: Create placeholder image
-                          image: article.image ??
-                              NetworkImage("https://picsum.photos/512/256"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 6),
-                    child: _buildArticleText(context, article),
-                  ),
-                ],
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                fit: FlexFit.tight,
+                flex: 1,
+                child: Image(
+                  // TODO: Create placeholder image
+                  image: article.image ??
+                      NetworkImage("https://picsum.photos/512/256"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          WindowSize.medium ||
-          WindowSize.expanded ||
-          WindowSize.large ||
-          WindowSize.extraLarge =>
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    flex: 1,
-                    child: Image(
-                      // TODO: Create placeholder image
-                      image: article.image ??
-                          NetworkImage("https://picsum.photos/512/256"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Flexible(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: _buildArticleText(context, article),
-                    ),
-                  ),
-                ],
+              Flexible(
+                flex: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: _buildArticleText(context, article),
+                ),
               ),
-            ),
-        },
+            ],
+          ),
+        ),
       ),
     );
   }
