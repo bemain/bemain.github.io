@@ -22,7 +22,6 @@ class WritingPage extends StatelessWidget {
           switch (WindowSize.of(context)) {
             case WindowSize.compact:
             case WindowSize.medium:
-            case WindowSize.expanded:
               return article != null
                   ? Align(
                       alignment: Alignment.topCenter,
@@ -30,6 +29,7 @@ class WritingPage extends StatelessWidget {
                     )
                   : ArticleList();
 
+            case WindowSize.expanded:
             case WindowSize.large:
             case WindowSize.extraLarge:
               return Row(

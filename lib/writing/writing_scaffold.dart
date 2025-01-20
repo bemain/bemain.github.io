@@ -64,33 +64,96 @@ class WritingScaffold extends StatelessWidget {
   }
 
   Widget _buildNavigation(BuildContext context) {
-    return NavigationDrawer(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      elevation: 0,
-      selectedIndex: null,
-      onDestinationSelected: (value) {},
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(12, 24, 8, 8),
-          child: _buildHomeLogo(context),
-        ),
-        ...destinations,
-        const Padding(
-          padding: EdgeInsets.fromLTRB(28, 16, 28, 8),
-          child: Divider(),
-        ),
-      ],
-    );
+    switch (WindowSize.of(context)) {
+      case WindowSize.expanded:
+        return NavigationRail(
+          selectedIndex: null,
+          onDestinationSelected: (value) {},
+          labelType: NavigationRailLabelType.all,
+          leading: _buildHomeLogo(context, vertical: true),
+          destinations: [
+            for (final NavigationDrawerDestination destination in destinations)
+              NavigationRailDestination(
+                icon: destination.icon,
+                label: destination.label,
+              ),
+          ],
+        );
+      default:
+        return NavigationDrawer(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          elevation: 0,
+          selectedIndex: null,
+          onDestinationSelected: (value) {},
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 24, 8, 8),
+              child: _buildHomeLogo(context),
+            ),
+            ...destinations,
+            const Padding(
+              padding: EdgeInsets.fromLTRB(28, 16, 28, 8),
+              child: Divider(),
+            ),
+          ],
+        );
+    }
   }
 
-  Widget _buildHomeLogo(BuildContext context) {
+  Widget _buildHomeLogo(BuildContext context, {bool vertical = false}) {
+    final Widget image = Card.outlined(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: EdgeInsets.all(4),
+        child: SvgPicture.asset(
+          "assets/logo/butterfly.svg",
+          semanticsLabel: "Moments Logo",
+          width: 40,
+          height: 40,
+        ),
+      ),
+    );
+
+    onTap() {
+      scaffoldKey.currentState?.closeDrawer();
+      GoRouter.of(context).go("/writing");
+    }
+
+    if (vertical) {
+      return Column(
+        children: [
+          SizedBox(height: 12),
+          Material(
+            type: MaterialType.transparency,
+            child: _LogoInkWell(
+              onTap: onTap,
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              indicatorOffset: Offset(0, 4),
+              applyXOffset: false,
+              indicatorSize: Size(48, 48),
+              child: Column(
+                children: [
+                  image,
+                  SizedBox(height: 8),
+                  Text(
+                    "Moments",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Divider(),
+        ],
+      );
+    }
     return Material(
       type: MaterialType.transparency,
       child: _LogoInkWell(
-        onTap: () {
-          scaffoldKey.currentState?.closeDrawer();
-          GoRouter.of(context).go("/writing");
-        },
+        onTap: onTap,
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -99,19 +162,7 @@ class WritingScaffold extends StatelessWidget {
         indicatorSize: Size(48, 48),
         child: Row(
           children: [
-            Card.outlined(
-              color: Colors.transparent,
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: EdgeInsets.all(4),
-                child: SvgPicture.asset(
-                  "assets/logo/butterfly.svg",
-                  semanticsLabel: "Moments Logo",
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-            ),
+            image,
             SizedBox(width: 8),
             Text(
               "Moments",
