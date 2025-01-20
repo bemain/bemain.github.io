@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
-import 'package:portfolio/writing/article_page.dart';
+import 'package:portfolio/writing/article_pane.dart';
 import 'package:portfolio/writing/writing_page.dart';
 
 void main() {
@@ -17,6 +17,7 @@ final GoRouter router = GoRouter(
       path: "/",
       builder: (context, state) => Frontpage(),
     ),
+    // TODO: Rewrite using ShellRoute
     GoRoute(
       path: "/writing",
       builder: (context, state) {
@@ -34,12 +35,18 @@ final GoRouter router = GoRouter(
 
             return null;
           },
-          builder: (context, state) {
-            final Article article = articles.singleWhere(
+          pageBuilder: (context, state) {
+            final Article article = articles.firstWhere(
               (article) => article.id == state.pathParameters["article"],
             );
 
-            return ArticlePage(article: article);
+            return CustomTransitionPage<void>(
+              key: state.pageKey,
+              child: WritingPage(article: article),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) =>
+                      FadeTransition(opacity: animation, child: child),
+            );
           },
         ),
       ],

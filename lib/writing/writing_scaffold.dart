@@ -45,7 +45,8 @@ class WritingScaffold extends StatelessWidget {
                   child: Column(
                     children: [
                       AppBar(
-                        automaticallyImplyLeading: false,
+                        automaticallyImplyLeading:
+                            WindowSize.of(context) == WindowSize.expanded,
                         title: title,
                       ),
                       Expanded(
@@ -116,6 +117,7 @@ class WritingScaffold extends StatelessWidget {
                   "assets/logo/butterfly.svg",
                   semanticsLabel: "Moments Logo",
                   width: 40,
+                  height: 40,
                 ),
               ),
             ),
