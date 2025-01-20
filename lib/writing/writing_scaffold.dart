@@ -42,18 +42,7 @@ class WritingScaffold extends StatelessWidget {
               _buildNavigation(context),
               if (body != null)
                 Expanded(
-                  child: Column(
-                    children: [
-                      AppBar(
-                        automaticallyImplyLeading:
-                            WindowSize.of(context) == WindowSize.expanded,
-                        title: title,
-                      ),
-                      Expanded(
-                        child: body!,
-                      ),
-                    ],
-                  ),
+                  child: body!,
                 ),
             ],
           )
@@ -76,6 +65,8 @@ class WritingScaffold extends StatelessWidget {
 
   Widget _buildNavigation(BuildContext context) {
     return NavigationDrawer(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      elevation: 0,
       selectedIndex: null,
       onDestinationSelected: (value) {},
       children: [

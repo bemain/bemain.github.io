@@ -15,15 +15,33 @@ class _ArticleListState extends State<ArticleList> {
   @override
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
+
     return SizedBox(
       width: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => null,
         WindowSize.expanded || WindowSize.large => 360,
         WindowSize.extraLarge => 412,
       },
-      child: ListView(
+      child: Column(
         children: [
-          for (final article in articles) _buildArticleTile(context, article),
+          SizedBox(height: 24),
+          SearchBar(
+            elevation: WidgetStatePropertyAll(0),
+            enabled: false, // TODO: Implement search
+            padding: const WidgetStatePropertyAll<EdgeInsets>(
+                EdgeInsets.symmetric(horizontal: 16.0)),
+            leading: Icon(Icons.search),
+            hintText: "Search moments",
+          ),
+          SizedBox(height: 12),
+          Expanded(
+            child: ListView(
+              children: [
+                for (final article in articles)
+                  _buildArticleTile(context, article),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -39,9 +57,9 @@ class _ArticleListState extends State<ArticleList> {
         article.id;
 
     return Card(
-      color: isSelected
-          ? Theme.of(context).colorScheme.secondaryContainer
-          : Theme.of(context).colorScheme.surface,
+      elevation: 0,
+      color:
+          isSelected ? Theme.of(context).colorScheme.secondaryContainer : null,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
@@ -140,11 +158,14 @@ class _ArticleListState extends State<ArticleList> {
               children: [
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: Icon(Icons.event, color: subtitleColor),
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Icon(Icons.event, color: subtitleColor),
+                  ),
                 ),
                 TextSpan(
-                    text:
-                        "  ${DateFormat("MMMM dd, yyyy").format(article.writtenAt!)}"),
+                  text: DateFormat("dd MMMM, yyyy").format(article.writtenAt!),
+                ),
               ],
             ),
           ),

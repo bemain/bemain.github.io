@@ -24,7 +24,10 @@ class WritingPage extends StatelessWidget {
             case WindowSize.medium:
             case WindowSize.expanded:
               return article != null
-                  ? ArticlePane(article: article)
+                  ? Align(
+                      alignment: Alignment.topCenter,
+                      child: ArticlePane(article: article),
+                    )
                   : ArticleList();
 
             case WindowSize.large:
@@ -35,6 +38,8 @@ class WritingPage extends StatelessWidget {
                   SizedBox(width: 24),
                   Expanded(
                     child: Card(
+                      elevation: 0,
+                      margin: EdgeInsets.symmetric(vertical: 24),
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: ArticlePane(article: article),

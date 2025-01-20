@@ -43,7 +43,7 @@ class ArticlePane extends StatelessWidget {
   Widget build(BuildContext context) {
     if (article == null) {
       return const Center(
-        child: Text("No article selected"),
+        child: Text("No moment selected"),
       );
     }
 
