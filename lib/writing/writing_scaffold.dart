@@ -31,12 +31,12 @@ class WritingScaffold extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       drawer: switch (WindowSize.of(context)) {
-        WindowSize.compact || WindowSize.medium => _buildNavigation(context),
+        WindowSize.compact => _buildNavigation(context),
         _ => null,
       },
       appBar: _buildAppBar(context),
       body: switch (WindowSize.of(context)) {
-        WindowSize.compact || WindowSize.medium => body,
+        WindowSize.compact => body,
         _ => Row(
             children: [
               _buildNavigation(context),
@@ -53,7 +53,6 @@ class WritingScaffold extends StatelessWidget {
   PreferredSizeWidget? _buildAppBar(BuildContext context) {
     switch (WindowSize.of(context)) {
       case WindowSize.compact:
-      case WindowSize.medium:
         return AppBar(
           title: title,
         );
@@ -64,7 +63,10 @@ class WritingScaffold extends StatelessWidget {
   }
 
   Widget _buildNavigation(BuildContext context) {
-    switch (WindowSize.of(context)) {
+    final WindowSize windowSize = WindowSize.of(context);
+
+    switch (windowSize) {
+      case WindowSize.medium:
       case WindowSize.expanded:
         return NavigationRail(
           selectedIndex: null,
@@ -81,7 +83,12 @@ class WritingScaffold extends StatelessWidget {
         );
       default:
         return NavigationDrawer(
-          backgroundColor: Theme.of(context).colorScheme.surface,
+          backgroundColor: switch (windowSize) {
+            WindowSize.large ||
+            WindowSize.extraLarge =>
+              Theme.of(context).colorScheme.surface,
+            _ => null,
+          },
           elevation: 0,
           selectedIndex: null,
           onDestinationSelected: (value) {},
