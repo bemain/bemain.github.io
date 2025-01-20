@@ -42,7 +42,10 @@ class WritingPage extends StatelessWidget {
                       margin: EdgeInsets.symmetric(vertical: 24),
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: ArticlePane(article: article),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: ArticlePane(article: article),
+                        ),
                       ),
                     ),
                   ),

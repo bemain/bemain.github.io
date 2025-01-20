@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:portfolio/layout.dart';
 
 class Article {
   Article({
@@ -28,8 +29,9 @@ final List<Article> articles = [
   ),
   Article(
     id: "250120",
-    title: "How about this?",
-    textPath: "assets/writing/jnsk.md",
+    title: "Highland green",
+    textPath: "assets/writing/250120.md",
+    image: AssetImage("assets/writing/250120.jpg"),
     writtenAt: DateTime(2023, 4, 15),
   )
 ];
@@ -47,33 +49,33 @@ class ArticlePane extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: EdgeInsets.all(24),
-      child: FutureBuilder(
-        future: DefaultAssetBundle.of(context).loadString(article!.textPath),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("Error: ${snapshot.error}"),
-            );
-          }
+    return FutureBuilder(
+      future: DefaultAssetBundle.of(context).loadString(article!.textPath),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text("Error: ${snapshot.error}"),
+          );
+        }
 
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          return SingleChildScrollView(
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24),
             child: MarkdownBody(
               data: snapshot.data!,
               selectable: true,
               styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
               softLineBreak: true,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
