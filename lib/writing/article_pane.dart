@@ -29,20 +29,22 @@ final List<Article> articles = [
   Article(
     id: "230712",
     title: "Mountain-fog and highland-green",
+    textPath: "assets/writing/230712.md",
     textPath: "assets/writing/250120.md",
+    textPath: "assets/writing/230712.md",
     image: AssetImage("assets/writing/230712.jpg"),
     writtenAt: DateTime(2023, 7, 12),
   ),
   Article(
     id: "21000",
     title: "What is already dead can never die",
-    textPath: "assets/writing/21000.md",
+    textPath: "assets/writing/210000.md",
     writtenAt: DateTime(2021, 7, 24),
   ),
   Article(
     id: "21001",
     title: "Jag tänker aldrig bli psykolog",
-    textPath: "assets/writing/21001.md",
+    textPath: "assets/writing/210001.md",
     writtenAt: DateTime(2021, 11, 17),
   ),
   Article(
