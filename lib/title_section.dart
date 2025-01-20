@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/nodegraph/butterfly_nodegraph.dart';
 import 'package:portfolio/nodegraph/nodegraph_widget.dart';
+import 'package:portfolio/theme.dart';
 
 class TitleSection extends StatelessWidget {
   const TitleSection({super.key, this.onGetInTouchPressed});
@@ -82,9 +83,7 @@ class TitleSection extends StatelessWidget {
 
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => LinearGradient(
-        colors: <Color>[Colors.amber, Colors.red],
-      ).createShader(
+      shaderCallback: (bounds) => primaryGradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
       child: Padding(

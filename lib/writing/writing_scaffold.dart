@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:portfolio/layout.dart';
 
 class WritingScaffold extends StatelessWidget {
-  WritingScaffold({super.key, this.body});
+  WritingScaffold({super.key, this.title, this.body});
 
+  final Widget? title;
   final Widget? body;
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -30,18 +31,28 @@ class WritingScaffold extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       drawer: switch (WindowSize.of(context)) {
-        WindowSize.compact => _buildNavigation(context),
+        WindowSize.compact || WindowSize.medium => _buildNavigation(context),
         _ => null,
       },
       appBar: _buildAppBar(context),
       body: switch (WindowSize.of(context)) {
-        WindowSize.compact => body,
+        WindowSize.compact || WindowSize.medium => body,
         _ => Row(
             children: [
               _buildNavigation(context),
               if (body != null)
                 Expanded(
-                  child: body!,
+                  child: Column(
+                    children: [
+                      AppBar(
+                        automaticallyImplyLeading: false,
+                        title: title,
+                      ),
+                      Expanded(
+                        child: body!,
+                      ),
+                    ],
+                  ),
                 ),
             ],
           )
@@ -52,7 +63,10 @@ class WritingScaffold extends StatelessWidget {
   PreferredSizeWidget? _buildAppBar(BuildContext context) {
     switch (WindowSize.of(context)) {
       case WindowSize.compact:
-        return AppBar();
+      case WindowSize.medium:
+        return AppBar(
+          title: title,
+        );
 
       default:
         return null;
@@ -60,125 +74,60 @@ class WritingScaffold extends StatelessWidget {
   }
 
   Widget _buildNavigation(BuildContext context) {
-    switch (WindowSize.of(context)) {
-      case WindowSize.compact:
-      case WindowSize.large:
-      case WindowSize.extraLarge:
-        return NavigationDrawer(
-          selectedIndex: null,
-          onDestinationSelected: (value) {},
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 24, 8, 8),
-              child: _buildHomeLogo(context),
-            ),
-            ...destinations,
-            const Padding(
-              padding: EdgeInsets.fromLTRB(28, 16, 28, 8),
-              child: Divider(),
-            ),
-          ],
-        );
-
-      case WindowSize.medium:
-      case WindowSize.expanded:
-        return NavigationRail(
-          selectedIndex: null,
-          onDestinationSelected: (int index) {},
-          labelType: NavigationRailLabelType.all,
-          leading: _buildHomeLogo(context),
-          destinations: [
-            for (final destination in destinations)
-              NavigationRailDestination(
-                icon: destination.icon,
-                label: destination.label,
-              )
-          ],
-        );
-    }
+    return NavigationDrawer(
+      selectedIndex: null,
+      onDestinationSelected: (value) {},
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 24, 8, 8),
+          child: _buildHomeLogo(context),
+        ),
+        ...destinations,
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 8),
+          child: Divider(),
+        ),
+      ],
+    );
   }
 
   Widget _buildHomeLogo(BuildContext context) {
-    final Widget image = Center(
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: Card.outlined(
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          child: Padding(
-            padding: EdgeInsets.all(4),
-            child: SvgPicture.asset(
-              "assets/logo/butterfly.svg",
-              semanticsLabel: "Moments Logo",
-              width: 40,
-            ),
-          ),
+    return Material(
+      type: MaterialType.transparency,
+      child: _LogoInkWell(
+        onTap: () {
+          scaffoldKey.currentState?.closeDrawer();
+          GoRouter.of(context).go("/writing");
+        },
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
-      ),
-    );
-
-    onTap() {
-      scaffoldKey.currentState?.closeDrawer();
-      GoRouter.of(context).go("/writing");
-    }
-
-    switch (WindowSize.of(context)) {
-      case WindowSize.compact:
-      case WindowSize.large:
-      case WindowSize.extraLarge:
-        return Material(
-          type: MaterialType.transparency,
-          child: _LogoInkWell(
-            onTap: onTap,
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            indicatorOffset: Offset(28, 4),
-            applyXOffset: true,
-            indicatorSize: Size(48, 48),
-            child: Row(
-              children: [
-                image,
-                SizedBox(width: 8),
-                Text(
-                  "Moments",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-        );
-      case WindowSize.medium:
-      case WindowSize.expanded:
-        return Column(
+        indicatorOffset: Offset(28, 4),
+        applyXOffset: true,
+        indicatorSize: Size(48, 48),
+        child: Row(
           children: [
-            SizedBox(height: 12),
-            Material(
-              type: MaterialType.transparency,
-              child: _LogoInkWell(
-                onTap: onTap,
-                customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                indicatorOffset: Offset(0, 4),
-                applyXOffset: false,
-                indicatorSize: Size(48, 48),
-                child: Column(
-                  children: [
-                    image,
-                    SizedBox(height: 8),
-                    Text(
-                      "Moments",
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ],
+            Card.outlined(
+              color: Colors.transparent,
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: EdgeInsets.all(4),
+                child: SvgPicture.asset(
+                  "assets/logo/butterfly.svg",
+                  semanticsLabel: "Moments Logo",
+                  width: 40,
                 ),
               ),
             ),
-            Divider(),
+            SizedBox(width: 8),
+            Text(
+              "Moments",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
           ],
-        );
-    }
+        ),
+      ),
+    );
   }
 }
 

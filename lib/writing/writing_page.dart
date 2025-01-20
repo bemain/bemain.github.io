@@ -7,6 +7,7 @@ class WritingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WritingScaffold(
+      title: Text("Moments that are forever"),
       body: const Placeholder(),
     );
   }

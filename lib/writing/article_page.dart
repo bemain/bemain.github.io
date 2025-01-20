@@ -7,26 +7,36 @@ class Article {
   Article({
     required this.id,
     required this.title,
-    required this.assetPath,
+    required this.textPath,
+    this.image,
   });
 
   final String id;
   final String title;
-  final String assetPath;
+  final String textPath;
+  final ImageProvider? image;
 }
 
 final List<Article> articles = [
   Article(
     id: "what_is_this",
     title: "What is this?",
-    assetPath: "assets/writing/what_is_this.md",
+    textPath: "assets/writing/what_is_this.md",
   )
 ];
 
-class ArticlePage extends StatelessWidget {
+class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key, required this.article});
 
   final Article article;
+
+  @override
+  State<ArticlePage> createState() => _ArticlePageState();
+}
+
+class _ArticlePageState extends State<ArticlePage> {
+  late final Future<String> futureText =
+      DefaultAssetBundle.of(context).loadString(widget.article.textPath);
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +49,7 @@ class ArticlePage extends StatelessWidget {
             child: Padding(
               padding: windowSize.padding,
               child: FutureBuilder(
-                future: DefaultAssetBundle.of(context)
-                    .loadString(article.assetPath),
+                future: futureText,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/nodegraph/nodegraph_widget.dart';
+import 'package:portfolio/theme.dart';
 
 extension ColorMap on Map<Offset, Color> {
   /// Calculate the color at a [point] by using 2D interpolation.
@@ -195,8 +196,8 @@ final List<(int, int)> _butterflyPaths = [
 ];
 
 final Map<Offset, Color> _butterflyColorMap = {
-  Offset(0, 0.3): Colors.amber,
-  Offset(1, 0.7): Colors.red,
+  Offset(0, 0.3): primaryGradient.colors.first,
+  Offset(1, 0.7): primaryGradient.colors.last,
 };
 
 final Nodegraph butterflyNodegraph = Nodegraph(
