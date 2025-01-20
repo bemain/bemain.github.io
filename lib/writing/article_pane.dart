@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:portfolio/layout.dart';
+import 'package:portfolio/writing/article_list.dart';
 
 class Article {
   Article({
@@ -29,8 +31,6 @@ final List<Article> articles = [
   Article(
     id: "230712",
     title: "Mountain-fog and highland-green",
-    textPath: "assets/writing/230712.md",
-    textPath: "assets/writing/250120.md",
     textPath: "assets/writing/230712.md",
     image: AssetImage("assets/writing/230712.jpg"),
     writtenAt: DateTime(2023, 7, 12),
@@ -64,9 +64,17 @@ class ArticlePane extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (article == null) {
-      return const Center(
-        child: Text("No moment selected"),
-      );
+      switch (WindowSize.of(context)) {
+        case WindowSize.compact:
+        case WindowSize.medium:
+          // On small screens, show the list of articles instead of an empty pane
+          return const ArticleList();
+
+        default:
+          return const Center(
+            child: Text("No moment selected"),
+          );
+      }
     }
 
     return FutureBuilder(
@@ -86,7 +94,12 @@ class ArticlePane extends StatelessWidget {
 
         return SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24),
+            padding: EdgeInsets.symmetric(
+                vertical: 24,
+                horizontal: switch (WindowSize.of(context)) {
+                  WindowSize.compact || WindowSize.medium => 0,
+                  _ => 24,
+                }),
             child: MarkdownBody(
               data: snapshot.data!,
               selectable: true,

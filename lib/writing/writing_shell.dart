@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/writing/article_list.dart';
-import 'package:portfolio/writing/article_pane.dart';
 import 'package:portfolio/writing/writing_scaffold.dart';
 
-class WritingPage extends StatelessWidget {
-  const WritingPage({
+class WritingShell extends StatelessWidget {
+  const WritingShell({
     super.key,
-    this.article,
+    required this.child,
   });
 
-  /// The article that is currently open, if any.
-  final Article? article;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +20,10 @@ class WritingPage extends StatelessWidget {
           switch (WindowSize.of(context)) {
             case WindowSize.compact:
             case WindowSize.medium:
-              return article != null
+              return child != null
                   ? Align(
                       alignment: Alignment.topCenter,
-                      child: ArticlePane(article: article),
+                      child: child,
                     )
                   : ArticleList();
 
@@ -42,10 +40,7 @@ class WritingPage extends StatelessWidget {
                       margin: EdgeInsets.symmetric(vertical: 24),
                       child: Align(
                         alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24),
-                          child: ArticlePane(article: article),
-                        ),
+                        child: child,
                       ),
                     ),
                   ),

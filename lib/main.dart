@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
 import 'package:portfolio/writing/article_pane.dart';
-import 'package:portfolio/writing/writing_page.dart';
+import 'package:portfolio/writing/writing_shell.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,46 +11,49 @@ void main() {
 
 const Color seedColor = Colors.deepOrange;
 
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+
 final GoRouter router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(
       path: "/",
       builder: (context, state) => Frontpage(),
     ),
-    // TODO: Rewrite using ShellRoute
-    GoRoute(
-      path: "/writing",
-      builder: (context, state) {
-        return const WritingPage();
+    ShellRoute(
+      builder: (context, state, child) {
+        return WritingShell(child: child);
       },
       routes: [
         GoRoute(
-          path: ":article",
-          redirect: (context, state) {
-            if (!articles.any(
-              (article) => article.id == state.pathParameters["article"],
-            )) {
-              return "/writing";
-            }
+            path: "/writing",
+            builder: (context, state) {
+              // TODO: Find another way to handle the case where no article is selected
+              return ArticlePane(article: null);
+            },
+            routes: [
+              GoRoute(
+                path: ":article",
+                redirect: (context, state) {
+                  if (!articles.any(
+                    (article) => article.id == state.pathParameters["article"],
+                  )) {
+                    return "/writing";
+                  }
 
-            return null;
-          },
-          pageBuilder: (context, state) {
-            final Article article = articles.firstWhere(
-              (article) => article.id == state.pathParameters["article"],
-            );
+                  return null;
+                },
+                builder: (context, state) {
+                  final Article article = articles.firstWhere(
+                    (article) => article.id == state.pathParameters["article"],
+                  );
 
-            return CustomTransitionPage<void>(
-              key: state.pageKey,
-              child: WritingPage(article: article),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) =>
-                      FadeTransition(opacity: animation, child: child),
-            );
-          },
-        ),
+                  return ArticlePane(article: article);
+                },
+              ),
+            ]),
       ],
-    )
+    ),
   ],
 );
 
