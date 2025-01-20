@@ -16,14 +16,6 @@ class WritingScaffold extends StatelessWidget {
       icon: Icon(Icons.person_outline),
       label: Text("About me"),
     ),
-    NavigationDrawerDestination(
-      icon: Icon(Icons.work_outline),
-      label: Text("Projects"),
-    ),
-    NavigationDrawerDestination(
-      icon: Icon(Icons.mail_outline),
-      label: Text("Contact"),
-    ),
   ];
 
   @override
@@ -70,7 +62,12 @@ class WritingScaffold extends StatelessWidget {
       case WindowSize.expanded:
         return NavigationRail(
           selectedIndex: null,
-          onDestinationSelected: (value) {},
+          onDestinationSelected: (value) {
+            switch (value) {
+              case 0:
+                context.go("/");
+            }
+          },
           labelType: NavigationRailLabelType.all,
           leading: _buildHomeLogo(context, vertical: true),
           destinations: [
