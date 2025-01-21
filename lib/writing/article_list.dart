@@ -17,7 +17,10 @@ class ArticleList extends StatefulWidget {
 }
 
 class _ArticleListState extends State<ArticleList> {
+  /// The controller for the search bar.
   final TextEditingController searchController = TextEditingController();
+
+  /// The current search query that the user has entered.
   String get searchQuery => searchController.text.toLowerCase();
 
   @override
@@ -90,16 +93,18 @@ class _ArticleListState extends State<ArticleList> {
             .last ==
         article.id;
 
-    return Card(
-      elevation: 0,
-      color:
-          isSelected ? Theme.of(context).colorScheme.secondaryContainer : null,
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          context.go("/writing/${article.id}");
-        },
-        child: IntrinsicHeight(
+    return SizedBox(
+      height: 120,
+      child: Card(
+        elevation: 0,
+        color: isSelected
+            ? Theme.of(context).colorScheme.secondaryContainer
+            : null,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () {
+            context.go("/writing/${article.id}");
+          },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -143,11 +148,15 @@ class _ArticleListState extends State<ArticleList> {
           article.title,
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.start,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         if (article.description != null)
           Text(
             article.description!,
             style: descriptionStyle,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         if (article.writtenAt != null)
           RichText(
@@ -166,6 +175,8 @@ class _ArticleListState extends State<ArticleList> {
                 ),
               ],
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
       ],
     );

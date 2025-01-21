@@ -33,7 +33,7 @@ class Article {
 final List<Article> articles = [
   Article(
     id: "what_is_this",
-    title: "What is this?",
+    title: "Vad är det här?",
     textPath: "assets/writing/what_is_this.md",
     writtenAt: DateTime(2025, 1, 20),
   ),

@@ -23,10 +23,7 @@ class WritingShell extends StatelessWidget {
           switch (WindowSize.of(context)) {
             case WindowSize.compact:
             case WindowSize.medium:
-              return Align(
-                alignment: Alignment.topCenter,
-                child: child,
-              );
+              return child;
 
             case WindowSize.expanded:
             case WindowSize.large:
@@ -39,10 +36,7 @@ class WritingShell extends StatelessWidget {
                     child: Card(
                       elevation: 0,
                       margin: EdgeInsets.symmetric(vertical: 24),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: child,
-                      ),
+                      child: child,
                     ),
                   ),
                 ],

@@ -26,19 +26,31 @@ class ArticlePane extends StatelessWidget {
           );
         }
 
-        return SingleChildScrollView(
+        return Align(
+          alignment: Alignment.topCenter,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                vertical: 24,
-                horizontal: switch (WindowSize.of(context)) {
-                  WindowSize.compact || WindowSize.medium => 0,
-                  _ => 24,
-                }),
-            child: MarkdownBody(
-              data: snapshot.data!,
-              selectable: true,
-              styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-              softLineBreak: true,
+              horizontal: switch (WindowSize.of(context)) {
+                WindowSize.compact || WindowSize.medium => 0,
+                _ => 24,
+              },
+            ),
+            child: ListView(
+              children: [
+                SizedBox(height: 24),
+                Text(
+                  article.title,
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                SizedBox(height: 8),
+                MarkdownBody(
+                  data: snapshot.data!,
+                  selectable: true,
+                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                  softLineBreak: true,
+                ),
+                SizedBox(height: 24),
+              ],
             ),
           ),
         );
