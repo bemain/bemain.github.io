@@ -2,31 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/writing/article.dart';
-import 'package:portfolio/writing/article_list.dart';
 
 class ArticlePane extends StatelessWidget {
+  /// Displays the text of an [article] by rendering it as markdown.
   const ArticlePane({super.key, required this.article});
 
-  final Article? article;
+  final Article article;
 
   @override
   Widget build(BuildContext context) {
-    if (article == null) {
-      switch (WindowSize.of(context)) {
-        case WindowSize.compact:
-        case WindowSize.medium:
-          // On small screens, show the list of articles instead of an empty pane
-          return const ArticleList();
-
-        default:
-          return const Center(
-            child: Text("No moment selected"),
-          );
-      }
-    }
-
     return FutureBuilder(
-      future: DefaultAssetBundle.of(context).loadString(article!.textPath),
+      future: DefaultAssetBundle.of(context).loadString(article.textPath),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(

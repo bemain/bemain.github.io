@@ -5,6 +5,11 @@ import 'package:portfolio/layout.dart';
 import 'package:portfolio/writing/article.dart';
 
 class ArticleList extends StatefulWidget {
+  /// A list of the available [articles].
+  ///
+  /// The list is searchable using a [SearchBar] widget.
+  ///
+  /// TODO: Fetch the articles dynamically from a database.
   const ArticleList({super.key});
 
   @override
@@ -17,14 +22,13 @@ class _ArticleListState extends State<ArticleList> {
 
   @override
   Widget build(BuildContext context) {
-    final WindowSize windowSize = WindowSize.of(context);
-
+    /// The articles that match the current [searchQuery].
     final Iterable<Article> filteredArticles = articles.where((article) =>
         article.title.toLowerCase().contains(searchQuery) ||
         article.description?.toLowerCase().contains(searchQuery) == true);
 
     return SizedBox(
-      width: switch (windowSize) {
+      width: switch (WindowSize.of(context)) {
         WindowSize.compact || WindowSize.medium => null,
         WindowSize.expanded || WindowSize.large => 360,
         WindowSize.extraLarge => 412,

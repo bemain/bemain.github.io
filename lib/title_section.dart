@@ -14,7 +14,7 @@ class TitleSection extends StatelessWidget {
     final WindowSize windowSize = WindowSize.of(context);
 
     return Padding(
-      padding: windowSize.padding,
+      padding: windowSize.margin,
       child: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => Column(
             children: [

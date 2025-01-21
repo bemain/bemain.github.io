@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Article {
+  /// Representation of a written article.
   Article({
     required this.id,
     required this.title,
@@ -10,11 +11,22 @@ class Article {
     this.image,
   });
 
+  /// A unique identifier for the article.
   final String id;
+
+  /// The title of the article.
   final String title;
+
+  /// A short description of the article.
   final String? description;
+
+  /// The path to the markdown file containing the article text.
   final String textPath;
+
+  /// The date the article was written.
   final DateTime? writtenAt;
+
+  /// An image to display alongside the article.
   final ImageProvider? image;
 }
 

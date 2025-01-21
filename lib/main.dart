@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
+import 'package:portfolio/layout.dart';
 import 'package:portfolio/writing/article.dart';
+import 'package:portfolio/writing/article_list.dart';
 import 'package:portfolio/writing/article_pane.dart';
 import 'package:portfolio/writing/writing_shell.dart';
 
@@ -22,6 +24,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) => Frontpage(),
     ),
     ShellRoute(
+      restorationScopeId: "writing",
       builder: (context, state, child) {
         return WritingShell(child: child);
       },
@@ -29,8 +32,17 @@ final GoRouter router = GoRouter(
         GoRoute(
             path: "/writing",
             builder: (context, state) {
-              // TODO: Find another way to handle the case where no article is selected
-              return ArticlePane(article: null);
+              switch (WindowSize.of(context)) {
+                case WindowSize.compact:
+                case WindowSize.medium:
+                  return const ArticleList();
+
+                default:
+                  // On larger screens the shell will already display the article list, so just return an empty container
+                  return const Center(
+                    child: Text("No moment selected"),
+                  );
+              }
             },
             routes: [
               GoRoute(

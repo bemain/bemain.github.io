@@ -50,7 +50,7 @@ class ContactSection extends StatelessWidget {
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
-        padding: windowSize.padding.add(EdgeInsets.only(
+        padding: windowSize.margin.add(EdgeInsets.only(
           top: 32,
           right: extraMargin,
           bottom: 12,

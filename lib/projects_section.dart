@@ -68,7 +68,7 @@ class ProjectsSection extends StatelessWidget {
     switch (windowSize) {
       case WindowSize.compact:
         return Padding(
-          padding: windowSize.padding.add(EdgeInsets.symmetric(vertical: 32)),
+          padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
           child: Column(
             children: [
               _buildTitle(context),
@@ -84,7 +84,7 @@ class ProjectsSection extends StatelessWidget {
 
       default:
         return Padding(
-          padding: windowSize.padding.add(EdgeInsets.symmetric(vertical: 32)),
+          padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
           child: Column(
             children: [
               _buildTitle(context),

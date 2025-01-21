@@ -4,11 +4,20 @@ import 'package:go_router/go_router.dart';
 import 'package:portfolio/layout.dart';
 
 class WritingScaffold extends StatelessWidget {
+  /// Wraps [body] with a scaffold that is also populated with navigation elements.
+  /// The type of navigation widgets used depend on the current [WindowSize]:
+  /// - Modal [NavigationDrawer] for [WindowSize.compact]
+  /// - [NavigationRail] for [WindowSize.medium] and [WindowSize.expanded]
+  /// - Standard [NavigationDrawer] for [WindowSize.large] and [WindowSize.extraLarge]
   WritingScaffold({super.key, this.title, this.body});
 
+  /// The title shown in the app bar on compact screens.
   final Widget? title;
+
+  /// The main content of the scaffold.
   final Widget? body;
 
+  /// The key of the primary scaffold. Used to open and close the drawer.
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   static final List<NavigationDrawerDestination> destinations = [
