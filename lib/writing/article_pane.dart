@@ -12,6 +12,7 @@ class ArticlePane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Maybe split the pane in two "lanes" on wider screens?
     return FutureBuilder(
       future: DefaultAssetBundle.of(context).loadString(article.textPath),
       builder: (context, snapshot) {
@@ -55,6 +56,7 @@ class ArticlePane extends StatelessWidget {
                 SizedBox(height: 8),
                 MarkdownBody(
                   data: data,
+                  softLineBreak: true,
                   selectable: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                   // Fix so that the horizontal rule is actually build using the custom builder.
@@ -64,8 +66,6 @@ class ArticlePane extends StatelessWidget {
                     "hhrr": _HorizontalRuleBuilder(),
                     "p": _IndentedParagraphBuilder(),
                   },
-
-                  softLineBreak: true,
                 ),
                 SizedBox(height: 24),
               ],

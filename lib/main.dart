@@ -57,12 +57,21 @@ final GoRouter router = GoRouter(
 
                   return null;
                 },
-                builder: (context, state) {
+                pageBuilder: (context, state) {
                   final Article article = articles.firstWhere(
                     (article) => article.id == state.pathParameters["article"],
                   );
 
-                  return ArticlePane(article: article);
+                  return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: ArticlePane(article: article),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        );
+                      });
                 },
               ),
             ]),

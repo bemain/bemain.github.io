@@ -15,7 +15,6 @@ class WritingShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building shell widget");
     return WritingScaffold(
       body: Padding(
         padding: WindowSize.of(context).margin,
