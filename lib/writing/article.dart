@@ -52,6 +52,7 @@ final List<Article> articles = [
     title: "Vad är det här?",
     type: ArticleType.prose,
     textPath: "assets/writing/what_is_this.md",
+    image: AssetImage("assets/writing/what_is_this.jpg"),
     writtenAt: DateTime(2025, 1, 20),
   ),
   Article(
@@ -59,6 +60,7 @@ final List<Article> articles = [
     title: "Fantasy Novel, Prologue: Vim",
     type: ArticleType.novel,
     textPath: "assets/writing/250122.md",
+    image: AssetImage("assets/writing/250122.jpg"),
     writtenAt: DateTime(2025, 1, 22),
   ),
   Article(
@@ -70,17 +72,19 @@ final List<Article> articles = [
     writtenAt: DateTime(2023, 7, 12),
   ),
   Article(
-    id: "21000",
+    id: "210000",
     title: "What is already dead can never die",
     type: ArticleType.poem,
     textPath: "assets/writing/210000.md",
+    image: AssetImage("assets/writing/210000.jpg"),
     writtenAt: DateTime(2021, 7, 24),
   ),
   Article(
-    id: "21001",
+    id: "210001",
     title: "Jag tänker aldrig bli psykolog",
     type: ArticleType.poem,
     textPath: "assets/writing/210001.md",
+    image: AssetImage("assets/writing/210001.jpg"),
     writtenAt: DateTime(2021, 11, 17),
   ),
   Article(
