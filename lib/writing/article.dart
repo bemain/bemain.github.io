@@ -38,6 +38,12 @@ final List<Article> articles = [
     writtenAt: DateTime(2025, 1, 20),
   ),
   Article(
+    id: "250122",
+    title: "Fantasy Novel, Prologue: Vim",
+    textPath: "assets/writing/250122.md",
+    writtenAt: DateTime(2025, 1, 22),
+  ),
+  Article(
     id: "230712",
     title: "Mountain-fog and highland-green",
     textPath: "assets/writing/230712.md",

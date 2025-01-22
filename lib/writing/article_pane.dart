@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/writing/article.dart';
+import 'package:markdown/markdown.dart' as md;
 
 class ArticlePane extends StatelessWidget {
   /// Displays the text of an [article] by rendering it as markdown.
@@ -40,13 +41,22 @@ class ArticlePane extends StatelessWidget {
                 SizedBox(height: 24),
                 Text(
                   article.title,
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 SizedBox(height: 8),
                 MarkdownBody(
-                  data: snapshot.data!,
+                  data: snapshot.data!.replaceAll(RegExp("\n\n(?=[A-Z]|\")"),
+                      "\n\n&ensp;&ensp;&ensp;"), // TODO: Only use indentation on select articles
                   selectable: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                  // Fix so that the horizontal rule is actually build using the custom builder.
+                  // See https://github.com/flutter/flutter/issues/153550
+                  extensionSet: md.ExtensionSet([_HorizontalRuleSyntax()], []),
+                  builders: {
+                    "hhrr": _HorizontalRuleBuilder(),
+                    "p": _IndentedParagraphBuilder(),
+                  },
+
                   softLineBreak: true,
                 ),
                 SizedBox(height: 24),
@@ -55,6 +65,60 @@ class ArticlePane extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _HorizontalRuleSyntax extends md.HorizontalRuleSyntax {
+  @override
+  md.Node parse(md.BlockParser parser) {
+    parser.advance();
+    return md.Element.empty('hhrr');
+  }
+}
+
+/// Builds a custom horizontal rule element with more padding around it than the default one.
+class _HorizontalRuleBuilder extends MarkdownElementBuilder {
+  @override
+  bool isBlockElement() => true;
+
+  @override
+  Widget visitText(md.Text text, TextStyle? preferredStyle) {
+    return super.visitText(text, preferredStyle) ?? SizedBox();
+  }
+
+  @override
+  Widget? visitElementAfterWithContext(
+    BuildContext context,
+    md.Element element,
+    TextStyle? preferredStyle,
+    TextStyle? parentStyle,
+  ) {
+    return Divider();
+  }
+}
+
+class _IndentedParagraphBuilder extends MarkdownElementBuilder {
+  @override
+  bool isBlockElement() => true;
+
+  @override
+  Widget visitText(md.Text text, TextStyle? preferredStyle) {
+    return super.visitText(text, preferredStyle) ?? SizedBox();
+  }
+
+  @override
+  Widget? visitElementAfterWithContext(
+    BuildContext context,
+    md.Element element,
+    TextStyle? preferredStyle,
+    TextStyle? parentStyle,
+  ) {
+    return Text(
+      element.textContent,
+      style: preferredStyle ??
+          parentStyle ??
+          Theme.of(context).textTheme.bodyMedium,
     );
   }
 }
