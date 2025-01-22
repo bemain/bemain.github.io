@@ -111,12 +111,15 @@ class _ArticleListState extends State<ArticleList> {
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
-                child: Image(
-                  // TODO: Create placeholder image
-                  image: article.image ??
-                      NetworkImage("https://picsum.photos/512/256"),
-                  fit: BoxFit.cover,
-                ),
+                child: article.image != null
+                    ? Image(
+                        image: article.image!,
+                        fit: BoxFit.cover,
+                      )
+                    : Icon(
+                        Icons.notes,
+                        size: 48,
+                      ),
               ),
               Flexible(
                 flex: 2,
