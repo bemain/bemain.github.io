@@ -17,6 +17,7 @@ const Color seedColor = Colors.deepOrange;
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter router = GoRouter(
+  initialLocation: "/writing",
   navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(

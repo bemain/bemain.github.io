@@ -27,6 +27,15 @@ class ArticlePane extends StatelessWidget {
           );
         }
 
+        String data = snapshot.data!;
+        if (article.type == ArticleType.novel) {
+          // Use tab indenting for paragraphs in novels.
+          data = data.replaceAll(
+            RegExp("\n\n(?=[A-Z]|\")"),
+            "\n\n&ensp;&ensp;&ensp;",
+          );
+        }
+
         return Align(
           alignment: Alignment.topCenter,
           child: Padding(
@@ -45,8 +54,7 @@ class ArticlePane extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 MarkdownBody(
-                  data: snapshot.data!.replaceAll(RegExp("\n\n(?=[A-Z]|\")"),
-                      "\n\n&ensp;&ensp;&ensp;"), // TODO: Only use indentation on select articles
+                  data: data,
                   selectable: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
                   // Fix so that the horizontal rule is actually build using the custom builder.
