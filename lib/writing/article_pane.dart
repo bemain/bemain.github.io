@@ -64,7 +64,6 @@ class ArticlePane extends StatelessWidget {
                   extensionSet: md.ExtensionSet([_HorizontalRuleSyntax()], []),
                   builders: {
                     "hhrr": _HorizontalRuleBuilder(),
-                    "p": _IndentedParagraphBuilder(),
                   },
                 ),
                 SizedBox(height: 24),
@@ -103,30 +102,5 @@ class _HorizontalRuleBuilder extends MarkdownElementBuilder {
     TextStyle? parentStyle,
   ) {
     return Divider();
-  }
-}
-
-class _IndentedParagraphBuilder extends MarkdownElementBuilder {
-  @override
-  bool isBlockElement() => true;
-
-  @override
-  Widget visitText(md.Text text, TextStyle? preferredStyle) {
-    return super.visitText(text, preferredStyle) ?? SizedBox();
-  }
-
-  @override
-  Widget? visitElementAfterWithContext(
-    BuildContext context,
-    md.Element element,
-    TextStyle? preferredStyle,
-    TextStyle? parentStyle,
-  ) {
-    return Text(
-      element.textContent,
-      style: preferredStyle ??
-          parentStyle ??
-          Theme.of(context).textTheme.bodyMedium,
-    );
   }
 }
