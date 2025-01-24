@@ -25,61 +25,69 @@ class _ArticleListState extends State<ArticleList> {
 
   @override
   Widget build(BuildContext context) {
+    final WindowSize windowSize = WindowSize.of(context);
+
     /// The articles that match the current [searchQuery].
     final Iterable<Article> filteredArticles = articles.where((article) =>
         article.title.toLowerCase().contains(searchQuery) ||
         article.description?.toLowerCase().contains(searchQuery) == true);
 
     return SizedBox(
-      width: switch (WindowSize.of(context)) {
+      width: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => null,
         WindowSize.expanded || WindowSize.large => 360,
         WindowSize.extraLarge => 412,
       },
-      child: Column(
-        children: [
-          SizedBox(height: 24),
-          SearchBar(
-            controller: searchController,
-            elevation: WidgetStatePropertyAll(0),
-            padding: const WidgetStatePropertyAll<EdgeInsets>(
-              EdgeInsets.symmetric(horizontal: 16.0),
-            ),
-            leading: Icon(Icons.search),
-            trailing: [
-              if (searchQuery.isNotEmpty)
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      searchController.clear();
-                    });
-                  },
-                  icon: Icon(Icons.clear),
-                ),
-            ],
-            onChanged: (value) {
-              setState(() {});
-            },
-            hintText: "Search moments",
-          ),
-          SizedBox(height: 12),
-          Expanded(
-            child: ListView(
-              children: [
-                for (final article in filteredArticles)
-                  _buildArticleTile(context, article),
-                if (filteredArticles.isEmpty)
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      "No moments found. Try a different search query.",
-                      textAlign: TextAlign.center,
-                    ),
+      child: Padding(
+        padding: switch (windowSize) {
+          WindowSize.compact || WindowSize.medium => windowSize.margin,
+          _ => EdgeInsets.zero,
+        },
+        child: Column(
+          children: [
+            SizedBox(height: 24),
+            SearchBar(
+              controller: searchController,
+              elevation: WidgetStatePropertyAll(0),
+              padding: const WidgetStatePropertyAll<EdgeInsets>(
+                EdgeInsets.symmetric(horizontal: 16.0),
+              ),
+              leading: Icon(Icons.search),
+              trailing: [
+                if (searchQuery.isNotEmpty)
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        searchController.clear();
+                      });
+                    },
+                    icon: Icon(Icons.clear),
                   ),
               ],
+              onChanged: (value) {
+                setState(() {});
+              },
+              hintText: "Search moments",
             ),
-          ),
-        ],
+            SizedBox(height: 12),
+            Expanded(
+              child: ListView(
+                children: [
+                  for (final article in filteredArticles)
+                    _buildArticleTile(context, article),
+                  if (filteredArticles.isEmpty)
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        "No moments found. Try a different search query.",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 import 'package:portfolio/writing/article.dart';
 import 'package:portfolio/writing/article_list.dart';
 import 'package:portfolio/writing/article_pane.dart';
@@ -38,9 +39,39 @@ final GoRouter router = GoRouter(
                   return const ArticleList();
 
                 default:
-                  // On larger screens the shell will already display the article list, so just return an empty container
-                  return const Center(
-                    child: Text("No moment selected"),
+                  // On larger screens the shell will already display the article list, so just return something to fill the space
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ShaderMask(
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: (bounds) =>
+                              primaryGradient.createShader(
+                            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 16),
+                            child: Text(
+                              "Moments",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "that are forever",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   );
               }
             },
