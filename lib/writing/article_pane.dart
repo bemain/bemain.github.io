@@ -59,7 +59,7 @@ class ArticlePane extends StatelessWidget {
                   softLineBreak: true,
                   selectable: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                  // Fix so that the horizontal rule is actually build using the custom builder.
+                  // Fix so that the horizontal rule is actually built using the custom builder.
                   // See https://github.com/flutter/flutter/issues/153550
                   extensionSet: md.ExtensionSet([_HorizontalRuleSyntax()], []),
                   builders: {

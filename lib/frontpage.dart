@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:portfolio/about_section.dart';
 import 'package:portfolio/contact_section.dart';
 import 'package:portfolio/layout.dart';
@@ -8,7 +9,7 @@ import 'package:portfolio/title_section.dart';
 class Frontpage extends StatelessWidget {
   Frontpage({super.key});
 
-  final List<NavigationDrawerDestination> destinations = [
+  static final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
       icon: Icon(Icons.person_outline),
       label: Text("About me"),
@@ -20,6 +21,10 @@ class Frontpage extends StatelessWidget {
     NavigationDrawerDestination(
       icon: Icon(Icons.mail_outline),
       label: Text("Contact"),
+    ),
+    NavigationDrawerDestination(
+      icon: Icon(Icons.notes),
+      label: Text("Moments"),
     ),
   ];
 
@@ -67,6 +72,20 @@ class Frontpage extends StatelessWidget {
     );
   }
 
+  void _onDestinationSelected(BuildContext context, int index) {
+    if (index == 3) {
+      context.go("/writing");
+      return;
+    }
+
+    _scrollTo(switch (index) {
+      0 => aboutMeSectionKey,
+      1 => projectsSectionKey,
+      2 => contactSectionKey,
+      _ => throw "Invalid destination index",
+    });
+  }
+
   PreferredSizeWidget _buildAppBar(
     BuildContext context,
     WindowSize windowSize,
@@ -82,12 +101,8 @@ class Frontpage extends StatelessWidget {
             for (final destination in destinations)
               TextButton.icon(
                 onPressed: () {
-                  _scrollTo(switch (destinations.indexOf(destination)) {
-                    0 => aboutMeSectionKey,
-                    1 => projectsSectionKey,
-                    2 => contactSectionKey,
-                    _ => throw "Invalid destination index",
-                  });
+                  _onDestinationSelected(
+                      context, destinations.indexOf(destination));
                 },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.all(24),
@@ -107,12 +122,7 @@ class Frontpage extends StatelessWidget {
         return NavigationDrawer(
           selectedIndex: null,
           onDestinationSelected: (value) {
-            _scrollTo(switch (value) {
-              0 => aboutMeSectionKey,
-              1 => projectsSectionKey,
-              2 => contactSectionKey,
-              _ => throw "Invalid destination index '$value'",
-            });
+            _onDestinationSelected(context, value);
             scaffoldKey.currentState?.closeDrawer();
           },
           children: [
