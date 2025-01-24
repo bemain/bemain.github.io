@@ -39,35 +39,43 @@ class ArticlePane extends StatelessWidget {
 
         return Align(
           alignment: Alignment.topCenter,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: switch (WindowSize.of(context)) {
-                WindowSize.compact || WindowSize.medium => 0,
-                _ => 24,
-              },
-            ),
-            child: ListView(
-              children: [
-                SizedBox(height: 24),
-                Text(
-                  article.title,
-                  style: Theme.of(context).textTheme.headlineSmall,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: switch (WindowSize.of(context)) {
+                  WindowSize.compact || WindowSize.medium => 0,
+                  _ => 24,
+                },
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 512),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 24),
+                    Text(
+                      article.title,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    SizedBox(height: 8),
+                    MarkdownBody(
+                      data: data,
+                      softLineBreak: true,
+                      selectable: true,
+                      styleSheet:
+                          MarkdownStyleSheet.fromTheme(Theme.of(context)),
+                      // Fix so that the horizontal rule is actually built using the custom builder.
+                      // See https://github.com/flutter/flutter/issues/153550
+                      extensionSet:
+                          md.ExtensionSet([_HorizontalRuleSyntax()], []),
+                      builders: {
+                        "hhrr": _HorizontalRuleBuilder(),
+                      },
+                    ),
+                    SizedBox(height: 24),
+                  ],
                 ),
-                SizedBox(height: 8),
-                MarkdownBody(
-                  data: data,
-                  softLineBreak: true,
-                  selectable: true,
-                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)),
-                  // Fix so that the horizontal rule is actually built using the custom builder.
-                  // See https://github.com/flutter/flutter/issues/153550
-                  extensionSet: md.ExtensionSet([_HorizontalRuleSyntax()], []),
-                  builders: {
-                    "hhrr": _HorizontalRuleBuilder(),
-                  },
-                ),
-                SizedBox(height: 24),
-              ],
+              ),
             ),
           ),
         );
