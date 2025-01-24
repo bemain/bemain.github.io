@@ -45,7 +45,6 @@ class _ArticleListState extends State<ArticleList> {
         },
         child: Column(
           children: [
-            SizedBox(height: 24),
             SearchBar(
               controller: searchController,
               elevation: WidgetStatePropertyAll(0),
@@ -69,7 +68,7 @@ class _ArticleListState extends State<ArticleList> {
               },
               hintText: "Search moments",
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Expanded(
               child: ListView(
                 children: [

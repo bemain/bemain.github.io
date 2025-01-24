@@ -52,7 +52,7 @@ class ArticlePane extends StatelessWidget {
                       article.title,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     MarkdownBody(
                       data: data,
                       softLineBreak: true,
@@ -93,7 +93,7 @@ class _HorizontalRuleBuilder extends MarkdownElementBuilder {
 
   @override
   Widget visitText(md.Text text, TextStyle? preferredStyle) {
-    return super.visitText(text, preferredStyle) ?? SizedBox();
+    return super.visitText(text, preferredStyle) ?? const SizedBox();
   }
 
   @override

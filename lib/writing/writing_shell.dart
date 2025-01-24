@@ -4,7 +4,7 @@ import 'package:portfolio/writing/article_list.dart';
 import 'package:portfolio/writing/writing_scaffold.dart';
 
 class WritingShell extends StatelessWidget {
-  /// Wraps [child] with navigation elements and, on larger screens, an article list.
+  /// Wraps [child] with navigation elements and, on larger screens, an [ArticleList].
   const WritingShell({
     super.key,
     required this.child,
@@ -29,8 +29,11 @@ class WritingShell extends StatelessWidget {
               padding: WindowSize.of(context).margin,
               child: Row(
                 children: [
-                  const ArticleList(),
-                  SizedBox(width: 24),
+                  Padding(
+                    padding: EdgeInsets.only(top: 24),
+                    child: ArticleList(),
+                  ),
+                  const SizedBox(width: 24),
                   Expanded(
                     child: Card(
                       elevation: 0,

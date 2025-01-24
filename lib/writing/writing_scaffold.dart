@@ -140,7 +140,7 @@ class WritingScaffold extends StatelessWidget {
     if (vertical) {
       return Column(
         children: [
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Material(
             type: MaterialType.transparency,
             child: _LogoInkWell(
@@ -154,7 +154,7 @@ class WritingScaffold extends StatelessWidget {
               child: Column(
                 children: [
                   image,
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     "Moments",
                     style: Theme.of(context).textTheme.labelMedium,
@@ -180,7 +180,7 @@ class WritingScaffold extends StatelessWidget {
         child: Row(
           children: [
             image,
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               "Moments",
               style: Theme.of(context).textTheme.bodyMedium,
