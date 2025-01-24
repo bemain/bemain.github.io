@@ -12,7 +12,6 @@ class ArticlePane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Maybe split the pane in two "lanes" on wider screens?
     return FutureBuilder(
       future: DefaultAssetBundle.of(context).loadString(article.textPath),
       builder: (context, snapshot) {
@@ -37,22 +36,18 @@ class ArticlePane extends StatelessWidget {
           );
         }
 
-        return Align(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: switch (WindowSize.of(context)) {
-                  WindowSize.compact || WindowSize.medium => 0,
-                  _ => 24,
-                },
-              ),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: WindowSize.of(context).margin.add(
+                  EdgeInsets.symmetric(vertical: 24),
+                ),
+            child: Align(
+              alignment: Alignment.topCenter,
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 512),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(height: 24),
                     Text(
                       article.title,
                       style: Theme.of(context).textTheme.headlineSmall,
@@ -72,7 +67,6 @@ class ArticlePane extends StatelessWidget {
                         "hhrr": _HorizontalRuleBuilder(),
                       },
                     ),
-                    SizedBox(height: 24),
                   ],
                 ),
               ),

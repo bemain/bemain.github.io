@@ -16,18 +16,18 @@ class WritingShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WritingScaffold(
-      body: Padding(
-        padding: WindowSize.of(context).margin,
-        child: <Widget>() {
-          switch (WindowSize.of(context)) {
-            case WindowSize.compact:
-            case WindowSize.medium:
-              return child;
+      body: <Widget>() {
+        switch (WindowSize.of(context)) {
+          case WindowSize.compact:
+          case WindowSize.medium:
+            return child;
 
-            case WindowSize.expanded:
-            case WindowSize.large:
-            case WindowSize.extraLarge:
-              return Row(
+          case WindowSize.expanded:
+          case WindowSize.large:
+          case WindowSize.extraLarge:
+            return Padding(
+              padding: WindowSize.of(context).margin,
+              child: Row(
                 children: [
                   const ArticleList(),
                   SizedBox(width: 24),
@@ -39,10 +39,10 @@ class WritingShell extends StatelessWidget {
                     ),
                   ),
                 ],
-              );
-          }
-        }(),
-      ),
+              ),
+            );
+        }
+      }(),
     );
   }
 }
