@@ -29,17 +29,17 @@ class WritingShell extends StatelessWidget {
               padding: WindowSize.of(context).margin,
               child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 24),
-                    child: ArticleList(),
-                  ),
-                  const SizedBox(width: 24),
                   Expanded(
                     child: Card(
                       elevation: 0,
                       margin: EdgeInsets.symmetric(vertical: 24),
                       child: child,
                     ),
+                  ),
+                  const SizedBox(width: 24),
+                  Padding(
+                    padding: EdgeInsets.only(top: 24),
+                    child: ArticleList(),
                   ),
                 ],
               ),

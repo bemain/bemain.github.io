@@ -31,8 +31,8 @@ class ArticlePane extends StatelessWidget {
         if (article.type == ArticleType.novel) {
           // Use tab indenting for paragraphs in novels.
           data = data.replaceAll(
-            RegExp("\n\n(?=[A-Z]|\")"),
-            "\n\n&ensp;&ensp;&ensp;",
+            RegExp("\n(?=[A-Z]|\")"),
+            "\n&ensp;&ensp;&ensp;",
           );
         }
 
