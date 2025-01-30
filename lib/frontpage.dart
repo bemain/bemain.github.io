@@ -4,6 +4,7 @@ import 'package:portfolio/about_section.dart';
 import 'package:portfolio/contact_section.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/projects_section.dart';
+import 'package:portfolio/education_section.dart';
 import 'package:portfolio/title_section.dart';
 
 class Frontpage extends StatelessWidget {
@@ -23,7 +24,7 @@ class Frontpage extends StatelessWidget {
       label: Text("Contact"),
     ),
     NavigationDrawerDestination(
-      icon: Icon(Icons.notes),
+      icon: Icon(Icons.notes_outlined),
       label: Text("Moments"),
     ),
   ];
@@ -64,6 +65,7 @@ class Frontpage extends StatelessWidget {
               ),
             ),
             AboutMeSection(key: aboutMeSectionKey),
+            EducationSection(),
             ProjectsSection(key: projectsSectionKey),
             ContactSection(key: contactSectionKey),
           ],
