@@ -16,7 +16,7 @@ class WritingShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WritingScaffold(
-      body: <Widget>() {
+      body: () {
         switch (WindowSize.of(context)) {
           case WindowSize.compact:
           case WindowSize.medium:

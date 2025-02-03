@@ -12,7 +12,7 @@ enum EventType {
 
 class Event {
   // TODO: Add links to events
-  Event({
+  const Event({
     required this.title,
     required this.type,
     this.summary,
@@ -41,7 +41,12 @@ class Event {
 }
 
 class TimelineSection extends StatelessWidget {
-  const TimelineSection({super.key});
+  const TimelineSection({
+    super.key,
+    this.iconLineWidth = 48,
+    this.tileHeight = 128,
+    this.tileSpacing = 32,
+  });
 
   static final List<Event> events = [
     Event(
@@ -59,7 +64,7 @@ class TimelineSection extends StatelessWidget {
       location: "Helsingborg, Sweden",
       summary: "Consulting firm",
       description:
-          """I worked in-house at the consulting firm EC Solutions in Helsingborg to develop a digital service and website for the company Dirma in Next.js and TypeScript.""",
+          """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
     ),
     Event(
       dateString: "Spring 2023",
@@ -76,15 +81,15 @@ class TimelineSection extends StatelessWidget {
       type: EventType.award,
       summary: "Musical award given to talented youths.",
       description:
-          "Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music",
+          """Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music""",
     ),
     Event(
       dateString: "2021",
       title: "Award, Lund diocese",
       type: EventType.award,
-      summary: "Award for musically engaged youths",
+      summary: "Award given to musically engaged youths.",
       description:
-          "Yearly award given to musically engaged youths in the Lund diocese.",
+          """Yearly award given to musically engaged youths in the Lund diocese.""",
     ),
     Event(
       dateString: "2020 - 2022",
@@ -109,11 +114,17 @@ Grade: 22,41""",
       title: "Mattekollo",
       type: EventType.other,
       location: "Karlskrona, Sweden",
-      summary: "Summer camp for mathematically gifted children",
+      summary: "Summer camp for mathematically gifted children.",
       description:
           """Summer camp for children and young people who are gifted in and interested in mathematics and programming""",
     ),
   ];
+
+  final double iconLineWidth;
+
+  final double tileHeight;
+
+  final double tileSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -121,47 +132,76 @@ Grade: 22,41""",
 
     return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
-      child: Column(
-        children: [
-          const SizedBox(height: 24),
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerLow,
-                radius: 24,
-                child: Icon(Icons.event_outlined),
-              ),
-              const SizedBox(width: 16),
-              _buildTitle(context),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Stack(
-            children: [
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: SizedBox(
-                    width: 48,
-                    child: FractionallySizedBox(
-                      heightFactor: 1 - 1 / (events.length * 2),
-                      child: VerticalDivider(),
-                    ),
-                  ),
-                ),
-              ),
-              IntrinsicHeight(
-                child: Column(
+      child: () {
+        switch (windowSize) {
+          case WindowSize.compact:
+          case WindowSize.medium:
+            return Column(
+              children: [
+                const SizedBox(height: 24),
+                _buildTitle(context),
+                const SizedBox(height: 8),
+                Stack(
                   children: [
-                    for (final event in events) EventTile(event: event),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: _buildLine(context),
+                      ),
+                    ),
+                    Column(
+                      spacing: 12,
+                      children: [
+                        for (final event in events) EventTile(event: event),
+                      ],
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
-        ],
-      ),
+              ],
+            );
+          case WindowSize.expanded:
+          case WindowSize.large:
+          case WindowSize.extraLarge:
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                final double tileWidth =
+                    iconLineWidth / 2 + constraints.maxWidth / 2;
+
+                return Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: _buildLine(context),
+                      ),
+                    ),
+                    for (int i = 0; i < events.length; i++)
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: (tileHeight / 2 + tileSpacing) * i,
+                        ),
+                        child: Align(
+                          alignment: i % 2 == 0
+                              ? Alignment.centerLeft
+                              : Alignment.centerRight,
+                          child: SizedBox(
+                            width: tileWidth,
+                            child: EventTile(
+                              event: events[i],
+                              layoutDirection: i % 2 == 0
+                                  ? TextDirection.rtl
+                                  : TextDirection.ltr,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            );
+        }
+      }(),
     );
   }
 
@@ -169,22 +209,49 @@ Grade: 22,41""",
     BuildContext context, {
     String text = "Events",
   }) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleLarge,
-      textAlign: TextAlign.center,
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+          radius: 24,
+          child: Icon(Icons.event_outlined),
+        ),
+        const SizedBox(width: 16),
+        Text(
+          text,
+          style: Theme.of(context).textTheme.titleLarge,
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLine(BuildContext context) {
+    return SizedBox(
+      width: iconLineWidth,
+      child: FractionallySizedBox(
+        heightFactor: 1 - 1 / (events.length * 2),
+        child: VerticalDivider(),
+      ),
     );
   }
 }
 
 class EventTile extends StatelessWidget {
-  const EventTile({super.key, required this.event});
+  const EventTile({
+    super.key,
+    required this.event,
+    this.layoutDirection = TextDirection.ltr,
+  });
 
   final Event event;
+
+  final TextDirection layoutDirection;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      textDirection: layoutDirection,
       children: [
         Container(
           width: 48,
@@ -199,11 +266,13 @@ class EventTile extends StatelessWidget {
                 Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
           ),
         ),
-        const SizedBox(width: 16),
+        const SizedBox(width: 12),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 12),
-            child: _buildText(context),
+          child: Card.outlined(
+            child: Padding(
+              padding: EdgeInsets.all(12),
+              child: _buildText(context),
+            ),
           ),
         ),
       ],
@@ -254,7 +323,6 @@ class EventTile extends StatelessWidget {
         Text(
           event.title,
           style: Theme.of(context).textTheme.titleMedium,
-          textAlign: TextAlign.start,
         ),
         if (description != null)
           Text(
