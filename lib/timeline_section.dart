@@ -41,8 +41,8 @@ class Event {
   final String? dateString;
 }
 
-class TimelineSection extends StatelessWidget {
-  const TimelineSection({super.key});
+class TimelineSection extends StatefulWidget {
+  const TimelineSection({super.key, this.initialEventsShown = 6});
 
   static final List<Event> events = [
     Event(
@@ -125,9 +125,22 @@ Grade: 22,41""",
     ),
   ];
 
+  final int initialEventsShown;
+
+  @override
+  State<TimelineSection> createState() => _TimelineSectionState();
+}
+
+class _TimelineSectionState extends State<TimelineSection> {
+  bool isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
+
+    final List<Event> events = isExpanded
+        ? TimelineSection.events
+        : TimelineSection.events.sublist(0, widget.initialEventsShown);
 
     return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
@@ -152,7 +165,9 @@ Grade: 22,41""",
                   startConnectorBuilder: (context, index) =>
                       SolidLineConnector(),
                   endConnectorBuilder: (context, index) =>
-                      index == events.length - 1 ? null : SolidLineConnector(),
+                      (isExpanded && index == events.length - 1)
+                          ? null
+                          : SolidLineConnector(),
                   indicatorBuilder: (context, index) => ContainerIndicator(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -170,6 +185,24 @@ Grade: 22,41""",
                   ),
                 ),
               ),
+              const SizedBox(height: 8),
+              if (!isExpanded)
+                Align(
+                  alignment: windowSize == WindowSize.compact
+                      ? Alignment.centerLeft
+                      : Alignment.center,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 4),
+                    child: IconButton.outlined(
+                      onPressed: () {
+                        setState(() {
+                          isExpanded = true;
+                        });
+                      },
+                      icon: Icon(Icons.arrow_drop_down),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
