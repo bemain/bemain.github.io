@@ -147,7 +147,7 @@ Grade: 22,41""",
                     _ => ContentsAlign.alternating,
                   },
                   contentsBuilder: (context, index) {
-                    return EventTile(event: events[index]);
+                    return _buildEventTile(context, events[index]);
                   },
                   startConnectorBuilder: (context, index) =>
                       SolidLineConnector(),
@@ -220,6 +220,22 @@ Grade: 22,41""",
     }
   }
 
+  TimelineThemeData _buildTheme(BuildContext context) {
+    return TimelineThemeData(
+      nodePosition: switch (WindowSize.of(context)) {
+        WindowSize.compact => 0,
+        _ => 0.5,
+      },
+      connectorTheme: ConnectorThemeData(
+        color: Theme.of(context).dividerColor,
+      ),
+      indicatorTheme: IndicatorThemeData(
+        color: Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
+      ),
+      color: Theme.of(context).colorScheme.primary,
+    );
+  }
+
   IconData _getIcon(Event event) {
     switch (event.type) {
       case EventType.education:
@@ -237,38 +253,8 @@ Grade: 22,41""",
     }
   }
 
-  TimelineThemeData _buildTheme(BuildContext context) {
-    return TimelineThemeData(
-      nodePosition: switch (WindowSize.of(context)) {
-        WindowSize.compact => 0,
-        _ => 0.5,
-      },
-      connectorTheme: ConnectorThemeData(
-        color: Theme.of(context).dividerColor,
-      ),
-      indicatorTheme: IndicatorThemeData(
-        color: Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
-      ),
-      color: Theme.of(context).colorScheme.primary,
-    );
-  }
-}
-
-class EventTile extends StatelessWidget {
-  const EventTile({
-    super.key,
-    required this.event,
-    this.layoutDirection = TextDirection.ltr,
-  });
-
-  final Event event;
-
-  final TextDirection layoutDirection;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildEventTile(BuildContext context, Event event) {
     final WindowSize windowSize = WindowSize.of(context);
-
     final String? description = switch (windowSize) {
       WindowSize.compact || WindowSize.medium => event.summary,
       _ => event.description
@@ -281,32 +267,41 @@ class EventTile extends StatelessWidget {
               color: subtitleColor,
             );
 
-    return Card.outlined(
-      child: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 4,
-          children: [
-            if (event.dateString != null)
-              Text(
-                event.dateString!,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
+    Widget content = Padding(
+      padding: EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: 4,
+        children: [
+          if (event.dateString != null)
             Text(
-              event.title,
-              style: Theme.of(context).textTheme.titleMedium,
+              event.dateString!,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
-            if (description != null)
-              Text(
-                description,
-                style: descriptionStyle,
-              ),
-          ],
-        ),
+          Text(
+            event.title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          if (description != null)
+            Text(
+              description,
+              style: descriptionStyle,
+            ),
+        ],
       ),
     );
+
+    switch (windowSize) {
+      case WindowSize.compact:
+        // On small screens, don't wrap the content in a card
+        return content;
+
+      default:
+        return Card.outlined(
+          child: content,
+        );
+    }
   }
 }
