@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
+import 'package:timelines_plus/timelines_plus.dart';
 
 enum EventType {
   education,
@@ -41,12 +42,7 @@ class Event {
 }
 
 class TimelineSection extends StatelessWidget {
-  const TimelineSection({
-    super.key,
-    this.iconLineWidth = 48,
-    this.tileHeight = 128,
-    this.tileSpacing = 32,
-  });
+  const TimelineSection({super.key});
 
   static final List<Event> events = [
     Event(
@@ -120,119 +116,125 @@ Grade: 22,41""",
     ),
   ];
 
-  final double iconLineWidth;
-
-  final double tileHeight;
-
-  final double tileSpacing;
-
   @override
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
 
     return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
-      child: () {
-        switch (windowSize) {
-          case WindowSize.compact:
-          case WindowSize.medium:
-            return Column(
-              children: [
-                const SizedBox(height: 24),
-                _buildTitle(context),
-                const SizedBox(height: 8),
-                Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: _buildLine(context),
-                      ),
-                    ),
-                    Column(
-                      spacing: 12,
-                      children: [
-                        for (final event in events) EventTile(event: event),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            );
-          case WindowSize.expanded:
-          case WindowSize.large:
-          case WindowSize.extraLarge:
-            return LayoutBuilder(
-              builder: (context, constraints) {
-                final double tileWidth =
-                    iconLineWidth / 2 + constraints.maxWidth / 2;
-
-                return Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: _buildLine(context),
-                      ),
-                    ),
-                    for (int i = 0; i < events.length; i++)
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: (tileHeight / 2 + tileSpacing) * i,
-                        ),
-                        child: Align(
-                          alignment: i % 2 == 0
-                              ? Alignment.centerLeft
-                              : Alignment.centerRight,
-                          child: SizedBox(
-                            width: tileWidth,
-                            child: EventTile(
-                              event: events[i],
-                              layoutDirection: i % 2 == 0
-                                  ? TextDirection.rtl
-                                  : TextDirection.ltr,
-                            ),
-                          ),
-                        ),
-                      ),
-                  ],
-                );
+      child: Column(
+        children: [
+          _buildTitle(context),
+          const SizedBox(height: 8),
+          FixedTimeline.tileBuilder(
+            theme: _buildTheme(context),
+            builder: TimelineTileBuilder(
+              itemCount: events.length,
+              contentsAlign: switch (windowSize) {
+                WindowSize.compact => ContentsAlign.basic,
+                _ => ContentsAlign.alternating,
               },
-            );
-        }
-      }(),
+              contentsBuilder: (context, index) {
+                return EventTile(event: events[index]);
+              },
+              startConnectorBuilder: (context, index) => SolidLineConnector(),
+              endConnectorBuilder: (context, index) =>
+                  index == events.length - 1 ? null : SolidLineConnector(),
+              indicatorBuilder: (context, index) => ContainerIndicator(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 4,
+                  ),
+                  child: Icon(
+                    _getIcon(events[index]),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onSurfaceVariant
+                        .withAlpha(0xaa),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildTitle(
     BuildContext context, {
-    String text = "Events",
+    String text = "Timeline",
   }) {
-    return Row(
-      children: [
-        CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
-          radius: 24,
-          child: Icon(Icons.event_outlined),
-        ),
-        const SizedBox(width: 16),
-        Text(
-          text,
-          style: Theme.of(context).textTheme.titleLarge,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
+    switch (WindowSize.of(context)) {
+      case WindowSize.compact:
+        return Row(
+          children: [
+            CircleAvatar(
+              backgroundColor:
+                  Theme.of(context).colorScheme.surfaceContainerLow,
+              radius: 24,
+              child: Icon(Icons.event_outlined),
+            ),
+            const SizedBox(width: 16),
+            Text(
+              text,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        );
+
+      default:
+        return Column(
+          children: [
+            Text(
+              text,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            CircleAvatar(
+              backgroundColor:
+                  Theme.of(context).colorScheme.surfaceContainerLow,
+              radius: 24,
+              child: Icon(Icons.event_outlined),
+            ),
+          ],
+        );
+    }
   }
 
-  Widget _buildLine(BuildContext context) {
-    return SizedBox(
-      width: iconLineWidth,
-      child: FractionallySizedBox(
-        heightFactor: 1 - 1 / (events.length * 2),
-        child: VerticalDivider(),
+  IconData _getIcon(Event event) {
+    switch (event.type) {
+      case EventType.education:
+        return Icons.school_outlined;
+      case EventType.work:
+        return Icons.work_outline;
+      case EventType.coding:
+        return Icons.code_outlined;
+      case EventType.music:
+        return Icons.music_note_outlined;
+      case EventType.award:
+        return Icons.emoji_events_outlined;
+      case EventType.other:
+        return Icons.radio_button_checked_outlined;
+    }
+  }
+
+  TimelineThemeData _buildTheme(BuildContext context) {
+    return TimelineThemeData(
+      nodePosition: switch (WindowSize.of(context)) {
+        WindowSize.compact => 0,
+        _ => null,
+      },
+      connectorTheme: ConnectorThemeData(
+        color: Theme.of(context).dividerColor,
       ),
+      indicatorTheme: IndicatorThemeData(
+        color: Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
+      ),
+      color: Theme.of(context).colorScheme.primary,
     );
   }
 }
@@ -250,57 +252,12 @@ class EventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      textDirection: layoutDirection,
-      children: [
-        Container(
-          width: 48,
-          height: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).colorScheme.surface,
-          ),
-          child: Icon(
-            _getIcon(),
-            color:
-                Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
-          ),
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Card.outlined(
-            child: Padding(
-              padding: EdgeInsets.all(12),
-              child: _buildText(context),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  IconData _getIcon() {
-    switch (event.type) {
-      case EventType.education:
-        return Icons.school_outlined;
-      case EventType.work:
-        return Icons.work_outline;
-      case EventType.coding:
-        return Icons.code_outlined;
-      case EventType.music:
-        return Icons.music_note_outlined;
-      case EventType.award:
-        return Icons.emoji_events_outlined;
-      case EventType.other:
-        return Icons.radio_button_checked_outlined;
-    }
-  }
-
-  Widget _buildText(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
 
-    final String? description =
-        windowSize == WindowSize.compact ? event.summary : event.description;
+    final String? description = switch (windowSize) {
+      WindowSize.compact || WindowSize.medium => event.summary,
+      _ => event.description
+    };
 
     final Color subtitleColor =
         Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
@@ -309,27 +266,32 @@ class EventTile extends StatelessWidget {
               color: subtitleColor,
             );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      spacing: 4,
-      children: [
-        if (event.dateString != null)
-          Text(
-            event.dateString!,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-          ),
-        Text(
-          event.title,
-          style: Theme.of(context).textTheme.titleMedium,
+    return Card.outlined(
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 4,
+          children: [
+            if (event.dateString != null)
+              Text(
+                event.dateString!,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
+            Text(
+              event.title,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            if (description != null)
+              Text(
+                description,
+                style: descriptionStyle,
+              ),
+          ],
         ),
-        if (description != null)
-          Text(
-            description,
-            style: descriptionStyle,
-          ),
-      ],
+      ),
     );
   }
 }
