@@ -46,6 +46,15 @@ class TimelineSection extends StatelessWidget {
 
   static final List<Event> events = [
     Event(
+      dateString: "Spring 2025",
+      title: "Conductor in the musical 'The Sound of Music'",
+      type: EventType.music,
+      location: "Helsingborgs Stadsteater",
+      summary: "Conducted the band and arranged the music.",
+      description:
+          """The musical Sound of Music was staged on one of Skåne's largest stages. I arranged the music for the three-hour long play and conducted the band.""",
+    ),
+    Event(
       dateString: "2024 - present",
       title: "Chalmers University of Technology",
       type: EventType.education,
@@ -122,42 +131,48 @@ Grade: 22,41""",
 
     return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
-      child: Column(
-        children: [
-          _buildTitle(context),
-          const SizedBox(height: 8),
-          FixedTimeline.tileBuilder(
-            theme: _buildTheme(context),
-            builder: TimelineTileBuilder(
-              itemCount: events.length,
-              contentsAlign: switch (windowSize) {
-                WindowSize.compact => ContentsAlign.basic,
-                _ => ContentsAlign.alternating,
-              },
-              contentsBuilder: (context, index) {
-                return EventTile(event: events[index]);
-              },
-              startConnectorBuilder: (context, index) => SolidLineConnector(),
-              endConnectorBuilder: (context, index) =>
-                  index == events.length - 1 ? null : SolidLineConnector(),
-              indicatorBuilder: (context, index) => ContainerIndicator(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 4,
-                  ),
-                  child: Icon(
-                    _getIcon(events[index]),
-                    color: Theme.of(context)
-                        .colorScheme
-                        .onSurfaceVariant
-                        .withAlpha(0xaa),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 1024),
+          child: Column(
+            children: [
+              _buildTitle(context),
+              const SizedBox(height: 8),
+              FixedTimeline.tileBuilder(
+                theme: _buildTheme(context),
+                builder: TimelineTileBuilder(
+                  itemCount: events.length,
+                  contentsAlign: switch (windowSize) {
+                    WindowSize.compact => ContentsAlign.basic,
+                    _ => ContentsAlign.alternating,
+                  },
+                  contentsBuilder: (context, index) {
+                    return EventTile(event: events[index]);
+                  },
+                  startConnectorBuilder: (context, index) =>
+                      SolidLineConnector(),
+                  endConnectorBuilder: (context, index) =>
+                      index == events.length - 1 ? null : SolidLineConnector(),
+                  indicatorBuilder: (context, index) => ContainerIndicator(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                      child: Icon(
+                        _getIcon(events[index]),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant
+                            .withAlpha(0xaa),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -226,7 +241,7 @@ Grade: 22,41""",
     return TimelineThemeData(
       nodePosition: switch (WindowSize.of(context)) {
         WindowSize.compact => 0,
-        _ => null,
+        _ => 0.5,
       },
       connectorTheme: ConnectorThemeData(
         color: Theme.of(context).dividerColor,
