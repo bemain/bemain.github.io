@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/frontpage.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
@@ -17,65 +18,90 @@ class Navigation {
     routes: [
       GoRoute(
         path: "/",
-        builder: (context, state) => Frontpage(),
+        builder: (context, state) => awaitFonts(
+          (context) => Frontpage(),
+        ),
       ),
       ShellRoute(
         restorationScopeId: "writing",
         builder: (context, state, child) {
-          return WritingShell(child: child);
+          return awaitFonts(
+            (context) => WritingShell(child: child),
+          );
         },
         routes: [
           GoRoute(
-              path: "/writing",
-              builder: (context, state) {
-                switch (WindowSize.of(context)) {
-                  case WindowSize.compact:
-                  case WindowSize.medium:
-                    return const ArticleList();
+            path: "/writing",
+            builder: (context, state) {
+              switch (WindowSize.of(context)) {
+                case WindowSize.compact:
+                case WindowSize.medium:
+                  return const ArticleList();
 
-                  default:
-                    // On larger screens the shell will already display the article list, so just return something to fill the space
-                    return Center(
-                      child: _buildPlaceholderText(context),
-                    );
-                }
-              },
-              routes: [
-                GoRoute(
-                  path: ":article",
-                  redirect: (context, state) {
-                    if (!articles.any(
-                      (article) =>
-                          article.id == state.pathParameters["article"],
-                    )) {
-                      return "/writing";
-                    }
+                default:
+                  // On larger screens the shell will already display the article list, so just return something to fill the space
+                  return Center(
+                    child: _buildPlaceholderText(context),
+                  );
+              }
+            },
+            routes: [
+              GoRoute(
+                path: ":article",
+                redirect: (context, state) {
+                  if (!articles.any(
+                    (article) => article.id == state.pathParameters["article"],
+                  )) {
+                    return "/writing";
+                  }
 
-                    return null;
-                  },
-                  pageBuilder: (context, state) {
-                    final Article article = articles.firstWhere(
-                      (article) =>
-                          article.id == state.pathParameters["article"],
-                    );
+                  return null;
+                },
+                pageBuilder: (context, state) {
+                  final Article article = articles.firstWhere(
+                    (article) => article.id == state.pathParameters["article"],
+                  );
 
-                    return CustomTransitionPage(
-                        key: state.pageKey,
-                        child: ArticlePane(article: article),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        });
-                  },
-                ),
-              ]),
+                  return CustomTransitionPage(
+                    key: state.pageKey,
+                    child: ArticlePane(article: article),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(
+                        opacity: animation,
+                        child: child,
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],
   );
+
+  /// The process that is loading fonts. See [awaitFonts].
+  static final Future<void> _fontsPending = GoogleFonts.pendingFonts();
+
+  /// Let google_fonts load all fonts used before calling and returning [builder].
+  ///
+  /// Avoids visual font swaps that occur when a font is loading
+  static Widget awaitFonts(Widget Function(BuildContext context) builder) {
+    return FutureBuilder(
+      future: _fontsPending,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return Scaffold(body: SizedBox());
+        }
+
+        // Even if the loading returns an error, we still let the widget build and fallback to the default font.
+
+        return builder(context);
+      },
+    );
+  }
 
   /// Text shown when no article is selected.
   static Widget _buildPlaceholderText(BuildContext context) {
