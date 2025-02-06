@@ -176,6 +176,10 @@ class _TimelineSectionState extends State<TimelineSection> {
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 1024),
           child: Column(
+            crossAxisAlignment: switch (windowSize) {
+              WindowSize.compact => CrossAxisAlignment.start,
+              _ => CrossAxisAlignment.center,
+            },
             children: [
               CircleAvatar(
                 backgroundColor:
@@ -197,11 +201,10 @@ class _TimelineSectionState extends State<TimelineSection> {
                   },
                   startConnectorBuilder: (context, index) =>
                       SolidLineConnector(),
-                  endConnectorBuilder: (context, index) => ((isExpanded ||
-                              events.length <= widget.initialEventsShown) &&
-                          index == events.length - 1)
-                      ? null
-                      : SolidLineConnector(),
+                  endConnectorBuilder: (context, index) =>
+                      (index == TimelineSection.events.length - 1)
+                          ? null
+                          : SolidLineConnector(),
                   indicatorBuilder: (context, index) => ContainerIndicator(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
