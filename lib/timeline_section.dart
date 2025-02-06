@@ -176,7 +176,12 @@ class _TimelineSectionState extends State<TimelineSection> {
           constraints: BoxConstraints(maxWidth: 1024),
           child: Column(
             children: [
-              _buildTitle(context),
+              CircleAvatar(
+                backgroundColor:
+                    Theme.of(context).colorScheme.surfaceContainerLow,
+                radius: 24,
+                child: Icon(Icons.event_outlined),
+              ),
               const SizedBox(height: 8),
               FixedTimeline.tileBuilder(
                 theme: _buildTheme(context),
@@ -236,49 +241,6 @@ class _TimelineSectionState extends State<TimelineSection> {
         ),
       ),
     );
-  }
-
-  Widget _buildTitle(
-    BuildContext context, {
-    String text = "Timeline",
-  }) {
-    switch (WindowSize.of(context)) {
-      case WindowSize.compact:
-        return Row(
-          children: [
-            CircleAvatar(
-              backgroundColor:
-                  Theme.of(context).colorScheme.surfaceContainerLow,
-              radius: 24,
-              child: Icon(Icons.event_outlined),
-            ),
-            const SizedBox(width: 16),
-            Text(
-              text,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        );
-
-      default:
-        return Column(
-          children: [
-            Text(
-              text,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            CircleAvatar(
-              backgroundColor:
-                  Theme.of(context).colorScheme.surfaceContainerLow,
-              radius: 24,
-              child: Icon(Icons.event_outlined),
-            ),
-          ],
-        );
-    }
   }
 
   TimelineThemeData _buildTheme(BuildContext context) {
