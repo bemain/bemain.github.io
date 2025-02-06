@@ -65,7 +65,7 @@ class ContactSection extends StatelessWidget {
           children: [
             _buildTitle(context),
             ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 256),
+              constraints: BoxConstraints(maxWidth: 240),
               child: _buildTextSection(context),
             ),
             _buildAddressSection(context),
@@ -83,24 +83,28 @@ class ContactSection extends StatelessWidget {
           children: [
             _buildTitle(context),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(width: 264),
                 Flexible(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 340),
-                    child: _buildTextSection(context),
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: SizedBox(),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 340),
+                      child: _buildTextSection(context),
+                    ),
                   ),
                 ),
-                SizedBox(
-                  width: 240,
+                Flexible(
+                  flex: 1,
                   child: _buildAddressSection(
                     context,
                     textAlign: TextAlign.right,
                   ),
                 ),
-                const SizedBox(width: 24)
               ],
             ),
             _buildSocialSection(context),
