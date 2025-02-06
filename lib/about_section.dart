@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 
 class Characteristic {
+  /// A characteristic describing me.
   const Characteristic({
     required this.adjective,
     required this.title,
@@ -19,6 +20,7 @@ class Characteristic {
 }
 
 class AboutMeSection extends StatelessWidget {
+  /// A section displaying a short description of me and my characteristics.
   const AboutMeSection({super.key});
 
   static final List<Characteristic> characteristics = [

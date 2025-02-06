@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:portfolio/about_section.dart';
 import 'package:portfolio/contact_section.dart';
 import 'package:portfolio/layout.dart';
@@ -8,12 +7,23 @@ import 'package:portfolio/timeline_section.dart';
 import 'package:portfolio/title_section.dart';
 
 class Frontpage extends StatelessWidget {
+  /// The main page of the portfolio.
+  /// This page contains the following sections:
+  /// - Title section with a butterfly nodegraph and a "Get in touch" button
+  /// - About me section with a short description of me
+  /// - Timeline section with a timeline of my education and work experience
+  /// - Projects section with a list of my projects
+  /// - Contact section with links to my social platforms
   Frontpage({super.key});
 
   static final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
       icon: Icon(Icons.person_outline),
       label: Text("About me"),
+    ),
+    NavigationDrawerDestination(
+      icon: Icon(Icons.event),
+      label: Text("Timeline"),
     ),
     NavigationDrawerDestination(
       icon: Icon(Icons.work_outline),
@@ -23,20 +33,35 @@ class Frontpage extends StatelessWidget {
       icon: Icon(Icons.mail_outline),
       label: Text("Contact"),
     ),
-    NavigationDrawerDestination(
-      icon: Icon(Icons.notes_outlined),
-      label: Text("Moments"),
-    ),
   ];
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final GlobalKey aboutMeSectionKey = GlobalKey(debugLabel: "aboutMeSection");
+  final GlobalKey timelineSectionKey = GlobalKey(debugLabel: "timelineSection");
   final GlobalKey projectsSectionKey = GlobalKey(debugLabel: "projectsSection");
   final GlobalKey contactSectionKey = GlobalKey(debugLabel: "contactSection");
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
+  }
+
+  void _scrollTo(GlobalKey key) {
+    Scrollable.ensureVisible(
+      key.currentContext!,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onDestinationSelected(BuildContext context, int index) {
+    _scrollTo(switch (index) {
+      0 => aboutMeSectionKey,
+      1 => timelineSectionKey,
+      2 => projectsSectionKey,
+      3 => contactSectionKey,
+      _ => throw "Invalid destination index",
+    });
   }
 
   @override
@@ -65,27 +90,13 @@ class Frontpage extends StatelessWidget {
               ),
             ),
             AboutMeSection(key: aboutMeSectionKey),
-            TimelineSection(),
+            TimelineSection(key: timelineSectionKey),
             ProjectsSection(key: projectsSectionKey),
             ContactSection(key: contactSectionKey),
           ],
         ),
       ),
     );
-  }
-
-  void _onDestinationSelected(BuildContext context, int index) {
-    if (index == 3) {
-      context.go("/writing");
-      return;
-    }
-
-    _scrollTo(switch (index) {
-      0 => aboutMeSectionKey,
-      1 => projectsSectionKey,
-      2 => contactSectionKey,
-      _ => throw "Invalid destination index",
-    });
   }
 
   PreferredSizeWidget _buildAppBar(
@@ -158,13 +169,5 @@ class Frontpage extends StatelessWidget {
       default:
         return null;
     }
-  }
-
-  void _scrollTo(GlobalKey key) {
-    Scrollable.ensureVisible(
-      key.currentContext!,
-      duration: Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
   }
 }

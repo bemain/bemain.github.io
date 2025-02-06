@@ -10,12 +10,19 @@ class SocialPlatform {
     required this.uri,
   });
 
+  /// The name of the social platform.
   final String name;
+
+  /// The icon representing the social platform.
   final ImageProvider icon;
+
+  /// The URI to my profile on the social platform.
   final Uri uri;
 }
 
 class ContactSection extends StatelessWidget {
+  /// A section displaying contact details and links to social platforms.
+  /// TODO: Add link to Moments
   const ContactSection({super.key});
 
   static final List<SocialPlatform> socialPlatforms = [
