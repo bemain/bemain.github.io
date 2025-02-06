@@ -86,23 +86,28 @@ class ProjectsSection extends StatelessWidget {
       default:
         return Padding(
           padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
-          child: Column(
-            children: [
-              _buildTitle(context),
-              const SizedBox(height: 24),
-              GridView.extent(
-                childAspectRatio: 0.9,
-                maxCrossAxisExtent: 360,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 1024),
+              child: Column(
                 children: [
-                  for (final Project project in projects)
-                    _buildProjectCard(context, project),
+                  _buildTitle(context),
+                  const SizedBox(height: 24),
+                  GridView.extent(
+                    childAspectRatio: 0.9,
+                    maxCrossAxisExtent: 360,
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      for (final Project project in projects)
+                        _buildProjectCard(context, project),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         );
     }
