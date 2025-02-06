@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 
 class Project {
   Project({
@@ -156,13 +157,6 @@ class ProjectsSection extends StatelessWidget {
   }
 
   Widget _buildProjectText(BuildContext context, Project project) {
-    final Color subtitleColor =
-        Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
-    final TextStyle? descriptionStyle =
-        Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: subtitleColor,
-            );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
@@ -174,16 +168,19 @@ class ProjectsSection extends StatelessWidget {
         ),
         Text(
           project.description,
-          style: descriptionStyle,
+          style: descriptionTextStyle(context),
         ),
         if (project.startDate != null)
           RichText(
             text: TextSpan(
-              style: descriptionStyle,
+              style: descriptionTextStyle(context),
               children: [
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: Icon(Icons.timeline, color: subtitleColor),
+                  child: Icon(
+                    Icons.timeline,
+                    color: descriptionTextStyle(context)?.color,
+                  ),
                 ),
                 TextSpan(text: "  ${project.startDate?.year}"),
                 if (project.endDate != project.startDate)

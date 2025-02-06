@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -283,13 +284,6 @@ class _TimelineSectionState extends State<TimelineSection> {
       _ => event.description
     };
 
-    final Color subtitleColor =
-        Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
-    final TextStyle? descriptionStyle =
-        Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: subtitleColor,
-            );
-
     Widget content = InkWell(
       onTap: event.link == null
           ? null
@@ -316,7 +310,7 @@ class _TimelineSectionState extends State<TimelineSection> {
             if (description != null)
               Text(
                 description,
-                style: descriptionStyle,
+                style: descriptionTextStyle(context),
               ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 import 'package:portfolio/writing/article.dart';
 
 class ArticleList extends StatefulWidget {
@@ -143,13 +144,6 @@ class _ArticleListState extends State<ArticleList> {
   }
 
   Widget _buildArticleText(BuildContext context, Article article) {
-    final Color subtitleColor =
-        Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
-    final TextStyle? descriptionStyle =
-        Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: subtitleColor,
-            );
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 8,
@@ -164,20 +158,23 @@ class _ArticleListState extends State<ArticleList> {
         if (article.description != null)
           Text(
             article.description!,
-            style: descriptionStyle,
+            style: descriptionTextStyle(context),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         if (article.writtenAt != null)
           RichText(
             text: TextSpan(
-              style: descriptionStyle,
+              style: descriptionTextStyle(context),
               children: [
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: Padding(
                     padding: EdgeInsets.only(right: 8),
-                    child: Icon(Icons.event, color: subtitleColor),
+                    child: Icon(
+                      Icons.event,
+                      color: descriptionTextStyle(context)?.color,
+                    ),
                   ),
                 ),
                 TextSpan(

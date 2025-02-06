@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialPlatform {
@@ -42,94 +43,140 @@ class ContactSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
 
-    final Color subtitleColor =
-        Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa);
-    final TextStyle? descriptionStyle =
-        Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: subtitleColor,
-            );
-
-    final double extraMargin = switch (windowSize) {
-      WindowSize.compact || WindowSize.medium => 0,
-      _ => 32,
-    };
-
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
         padding: windowSize.margin.add(EdgeInsets.only(
           top: 32,
-          right: extraMargin,
-          bottom: 12,
-          left: extraMargin,
+          bottom: 24,
         )),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 16,
+        child: _buildContent(context),
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    switch (WindowSize.of(context)) {
+      case WindowSize.compact:
+      case WindowSize.medium:
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 24,
           children: [
-            Text(
-              "Contact details",
-              style: Theme.of(context).textTheme.titleLarge,
+            _buildTitle(context),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 256),
+              child: _buildTextSection(context),
             ),
+            _buildAddressSection(context),
+            _buildSocialSection(context),
+            _buildCopyright(context),
+          ],
+        );
+      case WindowSize.expanded:
+      case WindowSize.large:
+      case WindowSize.extraLarge:
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 24,
+          children: [
+            _buildTitle(context),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const SizedBox(width: 264),
                 Flexible(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 320),
-                    child: Text(
-                      """Want to work together, or just interested in knowing more about what I do? Don't hesitate to reach out! I'm always eager to hear from and be inspired by fellow developers.""",
-                      style: descriptionStyle,
-                    ),
+                    constraints: BoxConstraints(maxWidth: 340),
+                    child: _buildTextSection(context),
                   ),
                 ),
-                const SizedBox(width: 24),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text("Benjamin Agardh"),
-                    Text(
-                      "Gothenburg, Sweden",
-                      style: descriptionStyle,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: "benjamin@agardh.se",
-                        style: descriptionStyle?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withAlpha(0xaa),
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () async {
-                            await launchUrl(
-                              Uri.parse("mailto:benjamin@agardh.se"),
-                            );
-                          },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: 240,
+                  child: _buildAddressSection(
+                    context,
+                    textAlign: TextAlign.right,
+                  ),
                 ),
+                const SizedBox(width: 24)
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 8,
-              children: [
-                for (final socialPlatform in socialPlatforms)
-                  _buildSocialButton(context, socialPlatform),
-              ],
-            ),
-            Text(
-              "© ${DateTime.now().year} Benjamin Agardh",
-              style: descriptionStyle,
-              textAlign: TextAlign.center,
-            )
+            _buildSocialSection(context),
+            _buildCopyright(context),
           ],
+        );
+    }
+  }
+
+  Widget _buildTitle(BuildContext context) {
+    return Text(
+      "Contact details",
+      style: Theme.of(context).textTheme.titleLarge,
+      textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildTextSection(
+    BuildContext context, {
+    TextAlign textAlign = TextAlign.center,
+  }) {
+    return Text(
+      """Want to work together, or just interested in knowing more about what I do? Don't hesitate to reach out! I'm always eager to hear from and be inspired by fellow developers.""",
+      style: descriptionTextStyle(context),
+      textAlign: textAlign,
+    );
+  }
+
+  Widget _buildAddressSection(
+    BuildContext context, {
+    TextAlign textAlign = TextAlign.center,
+  }) {
+    return Column(
+      crossAxisAlignment: switch (textAlign) {
+        TextAlign.right || TextAlign.end => CrossAxisAlignment.end,
+        TextAlign.left || TextAlign.start => CrossAxisAlignment.start,
+        _ => CrossAxisAlignment.center,
+      },
+      spacing: 4,
+      children: [
+        Text(
+          "Benjamin Agardh",
+          textAlign: textAlign,
         ),
-      ),
+        Text(
+          "Gothenburg, Sweden",
+          style: descriptionTextStyle(context),
+          textAlign: textAlign,
+        ),
+        RichText(
+          textAlign: textAlign,
+          text: TextSpan(
+            text: "benjamin@agardh.se",
+            style: descriptionTextStyle(context)?.copyWith(
+              color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () async {
+                await launchUrl(
+                  Uri.parse("mailto:benjamin@agardh.se"),
+                );
+              },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialSection(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 8,
+      children: [
+        for (final socialPlatform in socialPlatforms)
+          _buildSocialButton(context, socialPlatform),
+      ],
     );
   }
 
@@ -147,6 +194,14 @@ class ContactSection extends StatelessWidget {
         width: 24,
         height: 24,
       ),
+    );
+  }
+
+  Widget _buildCopyright(BuildContext context) {
+    return Text(
+      "© ${DateTime.now().year} Benjamin Agardh",
+      style: descriptionTextStyle(context),
+      textAlign: TextAlign.center,
     );
   }
 }
