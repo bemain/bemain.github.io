@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:timelines_plus/timelines_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum EventType {
   education,
@@ -20,6 +23,7 @@ class Event {
     this.description,
     this.location,
     this.dateString,
+    this.link,
   });
 
   /// The title of the event.
@@ -39,9 +43,15 @@ class Event {
 
   /// A string representation of the date of the event.
   final String? dateString;
+
+  /// The link that is opened when this event is clicked.
+  final Uri? link;
 }
 
 class TimelineSection extends StatefulWidget {
+  /// Creates a section with a timeline of events.
+  ///
+  /// Initially, only [initialEventsShown] events are shown. A button to show more events is displayed if there are more events to show.
   const TimelineSection({super.key, this.initialEventsShown = 6});
 
   static final List<Event> events = [
@@ -53,6 +63,8 @@ class TimelineSection extends StatefulWidget {
       summary: "Conducted the band and arranged the music.",
       description:
           """The musical Sound of Music was staged on one of Skåne's largest stages. I arranged the music for the three-hour long play and conducted the band.""",
+      link:
+          Uri.parse("https://www.facebook.com/profile.php?id=100089810478596"),
     ),
     Event(
       dateString: "2024 - present",
@@ -61,6 +73,8 @@ class TimelineSection extends StatefulWidget {
       location: "Gothenburg, Sweden",
       summary: "Engineering Mathematics",
       description: """Began studies in Engineering Mathematics.""",
+      link: Uri.parse(
+          "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/"),
     ),
     Event(
       dateString: "Autumn 2023",
@@ -70,15 +84,17 @@ class TimelineSection extends StatefulWidget {
       summary: "Consulting firm",
       description:
           """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
+      link: Uri.parse("https://www.ecsolutions.se/"),
     ),
     Event(
       dateString: "Spring 2023",
-      title: "Conductor in the Broadway musical 'Annie'",
+      title: "Conductor in the musical 'Annie'",
       type: EventType.music,
       location: "Helsingborgs Stadsteater, Lunds Stadsteater",
       summary: "Conducted the band and arranged the music.",
       description:
-          """The musical Annie was staged in 2023 at the city theaters in Lund and Helsingborg, and I conducted the band of 12 people and arranged much of the music. I also appeared on stage as one of the actors.""",
+          """The Broadway musical Annie was staged in Lund and Helsingborg, and I conducted the band of 12 people and arranged much of the music. I also appeared on stage as one of the actors.""",
+      link: Uri.parse("https://photos.app.goo.gl/dk2aGP8XyN8JSPWD7"),
     ),
     Event(
       dateString: "2022",
@@ -86,7 +102,9 @@ class TimelineSection extends StatefulWidget {
       type: EventType.award,
       summary: "Musical award given to talented youths.",
       description:
-          """Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music""",
+          """Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music.""",
+      link: Uri.parse(
+          "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/"),
     ),
     Event(
       dateString: "2021",
@@ -95,6 +113,8 @@ class TimelineSection extends StatefulWidget {
       summary: "Award given to musically engaged youths.",
       description:
           """Yearly award given to musically engaged youths in the Lund diocese.""",
+      link: Uri.parse(
+          "https://www.svenskakyrkan.se/lundsstift/nyheter/sok-stiftets-musikstipendium-for-unga"),
     ),
     Event(
       dateString: "2020 - 2022",
@@ -104,6 +124,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Taught children to code.",
       description:
           """I worked to teach children and young people to code, something that I find both fun and important. There were courses in Roblox, Minecraft and Python, and in addition to holding workshops digitally, I also trained new instructors.""",
+      link: Uri.parse("https://www.hemkodat.se/"),
     ),
     Event(
       dateString: "2020 - 2023",
@@ -113,6 +134,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Natural Science, Music",
       description: """Studied Natural Science, Music. 
 Grade: 22,41""",
+      link: Uri.parse("https://lel.nu/"),
     ),
     Event(
       dateString: "Summer 2017",
@@ -121,10 +143,12 @@ Grade: 22,41""",
       location: "Karlskrona, Sweden",
       summary: "Summer camp for mathematically gifted children.",
       description:
-          """Summer camp for children and young people who are gifted in and interested in mathematics and programming""",
+          """Summer camp for children and young people who are gifted in and interested in mathematics and programming.""",
+      link: Uri.parse("https://www.mattekollo.se/"),
     ),
   ];
 
+  /// The number of events shown initially.
   final int initialEventsShown;
 
   @override
@@ -140,7 +164,10 @@ class _TimelineSectionState extends State<TimelineSection> {
 
     final List<Event> events = isExpanded
         ? TimelineSection.events
-        : TimelineSection.events.sublist(0, widget.initialEventsShown);
+        : TimelineSection.events.sublist(
+            0,
+            min(widget.initialEventsShown, TimelineSection.events.length),
+          );
 
     return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
@@ -164,10 +191,11 @@ class _TimelineSectionState extends State<TimelineSection> {
                   },
                   startConnectorBuilder: (context, index) =>
                       SolidLineConnector(),
-                  endConnectorBuilder: (context, index) =>
-                      (isExpanded && index == events.length - 1)
-                          ? null
-                          : SolidLineConnector(),
+                  endConnectorBuilder: (context, index) => ((isExpanded ||
+                              events.length <= widget.initialEventsShown) &&
+                          index == events.length - 1)
+                      ? null
+                      : SolidLineConnector(),
                   indicatorBuilder: (context, index) => ContainerIndicator(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -186,7 +214,7 @@ class _TimelineSectionState extends State<TimelineSection> {
                 ),
               ),
               const SizedBox(height: 8),
-              if (!isExpanded)
+              if (!isExpanded && events.length < TimelineSection.events.length)
                 Align(
                   alignment: windowSize == WindowSize.compact
                       ? Alignment.centerLeft
@@ -300,39 +328,53 @@ class _TimelineSectionState extends State<TimelineSection> {
               color: subtitleColor,
             );
 
-    Widget content = Padding(
-      padding: EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        spacing: 4,
-        children: [
-          if (event.dateString != null)
+    Widget content = InkWell(
+      onTap: event.link == null
+          ? null
+          : () {
+              launchUrl(event.link!);
+            },
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 4,
+          children: [
+            if (event.dateString != null)
+              Text(
+                event.dateString!,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
             Text(
-              event.dateString!,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              event.title,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-          Text(
-            event.title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          if (description != null)
-            Text(
-              description,
-              style: descriptionStyle,
-            ),
-        ],
+            if (description != null)
+              Text(
+                description,
+                style: descriptionStyle,
+              ),
+          ],
+        ),
       ),
     );
 
     switch (windowSize) {
       case WindowSize.compact:
         // On small screens, don't wrap the content in a card
-        return content;
+        return ClipRRect(
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(12),
+          child: Material(
+            child: content,
+          ),
+        );
 
       default:
         return Card.outlined(
+          clipBehavior: Clip.antiAlias,
           child: content,
         );
     }
