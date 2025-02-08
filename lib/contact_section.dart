@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -82,30 +83,41 @@ class ContactSection extends StatelessWidget {
           spacing: 24,
           children: [
             _buildTitle(context),
-            Row(
-              children: [
-                Flexible(
-                  flex: 1,
-                  fit: FlexFit.tight,
-                  child: SizedBox(),
-                ),
-                Flexible(
-                  flex: 2,
-                  child: Center(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 340),
-                      child: _buildTextSection(context),
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 1024),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: "Looking for my writing? \nLook here!",
+                        style: descriptionTextStyle(context),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            context.go("/writing");
+                          },
+                      ),
                     ),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: _buildAddressSection(
-                    context,
-                    textAlign: TextAlign.right,
+                  Expanded(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 340),
+                        child: _buildTextSection(context),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 200,
+                    child: _buildAddressSection(
+                      context,
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
             ),
             _buildSocialSection(context),
             _buildCopyright(context),

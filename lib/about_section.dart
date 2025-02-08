@@ -82,7 +82,10 @@ class AboutMeSection extends StatelessWidget {
               children: [
                 _buildTitle(context),
                 const SizedBox(height: 12),
-                _buildDescription(context),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 380),
+                  child: _buildDescription(context),
+                ),
                 const SizedBox(height: 32),
                 _buildCharacteristics(context),
               ],
@@ -107,18 +110,13 @@ class AboutMeSection extends StatelessWidget {
   }
 
   Widget _buildDescription(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 380),
-      child: Text(
-        """I'm driven by the challenge of creating intuitive user experiences powered by innovative technology.""",
-        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onSurfaceVariant
-                  .withAlpha(0xaa),
-            ),
-        textAlign: TextAlign.center,
-      ),
+    return Text(
+      """I'm driven by the challenge of creating intuitive user experiences powered by innovative technology.""",
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color:
+                Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),
+          ),
+      textAlign: TextAlign.center,
     );
   }
 
