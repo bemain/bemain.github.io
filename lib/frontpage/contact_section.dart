@@ -128,7 +128,7 @@ class ContactSection extends StatelessWidget {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      "Contact details",
+      "Get in touch",
       style: Theme.of(context).textTheme.titleLarge,
       textAlign: TextAlign.center,
     );
