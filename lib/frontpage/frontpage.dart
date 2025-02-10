@@ -87,6 +87,9 @@ class Frontpage extends StatelessWidget {
                 onGetInTouchPressed: () {
                   _scrollTo(contactSectionKey);
                 },
+                onScrollDownPressed: () {
+                  _scrollTo(aboutMeSectionKey);
+                },
               ),
             ),
             AboutMeSection(key: aboutMeSectionKey),

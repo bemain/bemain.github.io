@@ -5,9 +5,17 @@ import 'package:portfolio/nodegraph/nodegraph_widget.dart';
 import 'package:portfolio/theme.dart';
 
 class TitleSection extends StatelessWidget {
-  const TitleSection({super.key, this.onGetInTouchPressed});
+  const TitleSection({
+    super.key,
+    this.onGetInTouchPressed,
+    this.onScrollDownPressed,
+  });
 
   final Function()? onGetInTouchPressed;
+
+  /// Callback for when the down arrow at the end of the section is pressed.
+  /// The intention is to scroll down to the next section.
+  final Function()? onScrollDownPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -167,9 +175,12 @@ class TitleSection extends StatelessWidget {
     // TODO: Make this clickable
     return Padding(
       padding: EdgeInsets.all(24),
-      child: Icon(
-        Icons.keyboard_arrow_down,
-        size: 48,
+      child: IconButton(
+        onPressed: onScrollDownPressed,
+        icon: Icon(
+          Icons.keyboard_arrow_down,
+          size: 48,
+        ),
       ),
     );
   }
