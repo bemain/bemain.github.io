@@ -70,6 +70,7 @@ class ContactSection extends StatelessWidget {
               child: _buildTextSection(context),
             ),
             _buildAddressSection(context),
+            _buildWritingLink(context),
             _buildSocialSection(context),
             _buildCopyright(context),
           ],
@@ -89,16 +90,9 @@ class ContactSection extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 200,
-                    child: RichText(
+                    child: _buildWritingLink(
+                      context,
                       textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: "Looking for my writing? \nLook here!",
-                        style: descriptionTextStyle(context),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            context.go("/writing");
-                          },
-                      ),
                     ),
                   ),
                   Expanded(
@@ -131,6 +125,31 @@ class ContactSection extends StatelessWidget {
       "Get in touch",
       style: Theme.of(context).textTheme.titleLarge,
       textAlign: TextAlign.center,
+    );
+  }
+
+  Widget _buildWritingLink(
+    BuildContext context, {
+    TextAlign textAlign = TextAlign.center,
+  }) {
+    return RichText(
+      textAlign: textAlign,
+      text: TextSpan(
+        children: [
+          TextSpan(text: "Looking for my writing?\n"),
+          TextSpan(
+            text: "Look here!",
+            style: descriptionTextStyle(context)?.copyWith(
+              color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                context.go("/writing");
+              },
+          ),
+        ],
+        style: descriptionTextStyle(context),
+      ),
     );
   }
 
