@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/about_section.dart';
-import 'package:portfolio/contact_section.dart';
+import 'package:portfolio/frontpage/about_section.dart';
+import 'package:portfolio/frontpage/contact_section.dart';
 import 'package:portfolio/layout.dart';
-import 'package:portfolio/projects_section.dart';
-import 'package:portfolio/timeline_section.dart';
-import 'package:portfolio/title_section.dart';
+import 'package:portfolio/frontpage/projects_section.dart';
+import 'package:portfolio/frontpage/timeline_section.dart';
+import 'package:portfolio/frontpage/title_section.dart';
 
 class Frontpage extends StatelessWidget {
   /// The main page of the portfolio.
