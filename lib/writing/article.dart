@@ -80,14 +80,6 @@ final List<Article> articles = [
     writtenAt: DateTime(2021, 7, 24),
   ),
   Article(
-    id: "210001",
-    title: "Jag tänker aldrig bli psykolog",
-    type: ArticleType.poem,
-    textPath: "assets/writing/210001.md",
-    image: AssetImage("assets/writing/210001.jpg"),
-    writtenAt: DateTime(2021, 11, 17),
-  ),
-  Article(
     id: "220421",
     title: "När kvällen åter står i brand",
     type: ArticleType.poem,

@@ -33,6 +33,9 @@ class _ArticleListState extends State<ArticleList> {
         article.title.toLowerCase().contains(searchQuery) ||
         article.description?.toLowerCase().contains(searchQuery) == true);
 
+    final bool isSinglePane =
+        windowSize == WindowSize.compact || windowSize == WindowSize.medium;
+
     return SizedBox(
       width: switch (windowSize) {
         WindowSize.compact || WindowSize.medium => null,
@@ -40,12 +43,10 @@ class _ArticleListState extends State<ArticleList> {
         WindowSize.extraLarge => 412,
       },
       child: Padding(
-        padding: switch (windowSize) {
-          WindowSize.compact || WindowSize.medium => windowSize.margin,
-          _ => EdgeInsets.zero,
-        },
+        padding: isSinglePane ? windowSize.margin : EdgeInsets.zero,
         child: Column(
           children: [
+            if (isSinglePane) const SizedBox(height: 12),
             SearchBar(
               controller: searchController,
               elevation: WidgetStatePropertyAll(0),
