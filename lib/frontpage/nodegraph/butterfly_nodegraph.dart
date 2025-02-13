@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/nodegraph/nodegraph_widget.dart';
+import 'package:portfolio/frontpage/nodegraph/nodegraph_widget.dart';
 import 'package:portfolio/theme.dart';
 
 extension ColorMap on Map<Offset, Color> {

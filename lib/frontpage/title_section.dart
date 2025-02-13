@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
-import 'package:portfolio/nodegraph/butterfly_nodegraph.dart';
-import 'package:portfolio/nodegraph/nodegraph_widget.dart';
+import 'package:portfolio/frontpage/nodegraph/butterfly_nodegraph.dart';
+import 'package:portfolio/frontpage/nodegraph/nodegraph_widget.dart';
 import 'package:portfolio/theme.dart';
 
 class TitleSection extends StatelessWidget {

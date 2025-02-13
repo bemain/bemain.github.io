@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:portfolio/nodegraph/nodegraph_painter.dart';
+import 'package:portfolio/frontpage/nodegraph/nodegraph_painter.dart';
 
 class Node {
   /// A node in the nodegraph, between which paths can be drawn.
