@@ -16,7 +16,6 @@ enum EventType {
 }
 
 class Event {
-  // TODO: Add links to events
   const Event({
     required this.title,
     required this.type,

@@ -24,7 +24,6 @@ class SocialPlatform {
 
 class ContactSection extends StatelessWidget {
   /// A section displaying contact details and links to social platforms.
-  /// TODO: Add link to Moments
   const ContactSection({super.key});
 
   static final List<SocialPlatform> socialPlatforms = [

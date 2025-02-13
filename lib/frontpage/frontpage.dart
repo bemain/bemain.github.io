@@ -133,13 +133,12 @@ class _FrontpageState extends State<Frontpage> {
   bool _isVisible(
     GlobalKey key,
     ScrollNotification scroll, {
-    double offsetMargin = 64,
+    double offsetMargin = 128,
   }) {
     final RenderObject? renderObject = key.currentContext?.findRenderObject();
     if (renderObject == null) return false;
 
-    final RenderAbstractViewport viewport =
-        RenderAbstractViewport.of(renderObject);
+    final viewport = RenderAbstractViewport.of(renderObject);
     final offsetToRevealTop = viewport.getOffsetToReveal(renderObject, 0.0);
 
     return scroll.metrics.pixels > offsetToRevealTop.offset - offsetMargin;
@@ -215,22 +214,10 @@ class _FrontpageState extends State<Frontpage> {
               ),
             ),
             ...Frontpage.destinations,
-            const Padding(
-              padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
-              child: Divider(),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(28, 0, 16, 0),
-              child: Text(
-                """Engineering student with a passion for technology, music, and coding.""",
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .onSurfaceVariant
-                          .withAlpha(0xaa),
-                    ),
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+            //   child: Divider(),
+            // ),
           ],
         );
 
