@@ -172,7 +172,6 @@ class TitleSection extends StatelessWidget {
   }
 
   Widget _buildDownArrow(BuildContext context) {
-    // TODO: Make this clickable
     return Padding(
       padding: EdgeInsets.all(24),
       child: IconButton(
