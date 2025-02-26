@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/link.dart';
 
-class SocialPlatform {
-  const SocialPlatform({
+class SocialLink {
+  const SocialLink({
     required this.name,
     required this.icon,
     required this.uri,
@@ -26,13 +25,13 @@ class ContactSection extends StatelessWidget {
   /// A section displaying contact details and links to social platforms.
   const ContactSection({super.key});
 
-  static final List<SocialPlatform> socialPlatforms = [
-    SocialPlatform(
+  static final List<SocialLink> socialPlatforms = [
+    SocialLink(
       name: "GitHub",
       icon: AssetImage("assets/contact/github-mark.png"),
       uri: Uri.parse("https://github.com/bemain"),
     ),
-    SocialPlatform(
+    SocialLink(
       name: "LinkedIn",
       icon: AssetImage("assets/contact/LI-In-Bug.png"),
       uri: Uri.parse("https://www.linkedin.com/in/benjamin-agardh"),
@@ -112,6 +111,7 @@ class ContactSection extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 0), // This still adds space due to the `spacing`
             _buildSocialSection(context),
             _buildCopyright(context),
           ],
@@ -131,24 +131,26 @@ class ContactSection extends StatelessWidget {
     BuildContext context, {
     TextAlign textAlign = TextAlign.center,
   }) {
-    return RichText(
-      textAlign: textAlign,
-      text: TextSpan(
-        children: [
-          TextSpan(text: "Looking for my writing?\n"),
-          TextSpan(
-            text: "Look here!",
-            style: descriptionTextStyle(context)?.copyWith(
-              color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                context.go("/writing");
-              },
+    return Link(
+      uri: Uri.parse("/writing"),
+      builder: (context, followLink) {
+        return RichText(
+          textAlign: textAlign,
+          text: TextSpan(
+            children: [
+              TextSpan(text: "Looking for my writing?\n"),
+              TextSpan(
+                text: "Look here!",
+                style: descriptionTextStyle(context)?.copyWith(
+                  color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
+                ),
+                recognizer: TapGestureRecognizer()..onTap = followLink,
+              ),
+            ],
+            style: descriptionTextStyle(context),
           ),
-        ],
-        style: descriptionTextStyle(context),
-      ),
+        );
+      },
     );
   }
 
@@ -184,20 +186,20 @@ class ContactSection extends StatelessWidget {
           style: descriptionTextStyle(context),
           textAlign: textAlign,
         ),
-        RichText(
-          textAlign: textAlign,
-          text: TextSpan(
-            text: "benjamin@agardh.se",
-            style: descriptionTextStyle(context)?.copyWith(
-              color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
-            ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () async {
-                await launchUrl(
-                  Uri.parse("mailto:benjamin@agardh.se"),
-                );
-              },
-          ),
+        Link(
+          uri: Uri.parse("mailto:benjamin@agardh.se"),
+          builder: (context, followLink) {
+            return RichText(
+              textAlign: textAlign,
+              text: TextSpan(
+                text: "benjamin@agardh.se",
+                style: descriptionTextStyle(context)?.copyWith(
+                  color: Theme.of(context).colorScheme.primary.withAlpha(0xaa),
+                ),
+                recognizer: TapGestureRecognizer()..onTap = followLink,
+              ),
+            );
+          },
         ),
       ],
     );
@@ -216,18 +218,21 @@ class ContactSection extends StatelessWidget {
 
   Widget _buildSocialButton(
     BuildContext context,
-    SocialPlatform socialPlatform,
+    SocialLink socialPlatform,
   ) {
-    return IconButton.outlined(
-      onPressed: () {
-        launchUrl(socialPlatform.uri);
+    return Link(
+      uri: socialPlatform.uri,
+      builder: (context, followLink) {
+        return IconButton.outlined(
+          onPressed: followLink,
+          icon: Image(
+            image: socialPlatform.icon,
+            color: Theme.of(context).colorScheme.onSurface,
+            width: 24,
+            height: 24,
+          ),
+        );
       },
-      icon: Image(
-        image: socialPlatform.icon,
-        color: Theme.of(context).colorScheme.onSurface,
-        width: 24,
-        height: 24,
-      ),
     );
   }
 

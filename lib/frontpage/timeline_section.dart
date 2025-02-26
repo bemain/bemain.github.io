@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:timelines_plus/timelines_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/link.dart';
 
 enum EventType {
   education,
@@ -85,6 +85,16 @@ class TimelineSection extends StatefulWidget {
       description:
           """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
       link: Uri.parse("https://www.ecsolutions.se/"),
+    ),
+    Event(
+      dateString: "2021, 2022, 2023",
+      title: "Arranged larp",
+      type: EventType.other,
+      location: "Oxdjupet, Vittsjö",
+      summary: "Arranged a larp for 30 people",
+      description:
+          """An activity where 30 people engage in improvised theater and solve challenges during a day. I started it in 2021 and have organized it 3 years in a row.""",
+      // TODO: Add link
     ),
     Event(
       dateString: "Spring 2023",
@@ -286,37 +296,38 @@ class _TimelineSectionState extends State<TimelineSection> {
       _ => event.description
     };
 
-    Widget content = InkWell(
-      onTap: event.link == null
-          ? null
-          : () {
-              launchUrl(event.link!);
-            },
-      child: Padding(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 4,
-          children: [
-            if (event.dateString != null)
-              Text(
-                event.dateString!,
-                style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-            Text(
-              event.title,
-              style: Theme.of(context).textTheme.titleMedium,
+    Widget content = Link(
+      uri: event.link,
+      builder: (context, followLink) {
+        return InkWell(
+          onTap: followLink,
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 4,
+              children: [
+                if (event.dateString != null)
+                  Text(
+                    event.dateString!,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                Text(
+                  event.title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                if (description != null)
+                  Text(
+                    description,
+                    style: descriptionTextStyle(context),
+                  ),
+              ],
             ),
-            if (description != null)
-              Text(
-                description,
-                style: descriptionTextStyle(context),
-              ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
 
     switch (windowSize) {
