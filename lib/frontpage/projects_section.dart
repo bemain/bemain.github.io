@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
+import 'package:portfolio/widgets.dart';
+import 'package:url_launcher/link.dart';
 
 class Project {
   Project({
@@ -9,6 +11,7 @@ class Project {
     required this.image,
     this.startDate,
     this.endDate,
+    this.links = const [],
   })  : // Start date must be before end date
         assert(startDate == null ||
             endDate == null ||
@@ -31,6 +34,26 @@ class Project {
 
   /// The end date of the project. If null, the project is ongoing.
   final DateTime? endDate;
+
+  final List<ProjectLink> links;
+}
+
+class ProjectLink {
+  /// A link to a project, such as a website or a repository.
+  ProjectLink({
+    required this.title,
+    required this.icon,
+    required this.uri,
+  });
+
+  /// A title describing the link
+  final String title;
+
+  /// An icon representing the link
+  final ImageProvider icon;
+
+  /// The URI that the link opens
+  final Uri uri;
 }
 
 class ProjectsSection extends StatelessWidget {
@@ -43,6 +66,20 @@ class ProjectsSection extends StatelessWidget {
           "A mobile app that offers everything a musician needs for transcribing, practicing and performing.",
       image: AssetImage("assets/projects/treble_clef.png"),
       startDate: DateTime(2022),
+      links: [
+        ProjectLink(
+          title: "Google Play",
+          icon: AssetImage("assets/icons/google-play.png"),
+          uri: Uri.parse(
+              "https://play.google.com/store/apps/details?id=se.agardh.musbx&pcampaignid=portfolio"),
+        ),
+        ProjectLink(
+          title: "App Store",
+          icon: AssetImage("assets/icons/app-store.png"),
+          uri: Uri.parse(
+              "https://apps.apple.com/se/app/musicians-toolbox/id1670009655"),
+        ),
+      ],
     ),
     Project(
       title: "Dirma",
@@ -51,6 +88,13 @@ class ProjectsSection extends StatelessWidget {
       image: AssetImage("assets/projects/dirma.png"),
       startDate: DateTime(2023),
       endDate: DateTime(2023),
+      links: [
+        ProjectLink(
+          title: "Website",
+          icon: IconImage(Icons.public),
+          uri: Uri.parse("https://dirma.se"),
+        ),
+      ],
     ),
     Project(
       title: "Märklin Bluetooth controller",
@@ -59,6 +103,34 @@ class ProjectsSection extends StatelessWidget {
       image: AssetImage("assets/projects/car.png"),
       startDate: DateTime(2021),
       endDate: DateTime(2022),
+      links: [
+        ProjectLink(
+          title: "GitHub",
+          icon: AssetImage("assets/icons/github-mark.png"),
+          uri: Uri.parse("https://github.com/bemain/marklin_client"),
+        ),
+      ],
+    ),
+    Project(
+      title: "Oxdjuptet lajv",
+      description:
+          "A mobile app used during the larp I arrange yearly at Oxdjupet.",
+      image: AssetImage("assets/projects/oxdjupet.png"),
+      startDate: DateTime(2021),
+      links: [
+        ProjectLink(
+          title: "Google Play",
+          icon: AssetImage("assets/icons/google-play.png"),
+          uri: Uri.parse(
+              "https://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=web_sharehttps://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=portfolio"),
+        ),
+        ProjectLink(
+          title: "App Store",
+          icon: AssetImage("assets/icons/app-store.png"),
+          uri: Uri.parse(
+              "https://apps.apple.com/se/app/oxdjupet-lajv/id6504813711"),
+        ),
+      ],
     ),
   ];
 
@@ -94,7 +166,7 @@ class ProjectsSection extends StatelessWidget {
                   _buildTitle(context),
                   const SizedBox(height: 24),
                   GridView.extent(
-                    childAspectRatio: 0.9,
+                    childAspectRatio: 0.8,
                     maxCrossAxisExtent: 360,
                     mainAxisSpacing: 8,
                     crossAxisSpacing: 8,
@@ -154,6 +226,41 @@ class ProjectsSection extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 6),
                 child: _buildProjectText(context, project),
               ),
+              const SizedBox(height: 4),
+              for (ProjectLink link in project.links)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Link(
+                    uri: link.uri,
+                    builder: (context, followLink) {
+                      return TextButton.icon(
+                        onPressed: followLink,
+                        icon: Image(
+                          image: link.icon,
+                          color: descriptionTextStyle(context)?.color,
+                          width: 20,
+                          height: 20,
+                        ),
+                        label: Row(
+                          spacing: 8,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              link.title,
+                              style: TextStyle(
+                                color: descriptionTextStyle(context)?.color,
+                              ),
+                            ),
+                            Icon(
+                              Icons.open_in_new,
+                              color: descriptionTextStyle(context)?.color,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
             ],
           ),
         ),
@@ -176,23 +283,27 @@ class ProjectsSection extends StatelessWidget {
           style: descriptionTextStyle(context),
         ),
         if (project.startDate != null)
-          RichText(
-            text: TextSpan(
-              style: descriptionTextStyle(context),
-              children: [
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: Icon(
-                    Icons.timeline,
-                    color: descriptionTextStyle(context)?.color,
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 6),
+            child: RichText(
+              text: TextSpan(
+                style: descriptionTextStyle(context),
+                children: [
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: Icon(
+                      Icons.timeline,
+                      size: 20,
+                      color: descriptionTextStyle(context)?.color,
+                    ),
                   ),
-                ),
-                TextSpan(text: "  ${project.startDate?.year}"),
-                if (project.endDate != project.startDate)
-                  TextSpan(
-                    text: " - ${project.endDate?.year ?? "present"}",
-                  ),
-              ],
+                  TextSpan(text: "  ${project.startDate?.year}"),
+                  if (project.endDate != project.startDate)
+                    TextSpan(
+                      text: " - ${project.endDate?.year ?? "present"}",
+                    ),
+                ],
+              ),
             ),
           ),
       ],

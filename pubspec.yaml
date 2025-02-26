@@ -35,6 +35,6 @@ flutter:
     - assets/logo/
     - assets/projects/
     - assets/me/
-    - assets/contact/
     - assets/writing/
+    - assets/icons/
     - assets/fonts/open_sans/

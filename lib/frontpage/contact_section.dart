@@ -28,12 +28,12 @@ class ContactSection extends StatelessWidget {
   static final List<SocialLink> socialPlatforms = [
     SocialLink(
       name: "GitHub",
-      icon: AssetImage("assets/contact/github-mark.png"),
+      icon: AssetImage("assets/icons/github-mark.png"),
       uri: Uri.parse("https://github.com/bemain"),
     ),
     SocialLink(
       name: "LinkedIn",
-      icon: AssetImage("assets/contact/LI-In-Bug.png"),
+      icon: AssetImage("assets/icons/LI-In-Bug.png"),
       uri: Uri.parse("https://www.linkedin.com/in/benjamin-agardh"),
     ),
   ];
