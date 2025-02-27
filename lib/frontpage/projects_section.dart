@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
-import 'package:portfolio/widgets.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+part 'projects_section.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Project {
   Project({
     required this.title,
     required this.description,
-    required this.image,
+    required this.imageUrl,
     this.startDate,
     this.endDate,
     this.links = const [],
@@ -27,8 +30,13 @@ class Project {
   /// A short description of the project
   final String description;
 
-  /// An image representing the project
-  final ImageProvider image;
+  /// An url to an image representing the project.
+  /// TODO: Point this to a document on Cloud Storage
+  final String imageUrl;
+
+  /// An image representing the project.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  ImageProvider get image => AssetImage(imageUrl);
 
   /// The start date of the project
   final DateTime? startDate;
@@ -36,25 +44,48 @@ class Project {
   /// The end date of the project. If null, the project is ongoing.
   final DateTime? endDate;
 
+  @JsonKey(fromJson: _linksFromJson, toJson: _linksToJson)
   final List<ProjectLink> links;
+
+  factory Project.fromJson(Map<String, dynamic> json) =>
+      _$ProjectFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProjectToJson(this);
 }
 
+List<ProjectLink> _linksFromJson(List<Map<String, dynamic>> json) =>
+    [for (final e in json) ProjectLink.fromJson(e)];
+
+List<Map<String, dynamic>> _linksToJson(List<ProjectLink> links) =>
+    [for (final link in links) link.toJson()];
+
+@JsonSerializable()
 class ProjectLink {
   /// A link to a project, such as a website or a repository.
   ProjectLink({
     required this.title,
-    required this.icon,
+    required this.imageUrl,
     required this.uri,
   });
 
   /// A title describing the link
   final String title;
 
-  /// An icon representing the link
-  final ImageProvider icon;
+  /// An url to the image representing the link
+  /// TODO: Point this to a document on Cloud Storage
+  final String imageUrl;
+
+  /// An image representing the link
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  ImageProvider get image => AssetImage(imageUrl);
 
   /// The URI that the link opens
   final Uri uri;
+
+  factory ProjectLink.fromJson(Map<String, dynamic> json) =>
+      _$ProjectLinkFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProjectLinkToJson(this);
 }
 
 class ProjectsSection extends StatelessWidget {
@@ -65,18 +96,18 @@ class ProjectsSection extends StatelessWidget {
       title: "Musician's Toolbox",
       description:
           "A mobile app that offers everything a musician needs for transcribing, practicing and performing.",
-      image: AssetImage("assets/projects/treble_clef.png"),
+      imageUrl: "assets/projects/treble_clef.png",
       startDate: DateTime(2022),
       links: [
         ProjectLink(
           title: "Google Play",
-          icon: AssetImage("assets/icons/google-play.png"),
+          imageUrl: "assets/icons/google-play.png",
           uri: Uri.parse(
               "https://play.google.com/store/apps/details?id=se.agardh.musbx&pcampaignid=portfolio"),
         ),
         ProjectLink(
           title: "App Store",
-          icon: AssetImage("assets/icons/app-store.png"),
+          imageUrl: "assets/icons/app-store.png",
           uri: Uri.parse(
               "https://apps.apple.com/se/app/musicians-toolbox/id1670009655"),
         ),
@@ -86,13 +117,13 @@ class ProjectsSection extends StatelessWidget {
       title: "Dirma",
       description:
           "A website for the Swedish company Dirma, built using TypeScript and Next.js.",
-      image: AssetImage("assets/projects/dirma.png"),
+      imageUrl: "assets/projects/dirma.png",
       startDate: DateTime(2023),
       endDate: DateTime(2023),
       links: [
         ProjectLink(
           title: "Website",
-          icon: IconImage(Icons.public),
+          imageUrl: "assets/icons/website.png",
           uri: Uri.parse("https://dirma.se"),
         ),
       ],
@@ -101,13 +132,13 @@ class ProjectsSection extends StatelessWidget {
       title: "Märklin Bluetooth controller",
       description:
           "A wireless hand controller for Märklin Sprint using Bluetooth LE.",
-      image: AssetImage("assets/projects/car.png"),
+      imageUrl: "assets/projects/car.png",
       startDate: DateTime(2021),
       endDate: DateTime(2022),
       links: [
         ProjectLink(
           title: "GitHub",
-          icon: AssetImage("assets/icons/github-mark.png"),
+          imageUrl: "assets/icons/github-mark.png",
           uri: Uri.parse("https://github.com/bemain/marklin_client"),
         ),
       ],
@@ -116,18 +147,18 @@ class ProjectsSection extends StatelessWidget {
       title: "Oxdjupet lajv",
       description:
           "A mobile app used during the larp I arrange yearly at Oxdjupet.",
-      image: AssetImage("assets/projects/oxdjupet.png"),
+      imageUrl: "assets/projects/oxdjupet.png",
       startDate: DateTime(2021),
       links: [
         ProjectLink(
           title: "Google Play",
-          icon: AssetImage("assets/icons/google-play.png"),
+          imageUrl: "assets/icons/google-play.png",
           uri: Uri.parse(
               "https://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=portfolio"),
         ),
         ProjectLink(
           title: "App Store",
-          icon: AssetImage("assets/icons/app-store.png"),
+          imageUrl: "assets/icons/app-store.png",
           uri: Uri.parse(
               "https://apps.apple.com/se/app/oxdjupet-lajv/id6504813711"),
         ),
@@ -241,7 +272,7 @@ class ProjectsSection extends StatelessWidget {
                       return TextButton.icon(
                         onPressed: followLink,
                         icon: Image(
-                          image: link.icon,
+                          image: link.image,
                           color: descriptionTextStyle(context)?.color,
                           width: 20,
                           height: 20,

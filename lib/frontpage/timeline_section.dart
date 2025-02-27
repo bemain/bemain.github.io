@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:timelines_plus/timelines_plus.dart';
 import 'package:url_launcher/link.dart';
+
+part 'timeline_section.g.dart';
 
 enum EventType {
   education,
@@ -15,6 +18,7 @@ enum EventType {
   other,
 }
 
+@JsonSerializable()
 class Event {
   const Event({
     required this.title,
@@ -23,7 +27,7 @@ class Event {
     this.description,
     this.location,
     this.dateString,
-    this.link,
+    this.linkUrl,
   });
 
   /// The title of the event.
@@ -45,7 +49,17 @@ class Event {
   final String? dateString;
 
   /// The link that is opened when this event is clicked.
-  final Uri? link;
+  final String? linkUrl;
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  Uri? get link {
+    if (linkUrl == null) return null;
+    return Uri.tryParse(linkUrl!);
+  }
+
+  factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EventToJson(this);
 }
 
 class TimelineSection extends StatefulWidget {
@@ -63,8 +77,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Conducted the band and arranged the music.",
       description:
           """The musical Sound of Music was staged on one of Skåne's largest stages. I arranged the music for the three-hour long play and conducted the band.""",
-      link:
-          Uri.parse("https://www.facebook.com/profile.php?id=100089810478596"),
+      linkUrl: "https://www.facebook.com/profile.php?id=100089810478596",
     ),
     Event(
       dateString: "2024 - present",
@@ -73,8 +86,8 @@ class TimelineSection extends StatefulWidget {
       location: "Gothenburg",
       summary: "Engineering Mathematics",
       description: """Began studies in Engineering Mathematics.""",
-      link: Uri.parse(
-          "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/"),
+      linkUrl:
+          "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/",
     ),
     Event(
       dateString: "Spring 2024",
@@ -84,7 +97,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Christian Bible program, BibelTjänst",
       description:
           """Christian Bible studies at the Adult Education College level.""",
-      link: Uri.parse("https://mariannelund.nu/kurser/bibelskola/bibeltjanst/"),
+      linkUrl: "https://mariannelund.nu/kurser/bibelskola/bibeltjanst/",
     ),
     Event(
       dateString: "Autumn 2023",
@@ -94,7 +107,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Consulting firm",
       description:
           """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
-      link: Uri.parse("https://www.ecsolutions.se/"),
+      linkUrl: "https://www.ecsolutions.se/",
     ),
     Event(
       dateString: "2021, 2022, 2023",
@@ -114,7 +127,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Conducted the band and arranged the music.",
       description:
           """The Broadway musical Annie was staged in Lund and Helsingborg, and I conducted the band of 12 people and arranged much of the music. I also appeared on stage as one of the actors.""",
-      link: Uri.parse("https://photos.app.goo.gl/dk2aGP8XyN8JSPWD7"),
+      linkUrl: "https://photos.app.goo.gl/dk2aGP8XyN8JSPWD7",
     ),
     Event(
       dateString: "2022",
@@ -123,8 +136,8 @@ class TimelineSection extends StatefulWidget {
       summary: "Musical award given to talented youths.",
       description:
           """Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music.""",
-      link: Uri.parse(
-          "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/"),
+      linkUrl:
+          "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/",
     ),
     Event(
       dateString: "Summer 2022",
@@ -134,8 +147,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Responsible for the maintenance of graves.",
       description:
           """Responsible for maintaining the grounds and caring for the graves at Kvistofta Cemetery.""",
-      link: Uri.parse(
-          "https://www.svenskakyrkan.se/kvistofta/kvistofta-kyrkogard"),
+      linkUrl: "https://www.svenskakyrkan.se/kvistofta/kvistofta-kyrkogard",
     ),
     Event(
       dateString: "2021",
@@ -144,8 +156,8 @@ class TimelineSection extends StatefulWidget {
       summary: "Award given to musically engaged youths.",
       description:
           """Yearly award given to musically engaged youths in the Lund diocese.""",
-      link: Uri.parse(
-          "https://www.svenskakyrkan.se/lundsstift/nyheter/sok-stiftets-musikstipendium-for-unga"),
+      linkUrl:
+          "https://www.svenskakyrkan.se/lundsstift/nyheter/sok-stiftets-musikstipendium-for-unga",
     ),
     Event(
       dateString: "May 2021",
@@ -155,7 +167,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Finalist in the National Security Championship",
       description:
           """Finalist in the National Security Championship for High School Students.""",
-      link: Uri.parse("https://sakerhetssm.se/"),
+      linkUrl: "https://sakerhetssm.se/",
     ),
     Event(
       dateString: "2020 - 2022",
@@ -165,7 +177,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Taught children to code.",
       description:
           """I taught children and young people to code, something that I find both fun and important. Courses included Roblox, Minecraft, and Python. Responsibilities also included training new instructors.""",
-      link: Uri.parse("https://www.hemkodat.se/"),
+      linkUrl: "https://www.hemkodat.se/",
     ),
     Event(
       dateString: "2020 - 2023",
@@ -175,7 +187,7 @@ class TimelineSection extends StatefulWidget {
       summary: "Natural Science, Music",
       description: """Studied Natural Science, Music. 
 Grade: 22.41""",
-      link: Uri.parse("https://lel.nu/"),
+      linkUrl: "https://lel.nu/",
     ),
     Event(
       dateString: "Summer 2019",
@@ -185,8 +197,8 @@ Grade: 22.41""",
       summary: "Camp for talented youths, focusing on AI and mathematics.",
       description:
           """A summer camp for gifted young individuals from across the Nordic region, with a focus on AI and mathematics.""",
-      link: Uri.parse(
-          "https://mattetalanger.ncm.gu.se/nordiskt-talanglager-inom-artificiell-intelligens/"),
+      linkUrl:
+          "https://mattetalanger.ncm.gu.se/nordiskt-talanglager-inom-artificiell-intelligens/",
     ),
     Event(
       dateString: "Summer 2017",
@@ -196,7 +208,7 @@ Grade: 22.41""",
       summary: "Summer camp for mathematically gifted children.",
       description:
           """Summer camp for children and young people who are gifted and interested in mathematics and programming.""",
-      link: Uri.parse("https://www.mattekollo.se/"),
+      linkUrl: "https://www.mattekollo.se/",
     ),
     Event(
       dateString: "2011 -202",
@@ -204,9 +216,9 @@ Grade: 22.41""",
       type: EventType.education,
       location: "Rydebäck",
       summary: "Elementary school",
-      description: """Elementary school. Received all A:s (340 merit points). Completed Math 1-3c during middle school (grade A).""",
-      link: Uri.parse("https://helsingborg.se/grundskolor/rydebacksskolan/"),
-
+      description:
+          """Elementary school. Received all A:s (340 merit points). Completed Math 1-3c during middle school (grade A).""",
+      linkUrl: "https://helsingborg.se/grundskolor/rydebacksskolan/",
     )
   ];
 
