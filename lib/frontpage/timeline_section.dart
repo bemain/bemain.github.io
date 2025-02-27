@@ -174,7 +174,7 @@ class TimelineSection extends StatefulWidget {
       location: "Lund",
       summary: "Natural Science, Music",
       description: """Studied Natural Science, Music. 
-Grade: 22,41""",
+Grade: 22.41""",
       link: Uri.parse("https://lel.nu/"),
     ),
     Event(
@@ -198,6 +198,16 @@ Grade: 22,41""",
           """Summer camp for children and young people who are gifted and interested in mathematics and programming.""",
       link: Uri.parse("https://www.mattekollo.se/"),
     ),
+    Event(
+      dateString: "2011 -202",
+      title: "Rydebäcksskolan",
+      type: EventType.education,
+      location: "Rydebäck",
+      summary: "Elementary school",
+      description: """Elementary school. Received all A:s (340 merit points). Completed Math 1-3c during middle school (grade A).""",
+      link: Uri.parse("https://helsingborg.se/grundskolor/rydebacksskolan/"),
+
+    )
   ];
 
   /// The number of events shown initially.
