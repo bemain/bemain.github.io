@@ -59,7 +59,7 @@ class TimelineSection extends StatefulWidget {
       dateString: "Spring 2025",
       title: "Conductor in the musical 'The Sound of Music'",
       type: EventType.music,
-      location: "Helsingborgs Stadsteater",
+      location: "Helsingborgs Stadsteater, Helsingborg",
       summary: "Conducted the band and arranged the music.",
       description:
           """The musical Sound of Music was staged on one of Skåne's largest stages. I arranged the music for the three-hour long play and conducted the band.""",
@@ -70,17 +70,27 @@ class TimelineSection extends StatefulWidget {
       dateString: "2024 - present",
       title: "Chalmers University of Technology",
       type: EventType.education,
-      location: "Gothenburg, Sweden",
+      location: "Gothenburg",
       summary: "Engineering Mathematics",
       description: """Began studies in Engineering Mathematics.""",
       link: Uri.parse(
           "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/"),
     ),
     Event(
+      dateString: "Spring 2024",
+      title: "Mariannelunds folkhögskola",
+      type: EventType.education,
+      location: "Mariannelund",
+      summary: "Christian Bible program, BibelTjänst",
+      description:
+          """Christian Bible studies at the Adult Education College level.""",
+      link: Uri.parse("https://mariannelund.nu/kurser/bibelskola/bibeltjanst/"),
+    ),
+    Event(
       dateString: "Autumn 2023",
       title: "EC Solutions",
       type: EventType.work,
-      location: "Helsingborg, Sweden",
+      location: "Helsingborg",
       summary: "Consulting firm",
       description:
           """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
@@ -117,6 +127,17 @@ class TimelineSection extends StatefulWidget {
           "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/"),
     ),
     Event(
+      dateString: "Summer 2022",
+      title: "Cemetery Groundskeeper",
+      type: EventType.work,
+      location: "Kvistofta Cemetery",
+      summary: "Responsible for the maintenance of graves.",
+      description:
+          """Responsible for maintaining the grounds and caring for the graves at Kvistofta Cemetery.""",
+      link: Uri.parse(
+          "https://www.svenskakyrkan.se/kvistofta/kvistofta-kyrkogard"),
+    ),
+    Event(
       dateString: "2021",
       title: "Award, Lund diocese",
       type: EventType.award,
@@ -127,33 +148,54 @@ class TimelineSection extends StatefulWidget {
           "https://www.svenskakyrkan.se/lundsstift/nyheter/sok-stiftets-musikstipendium-for-unga"),
     ),
     Event(
+      dateString: "May 2021",
+      title: "Säkerhets-SM",
+      type: EventType.coding,
+      location: "Digitally",
+      summary: "Finalist in the National Security Championship",
+      description:
+          """Finalist in the National Security Championship for High School Students.""",
+      link: Uri.parse("https://sakerhetssm.se/"),
+    ),
+    Event(
       dateString: "2020 - 2022",
       title: "Coding instructor at Hemkodat",
       type: EventType.work,
-      location: "Lund, Sweden",
+      location: "Lund",
       summary: "Taught children to code.",
       description:
-          """I worked to teach children and young people to code, something that I find both fun and important. There were courses in Roblox, Minecraft and Python, and in addition to holding workshops digitally, I also trained new instructors.""",
+          """I taught children and young people to code, something that I find both fun and important. Courses included Roblox, Minecraft, and Python. Responsibilities also included training new instructors.""",
       link: Uri.parse("https://www.hemkodat.se/"),
     ),
     Event(
       dateString: "2020 - 2023",
       title: "Lars-Erik Larsson-gymnasiet",
       type: EventType.education,
-      location: "Lund, Sweden",
+      location: "Lund",
       summary: "Natural Science, Music",
       description: """Studied Natural Science, Music. 
 Grade: 22,41""",
       link: Uri.parse("https://lel.nu/"),
     ),
     Event(
+      dateString: "Summer 2019",
+      title: "Nordiskt talangläger, AI",
+      type: EventType.other,
+      location: "BTH, Karlskrona",
+      summary: "Camp for talented youths, focusing on AI and mathematics.",
+      description:
+          """A summer camp for gifted young individuals from across the Nordic region, with a focus on AI and mathematics.""",
+      link: Uri.parse(
+          "https://mattetalanger.ncm.gu.se/nordiskt-talanglager-inom-artificiell-intelligens/"),
+    ),
+    Event(
       dateString: "Summer 2017",
       title: "Mattekollo",
       type: EventType.other,
-      location: "Karlskrona, Sweden",
+      location: "Karlskrona",
       summary: "Summer camp for mathematically gifted children.",
       description:
-          """Summer camp for children and young people who are gifted in and interested in mathematics and programming.""",
+          """Summer camp for children and young people who are gifted and interested in mathematics and programming.""",
       link: Uri.parse("https://www.mattekollo.se/"),
     ),
   ];

@@ -44,6 +44,24 @@ class Article {
 
   /// An image to display alongside the article.
   final ImageProvider? image;
+
+  factory Article.fromJson(Map<String, dynamic> json) {
+    return Article(
+      id: json["id"] as String,
+      title: json["title"] as String,
+      type: ArticleType.values.firstWhere(
+        (type) => type.name == json["type"],
+      ),
+      description: json["description"] as String?,
+      // TODO: Link this to a file on Firebase Storage
+      textPath: json["textPath"] as String,
+      writtenAt: json["writtenAt"] == null
+          ? null
+          : DateTime.parse(json["writtenAt"] as String),
+      // TODO: Link this to a file on Firebase Storage
+      image: json["image"] == null ? null : AssetImage(json["image"] as String),
+    );
+  }
 }
 
 final List<Article> articles = [
