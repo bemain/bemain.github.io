@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/firestore.dart';
 import 'package:portfolio/frontpage/frontpage.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
@@ -48,25 +50,45 @@ class Navigation {
             routes: [
               GoRoute(
                 path: ":article",
-                redirect: (context, state) {
-                  if (!articles.any(
-                    (article) => article.id == state.pathParameters["article"],
-                  )) {
+                redirect: (context, state) async {
+                  final snapshot = await Firestore.articles
+                      .where("id", isEqualTo: state.pathParameters["article"])
+                      .count()
+                      .get();
+                  if (snapshot.count != 1) {
                     return "/writing";
                   }
-
                   return null;
                 },
                 pageBuilder: (context, state) {
-                  final Article article = articles.firstWhere(
-                    (article) => article.id == state.pathParameters["article"],
-                  );
+                  final Query<Article> query = Firestore.articles
+                      .where("id", isEqualTo: state.pathParameters["article"])
+                      .limit(1);
 
                   return CustomTransitionPage(
                     key: state.pageKey,
-                    child: ArticlePane(article: article),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
+                    child: FutureBuilder(
+                      future: query.get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          debugPrint("[FIRESTORE] Error: ${snapshot.error}");
+                          return SizedBox();
+                        }
+                        if (!snapshot.hasData) {
+                          return SizedBox();
+                        }
+
+                        return ArticlePane(
+                          article: snapshot.data!.docs.single.data(),
+                        );
+                      },
+                    ),
+                    transitionsBuilder: (
+                      context,
+                      animation,
+                      secondaryAnimation,
+                      child,
+                    ) {
                       return FadeTransition(
                         opacity: animation,
                         child: child,

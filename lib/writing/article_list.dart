@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:portfolio/firestore.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:portfolio/writing/article.dart';
 
 class ArticleList extends StatefulWidget {
-  /// A list of the available [articles].
+  /// A list of the available [Firestore.articles].
   ///
   /// The list is searchable using a [SearchBar] widget.
-  ///
-  /// TODO: Fetch the articles dynamically from a database.
   const ArticleList({super.key});
 
   @override
@@ -18,6 +17,16 @@ class ArticleList extends StatefulWidget {
 }
 
 class _ArticleListState extends State<ArticleList> {
+  /// The articles queried from Firestore,
+  /// cached to avoid having to await [futureArticles] every time we rebuild.
+  static List<Article>? articles;
+
+  /// The articles that match the current [searchQuery].
+  Iterable<Article>? get filteredArticles =>
+      _ArticleListState.articles?.where((article) =>
+          article.title.toLowerCase().contains(searchQuery) ||
+          article.description?.toLowerCase().contains(searchQuery) == true);
+
   /// The controller for the search bar.
   final TextEditingController searchController = TextEditingController();
 
@@ -27,11 +36,6 @@ class _ArticleListState extends State<ArticleList> {
   @override
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
-
-    /// The articles that match the current [searchQuery].
-    final Iterable<Article> filteredArticles = articles.where((article) =>
-        article.title.toLowerCase().contains(searchQuery) ||
-        article.description?.toLowerCase().contains(searchQuery) == true);
 
     final bool isSinglePane =
         windowSize == WindowSize.compact || windowSize == WindowSize.medium;
@@ -54,6 +58,7 @@ class _ArticleListState extends State<ArticleList> {
                 EdgeInsets.symmetric(horizontal: 16.0),
               ),
               leading: Icon(Icons.search),
+              hintText: "Search moments",
               trailing: [
                 if (searchQuery.isNotEmpty)
                   IconButton(
@@ -68,28 +73,54 @@ class _ArticleListState extends State<ArticleList> {
               onChanged: (value) {
                 setState(() {});
               },
-              hintText: "Search moments",
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: ListView(
-                children: [
-                  for (final article in filteredArticles)
-                    _buildArticleTile(context, article),
-                  if (filteredArticles.isEmpty)
-                    Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        "No moments found. Try a different search query.",
-                        textAlign: TextAlign.center,
-                      ),
+              child: articles != null
+                  ? _buildArticleList(context, filteredArticles!)
+                  : FutureBuilder(
+                      future: Firestore.articles
+                          .orderBy("writtenAt", descending: true)
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          debugPrint("[FIRESTORE] Error: ${snapshot.error}");
+                          return SizedBox();
+                        }
+                        if (!snapshot.hasData) {
+                          // TODO: Show placeholder during loading
+                          return SizedBox();
+                        }
+
+                        _ArticleListState.articles = [
+                          for (final doc in snapshot.data!.docs) doc.data()
+                        ];
+
+                        return _buildArticleList(context, filteredArticles!);
+                      },
                     ),
-                ],
-              ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildArticleList(BuildContext context, Iterable<Article> articles) {
+    if (articles.isEmpty) {
+      return Padding(
+        padding: EdgeInsets.all(16),
+        child: Text(
+          "No moments found. Try a different search query.",
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+    return ListView(
+      children: [
+        for (final article in articles) _buildArticleTile(context, article),
+      ],
     );
   }
 
