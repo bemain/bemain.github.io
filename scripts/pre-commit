@@ -1,0 +1,49 @@
+#!/bin/bash
+
+GREEN="\e[32;1m%s\e[0m\n"
+YELLOW="\e[33;1m%s\e[0m\n"
+RED="\e[31;1m%s\e[0m\n"
+
+# Apply the stashed changes if there are any
+pop_stash_files () {
+    if [ -n "$hasChanges" ]; then
+        printf "$YELLOW" "Applying stashed changes"
+        git stash pop
+    fi
+}
+
+hasChanges=$(git diff)
+if [ -n "$hasChanges" ]; then
+    printf "$YELLOW" "Stashing unstaged changes"
+    git stash push --keep-index
+fi
+
+
+# === build_runner ===
+printf "$YELLOW" "Running 'dart run build_runner build'..."
+distrobox enter -- /usr/local/flutter/bin/dart run build_runner build
+
+if [ -n $(git diff) ]; then
+    # Files have been changed, so stage them
+    printf "$YELLOW" "Staging files generated during the commit hook"
+    git add .
+fi
+
+# === flutter analyze ===
+printf "$YELLOW" "Running 'flutter analyze'..."
+result=$(distrobox enter -- /usr/local/flutter/bin/flutter analyze --no-fatal-infos --no-fatal-warnings)
+exitCode=$? # If the exitCode is zero, then command executed successfully.
+
+if [ $exitCode  -ne 0 ]; then
+    echo "$result"
+    pop_stash_files
+    printf "$RED" "Flutter analyze found issues, please fix them."
+    exit 1
+fi
+
+
+pop_stash_files
+
+printf "$GREEN" "Finished pre-commit hook."
+
+
