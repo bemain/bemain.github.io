@@ -3,6 +3,7 @@ import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:portfolio/widgets.dart';
 import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Project {
   Project({
@@ -112,7 +113,7 @@ class ProjectsSection extends StatelessWidget {
       ],
     ),
     Project(
-      title: "Oxdjuptet lajv",
+      title: "Oxdjupet lajv",
       description:
           "A mobile app used during the larp I arrange yearly at Oxdjupet.",
       image: AssetImage("assets/projects/oxdjupet.png"),
@@ -122,7 +123,7 @@ class ProjectsSection extends StatelessWidget {
           title: "Google Play",
           icon: AssetImage("assets/icons/google-play.png"),
           uri: Uri.parse(
-              "https://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=web_sharehttps://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=portfolio"),
+              "https://play.google.com/store/apps/details?id=se.agardh.lajv&pcampaignid=portfolio"),
         ),
         ProjectLink(
           title: "App Store",
@@ -200,7 +201,11 @@ class ProjectsSection extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () => print("Tapped on ${project.title}"),
+        onTap: project.links.isEmpty
+            ? null
+            : () {
+                launchUrl(project.links.first.uri);
+              },
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
