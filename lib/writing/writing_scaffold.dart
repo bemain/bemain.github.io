@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/layout.dart';
 
@@ -123,9 +122,9 @@ class WritingScaffold extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Padding(
         padding: EdgeInsets.all(4),
-        child: SvgPicture.asset(
-          "assets/logo/butterfly.svg",
-          semanticsLabel: "Moments Logo",
+        child: Image.asset(
+          "assets/logo/butterfly_40px.png",
+          semanticLabel: "Moments Logo",
           width: 40,
           height: 40,
         ),
