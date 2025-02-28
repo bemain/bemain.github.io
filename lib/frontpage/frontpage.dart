@@ -116,13 +116,17 @@ class _FrontpageState extends State<Frontpage> {
           ),
         ),
         onNotification: (ScrollNotification scroll) {
-          final Iterable<int?> visibleIndices = sectionKeys.mapIndexed(
-              (index, key) => _isVisible(key, scroll) ? index : null);
+          final int? newSelectedIndex = sectionKeys
+              .mapIndexed(
+                  (index, key) => _isVisible(key, scroll) ? index : null)
+              .nonNulls
+              .lastOrNull;
 
-          setState(() {
-            selectedDestinationIndex =
-                visibleIndices.lastWhereOrNull((index) => index != null);
-          });
+          if (selectedDestinationIndex != newSelectedIndex) {
+            setState(() {
+              selectedDestinationIndex = newSelectedIndex;
+            });
+          }
 
           return false;
         },
