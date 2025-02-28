@@ -87,7 +87,7 @@ class _FrontpageState extends State<Frontpage> {
       key: scaffoldKey,
       appBar: _buildAppBar(context, windowSize),
       drawer: _buildDrawer(context, windowSize),
-      body: NotificationListener<ScrollNotification>(
+      body: NotificationListener<ScrollEndNotification>(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -115,7 +115,7 @@ class _FrontpageState extends State<Frontpage> {
             ],
           ),
         ),
-        onNotification: (ScrollNotification scroll) {
+        onNotification: (ScrollEndNotification scroll) {
           final int? newSelectedIndex = sectionKeys
               .mapIndexed(
                   (index, key) => _isVisible(key, scroll) ? index : null)
