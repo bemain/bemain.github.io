@@ -58,7 +58,7 @@ class _FrontpageState extends State<Frontpage> {
   ];
 
   /// The index of the currently selected destination.
-  int? selectedDestinationIndex;
+  final ValueNotifier<int?> selectedDestinationIndex = ValueNotifier(null);
 
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -74,9 +74,7 @@ class _FrontpageState extends State<Frontpage> {
 
   Future<void> _onDestinationSelected(BuildContext context, int index) async {
     await scrollTo(sectionKeys[index]);
-    setState(() {
-      selectedDestinationIndex = index;
-    });
+    selectedDestinationIndex.value = index;
   }
 
   @override
@@ -121,12 +119,7 @@ class _FrontpageState extends State<Frontpage> {
                   (index, key) => _isVisible(key, scroll) ? index : null)
               .nonNulls
               .lastOrNull;
-
-          if (selectedDestinationIndex != newSelectedIndex) {
-            setState(() {
-              selectedDestinationIndex = newSelectedIndex;
-            });
-          }
+          selectedDestinationIndex.value = newSelectedIndex;
 
           return false;
         },
@@ -173,29 +166,35 @@ class _FrontpageState extends State<Frontpage> {
     EdgeInsets padding = const EdgeInsets.all(20),
   }) {
     final int index = Frontpage.destinations.indexOf(destination);
-    if (index == selectedDestinationIndex) {
-      return FilledButton.tonalIcon(
-        onPressed: () {},
-        style: FilledButton.styleFrom(
-          padding: padding,
-        ),
-        label: destination.label,
-        icon: destination.icon,
-      );
-    }
 
-    return TextButton.icon(
-      onPressed: () {
-        _onDestinationSelected(
-          context,
-          Frontpage.destinations.indexOf(destination),
+    return ValueListenableBuilder(
+      valueListenable: selectedDestinationIndex,
+      builder: (context, selectedIndex, child) {
+        if (index == selectedIndex) {
+          return FilledButton.tonalIcon(
+            onPressed: () {},
+            style: FilledButton.styleFrom(
+              padding: padding,
+            ),
+            label: destination.label,
+            icon: destination.icon,
+          );
+        }
+
+        return TextButton.icon(
+          onPressed: () {
+            _onDestinationSelected(
+              context,
+              Frontpage.destinations.indexOf(destination),
+            );
+          },
+          style: TextButton.styleFrom(
+            padding: padding,
+          ),
+          label: destination.label,
+          icon: destination.icon,
         );
       },
-      style: TextButton.styleFrom(
-        padding: padding,
-      ),
-      label: destination.label,
-      icon: destination.icon,
     );
   }
 
@@ -203,26 +202,31 @@ class _FrontpageState extends State<Frontpage> {
     switch (windowSize) {
       case WindowSize.compact:
       case WindowSize.medium:
-        return NavigationDrawer(
-          selectedIndex: selectedDestinationIndex,
-          onDestinationSelected: (value) {
-            _onDestinationSelected(context, value);
-            scaffoldKey.currentState?.closeDrawer();
+        return ValueListenableBuilder(
+          valueListenable: selectedDestinationIndex,
+          builder: (context, selectedIndex, child) {
+            return NavigationDrawer(
+              selectedIndex: selectedDestinationIndex.value,
+              onDestinationSelected: (value) {
+                _onDestinationSelected(context, value);
+                scaffoldKey.currentState?.closeDrawer();
+              },
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(28, 24, 16, 16),
+                  child: Text(
+                    "Benjamin Agardh",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                ...Frontpage.destinations,
+                // const Padding(
+                //   padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+                //   child: Divider(),
+                // ),
+              ],
+            );
           },
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(28, 24, 16, 16),
-              child: Text(
-                "Benjamin Agardh",
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            ...Frontpage.destinations,
-            // const Padding(
-            //   padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
-            //   child: Divider(),
-            // ),
-          ],
         );
 
       default:
