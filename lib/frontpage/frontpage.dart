@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:collection/collection.dart';
 import 'package:portfolio/frontpage/about_section.dart';
 import 'package:portfolio/frontpage/contact_section.dart';
+import 'package:portfolio/frontpage/design_principles_section.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/frontpage/projects_section.dart';
 import 'package:portfolio/frontpage/timeline_section.dart';
@@ -107,6 +108,7 @@ class _FrontpageState extends State<Frontpage> {
                 ),
               ),
               AboutMeSection(key: aboutMeSectionKey),
+              DesignPrinciplesSection(),
               TimelineSection(key: timelineSectionKey),
               ProjectsSection(key: projectsSectionKey),
               ContactSection(key: contactSectionKey),

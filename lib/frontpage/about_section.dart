@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
+import 'package:portfolio/theme.dart';
 
 class Characteristic {
   /// A characteristic describing me.
@@ -154,12 +155,7 @@ class AboutMeSection extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           characteristic.adjective,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context)
-                    .colorScheme
-                    .onSurfaceVariant
-                    .withAlpha(0xaa),
-              ),
+          style: descriptionTextStyle(context),
           textAlign: TextAlign.center,
         ),
         Text(
