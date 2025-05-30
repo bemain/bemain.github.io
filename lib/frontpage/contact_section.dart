@@ -42,15 +42,12 @@ class ContactSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
 
-    return Container(
-      color: Theme.of(context).colorScheme.surfaceContainer,
-      child: Padding(
-        padding: windowSize.margin.add(EdgeInsets.only(
-          top: 32,
-          bottom: 24,
-        )),
-        child: _buildContent(context),
-      ),
+    return Padding(
+      padding: windowSize.margin.add(EdgeInsets.only(
+        top: 32,
+        bottom: 24,
+      )),
+      child: _buildContent(context),
     );
   }
 

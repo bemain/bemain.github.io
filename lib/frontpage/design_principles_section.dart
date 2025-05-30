@@ -51,13 +51,14 @@ class DesignPrinciplesSection extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     switch (WindowSize.of(context)) {
       case WindowSize.compact:
+      case WindowSize.medium:
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 12,
           children: [
             _buildTitle(context),
-            const SizedBox(height: 24),
+            const SizedBox(height: 0), // Resolves to 24px due to spacing
             for (final principle in designPrinciples)
               _buildPrinciple(context, principle),
           ],

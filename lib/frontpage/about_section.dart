@@ -46,9 +46,8 @@ class AboutMeSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final WindowSize windowSize = WindowSize.of(context);
 
-    return Container(
+    return Padding(
       padding: windowSize.margin.add(EdgeInsets.symmetric(vertical: 32)),
-      color: Theme.of(context).colorScheme.surfaceContainer,
       child: _buildBody(context),
     );
   }

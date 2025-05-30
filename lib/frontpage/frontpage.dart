@@ -71,11 +71,7 @@ class _FrontpageState extends State<Frontpage> {
       duration: Duration(milliseconds: 400),
       curve: Curves.easeInOut,
     );
-  }
-
-  Future<void> _onDestinationSelected(BuildContext context, int index) async {
-    await scrollTo(sectionKeys[index]);
-    selectedDestinationIndex.value = index;
+    selectedDestinationIndex.value = sectionKeys.indexOf(key);
   }
 
   @override
@@ -107,11 +103,17 @@ class _FrontpageState extends State<Frontpage> {
                   },
                 ),
               ),
-              AboutMeSection(key: aboutMeSectionKey),
+              Container(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: AboutMeSection(key: aboutMeSectionKey),
+              ),
               DesignPrinciplesSection(),
               TimelineSection(key: timelineSectionKey),
               ProjectsSection(key: projectsSectionKey),
-              ContactSection(key: contactSectionKey),
+              Container(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                child: ContactSection(key: contactSectionKey),
+              ),
             ],
           ),
         ),
@@ -185,10 +187,7 @@ class _FrontpageState extends State<Frontpage> {
 
         return TextButton.icon(
           onPressed: () {
-            _onDestinationSelected(
-              context,
-              Frontpage.destinations.indexOf(destination),
-            );
+            scrollTo(sectionKeys[Frontpage.destinations.indexOf(destination)]);
           },
           style: TextButton.styleFrom(
             padding: padding,
@@ -209,8 +208,8 @@ class _FrontpageState extends State<Frontpage> {
           builder: (context, selectedIndex, child) {
             return NavigationDrawer(
               selectedIndex: selectedDestinationIndex.value,
-              onDestinationSelected: (value) {
-                _onDestinationSelected(context, value);
+              onDestinationSelected: (index) {
+                scrollTo(sectionKeys[index]);
                 scaffoldKey.currentState?.closeDrawer();
               },
               children: [

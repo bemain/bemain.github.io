@@ -49,26 +49,23 @@ class TitleSection extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: _buildButterfly(context),
-                      ),
-                      const SizedBox(width: 24),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          _buildTitle(context),
-                          _buildSubtitle(context),
-                          const SizedBox(height: 32),
-                          _buildContactButton(context),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: _buildButterfly(context),
+                    ),
+                    const SizedBox(width: 24),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        _buildTitle(context),
+                        _buildSubtitle(context),
+                        const SizedBox(height: 32),
+                        _buildContactButton(context),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               _buildDownArrow(context),
