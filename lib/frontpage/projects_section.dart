@@ -229,78 +229,141 @@ class ProjectsSection extends StatelessWidget {
   }
 
   Widget _buildProjectCard(BuildContext context, Project project) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: project.links.isEmpty
-            ? null
-            : () {
-                launchUrl(project.links.first.uri);
-              },
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                child: Card.filled(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 0,
-                  child: AspectRatio(
-                    aspectRatio: 1.618,
-                    child: Image(
-                      image: project.image,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
-                child: _buildProjectText(context, project),
-              ),
-              const SizedBox(height: 4),
-              for (ProjectLink link in project.links)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Link(
-                    uri: link.uri,
-                    builder: (context, followLink) {
-                      return TextButton.icon(
-                        onPressed: followLink,
-                        icon: Image(
-                          image: link.image,
-                          color: descriptionTextStyle(context)?.color,
-                          width: 20,
-                          height: 20,
+    switch (WindowSize.of(context)) {
+      case WindowSize.compact:
+        return Card(
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () {
+              launchUrl(project.links.first.uri);
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: SizedBox(
+                height: 164,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 8,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      flex: 1,
+                      child: Card.filled(
+                        clipBehavior: Clip.antiAlias,
+                        elevation: 0,
+                        child: Image(
+                          image: project.image,
+                          fit: BoxFit.cover,
                         ),
-                        label: Row(
-                          spacing: 8,
-                          mainAxisSize: MainAxisSize.min,
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              link.title,
-                              style: TextStyle(
-                                color: descriptionTextStyle(context)?.color,
-                              ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 6),
+                              child: _buildProjectText(context, project),
                             ),
-                            Icon(
-                              Icons.open_in_new,
-                              color: descriptionTextStyle(context)?.color,
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                for (ProjectLink link in project.links)
+                                  _buildProjectLink(context, link),
+                              ],
                             ),
                           ],
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
+              ),
+            ),
+          ),
+        );
+
+      default:
+        return Card(
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: project.links.isEmpty
+                ? null
+                : () {
+                    launchUrl(project.links.first.uri);
+                  },
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Flexible(
+                    child: Card.filled(
+                      clipBehavior: Clip.antiAlias,
+                      elevation: 0,
+                      child: AspectRatio(
+                        aspectRatio: 1.618,
+                        child: Image(
+                          image: project.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 6),
+                    child: _buildProjectText(context, project),
+                  ),
+                  const SizedBox(height: 4),
+                  for (ProjectLink link in project.links)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: _buildProjectLink(context, link),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        );
+    }
+  }
+
+  Widget _buildProjectLink(BuildContext context, ProjectLink link) {
+    return Link(
+      uri: link.uri,
+      builder: (context, followLink) {
+        return TextButton.icon(
+          onPressed: followLink,
+          icon: Image(
+            image: link.image,
+            color: descriptionTextStyle(context)?.color,
+            width: 20,
+            height: 20,
+          ),
+          label: Row(
+            spacing: 8,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                link.title,
+                style: TextStyle(
+                  color: descriptionTextStyle(context)?.color,
+                ),
+              ),
+              Icon(
+                Icons.open_in_new,
+                color: descriptionTextStyle(context)?.color,
+              ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -313,10 +376,14 @@ class ProjectsSection extends StatelessWidget {
           project.title,
           style: Theme.of(context).textTheme.titleMedium,
           textAlign: TextAlign.start,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         Text(
           project.description,
           style: descriptionTextStyle(context),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         ),
         if (project.startDate != null)
           Padding(
