@@ -239,48 +239,44 @@ class ProjectsSection extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.all(8),
-              child: SizedBox(
-                height: 164,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  spacing: 8,
-                  children: [
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 1,
-                      child: Card.filled(
-                        clipBehavior: Clip.antiAlias,
-                        elevation: 0,
-                        child: Image(
-                          image: project.image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 4),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 6),
-                              child: _buildProjectText(context, project),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 128,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      spacing: 8,
+                      children: [
+                        Flexible(
+                          fit: FlexFit.tight,
+                          flex: 1,
+                          child: Card.filled(
+                            clipBehavior: Clip.antiAlias,
+                            elevation: 0,
+                            child: Image(
+                              image: project.image,
+                              fit: BoxFit.cover,
                             ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                for (ProjectLink link in project.links)
-                                  _buildProjectLink(context, link),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Flexible(
+                          flex: 2,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: _buildProjectText(context, project),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      for (ProjectLink link in project.links)
+                        _buildProjectLink(context, link),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

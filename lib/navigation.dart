@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +6,6 @@ import 'package:portfolio/firestore.dart';
 import 'package:portfolio/frontpage/frontpage.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
-import 'package:portfolio/writing/article.dart';
 import 'package:portfolio/writing/article_list.dart';
 import 'package:portfolio/writing/article_pane.dart';
 import 'package:portfolio/writing/writing_shell.dart';
@@ -35,6 +34,8 @@ class Navigation {
           GoRoute(
             path: "/writing",
             builder: (context, state) {
+              print("[DEBUG] Building article shell");
+
               switch (WindowSize.of(context)) {
                 case WindowSize.compact:
                 case WindowSize.medium:
@@ -51,24 +52,19 @@ class Navigation {
               GoRoute(
                 path: ":article",
                 redirect: (context, state) async {
-                  final snapshot = await Firestore.articles
-                      .where("id", isEqualTo: state.pathParameters["article"])
-                      .count()
-                      .get();
-                  if (snapshot.count != 1) {
+                  if ((await Firestore.articles).singleWhereOrNull((article) =>
+                          article.id == state.pathParameters["article"]) ==
+                      null) {
                     return "/writing";
                   }
+
                   return null;
                 },
                 pageBuilder: (context, state) {
-                  final Query<Article> query = Firestore.articles
-                      .where("id", isEqualTo: state.pathParameters["article"])
-                      .limit(1);
-
                   return CustomTransitionPage(
                     key: state.pageKey,
                     child: FutureBuilder(
-                      future: query.get(),
+                      future: Firestore.articles,
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           debugPrint("[FIRESTORE] Error: ${snapshot.error}");
@@ -79,7 +75,8 @@ class Navigation {
                         }
 
                         return ArticlePane(
-                          article: snapshot.data!.docs.single.data(),
+                          article: snapshot.data!.singleWhere((article) =>
+                              article.id == state.pathParameters["article"]),
                         );
                       },
                     ),

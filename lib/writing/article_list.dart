@@ -17,13 +17,9 @@ class ArticleList extends StatefulWidget {
 }
 
 class _ArticleListState extends State<ArticleList> {
-  /// The articles queried from Firestore,
-  /// cached to avoid having to await [futureArticles] every time we rebuild.
-  static List<Article>? articles;
-
   /// The articles that match the current [searchQuery].
-  Iterable<Article>? get filteredArticles =>
-      _ArticleListState.articles?.where((article) =>
+  Future<Iterable<Article>> get filteredArticles async =>
+      (await Firestore.articles).where((article) =>
           article.title.toLowerCase().contains(searchQuery) ||
           article.description?.toLowerCase().contains(searchQuery) == true);
 
@@ -35,6 +31,11 @@ class _ArticleListState extends State<ArticleList> {
 
   @override
   Widget build(BuildContext context) {
+    filteredArticles.then(
+      (value) =>
+          print("[DEBUG] Building article list with {${value}} articles"),
+    );
+
     final WindowSize windowSize = WindowSize.of(context);
 
     final bool isSinglePane =
@@ -76,51 +77,41 @@ class _ArticleListState extends State<ArticleList> {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: articles != null
-                  ? _buildArticleList(context, filteredArticles!)
-                  : FutureBuilder(
-                      future: Firestore.articles
-                          .orderBy("writtenAt", descending: true)
-                          .get(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          debugPrint("[FIRESTORE] Error: ${snapshot.error}");
-                          return SizedBox();
-                        }
-                        if (!snapshot.hasData) {
-                          // TODO: Show placeholder during loading
-                          return SizedBox();
-                        }
+              child: FutureBuilder(
+                future: filteredArticles,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    debugPrint("[FIRESTORE] Error: ${snapshot.error}");
+                    return SizedBox();
+                  }
+                  if (!snapshot.hasData) {
+                    // TODO: Show placeholder during loading
+                    return SizedBox();
+                  }
 
-                        _ArticleListState.articles = [
-                          for (final doc in snapshot.data!.docs) doc.data()
-                        ];
+                  final Iterable<Article> articles = snapshot.data!;
+                  if (articles.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        "No moments found. Try a different search query.",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
 
-                        return _buildArticleList(context, filteredArticles!);
-                      },
-                    ),
+                  return ListView(
+                    children: [
+                      for (final article in articles)
+                        _buildArticleTile(context, article),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildArticleList(BuildContext context, Iterable<Article> articles) {
-    if (articles.isEmpty) {
-      return Padding(
-        padding: EdgeInsets.all(16),
-        child: Text(
-          "No moments found. Try a different search query.",
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
-
-    return ListView(
-      children: [
-        for (final article in articles) _buildArticleTile(context, article),
-      ],
     );
   }
 

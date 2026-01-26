@@ -166,6 +166,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.6.5"
+  cloud_firestore_odm:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore_odm
+      sha256: aa1fc8693e064805c0f414037e841e886b52775307308f93bd9895beaa2ba415
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0-dev.88"
+  cloud_firestore_odm_generator:
+    dependency: "direct dev"
+    description:
+      name: cloud_firestore_odm_generator
+      sha256: "60d3b7bce057c156cdb5e0eb3ba099a1a3cee9be43215b01877a6289e5b037a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0-dev.90"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -226,10 +242,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "27eb0ae77836989a3bc541ce55595e8ceee0992807f14511552a898ddd0d88ac"
+      sha256: "7306ab8a2359a48d22310ad823521d723acfed60ee1f7e37388e8986853b6820"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "2.3.8"
   fake_async:
     dependency: transitive
     description:
@@ -325,6 +341,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.4"
   frontend_server_client:
     dependency: transitive
     description:
@@ -433,10 +457,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: "81f04dee10969f89f604e1249382d46b97a1ccad53872875369622b5bfc9e58a"
+      sha256: c2fcb3920cf2b6ae6845954186420fca40bc0a8abcc84903b7801f17d7050d7c
       url: "https://pub.dev"
     source: hosted
-    version: "6.9.4"
+    version: "6.9.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -653,6 +677,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  recase:
+    dependency: transitive
+    description:
+      name: recase
+      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   shelf:
     dependency: transitive
     description:
@@ -694,10 +726,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: "35c8150ece9e8c8d263337a265153c3329667640850b9304861faea59fc98f6b"
+      sha256: "14658ba5f669685cd3d63701d01b31ea748310f7ab854e471962670abcf57832"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "1.5.0"
   source_helper:
     dependency: transitive
     description:
