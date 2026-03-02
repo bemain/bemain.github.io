@@ -23,55 +23,22 @@ class TitleSection extends StatelessWidget {
 
     return Padding(
       padding: windowSize.margin,
-      child: switch (windowSize) {
-        WindowSize.compact || WindowSize.medium => Column(
-            children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    _buildTitle(context),
-                    _buildSubtitle(context),
-                    Flexible(
-                      child: _buildButterfly(context),
-                    ),
-                    const SizedBox(height: 8),
-                    if (onGetInTouchPressed != null)
-                      _buildContactButton(context),
-                  ],
-                ),
-              ),
-              _buildDownArrow(context),
-            ],
+      child: Column(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildTitle(context),
+                _buildSubtitle(context),
+                const SizedBox(height: 32),
+                if (onGetInTouchPressed != null) _buildContactButton(context),
+              ],
+            ),
           ),
-        WindowSize.expanded ||
-        WindowSize.large ||
-        WindowSize.extraLarge =>
-          Column(
-            children: [
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Flexible(
-                      child: _buildButterfly(context),
-                    ),
-                    const SizedBox(width: 24),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        _buildTitle(context),
-                        _buildSubtitle(context),
-                        const SizedBox(height: 32),
-                        _buildContactButton(context),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              _buildDownArrow(context),
-            ],
-          ),
-      },
+          _buildDownArrow(context),
+        ],
+      ),
     );
   }
 
@@ -130,6 +97,7 @@ class TitleSection extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildButterfly(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
