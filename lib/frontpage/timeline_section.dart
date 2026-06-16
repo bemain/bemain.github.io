@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
@@ -244,11 +245,14 @@ class _TimelineSectionState extends State<TimelineSection> {
               _ => CrossAxisAlignment.center,
             },
             children: [
-              CircleAvatar(
-                backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerLow,
-                radius: 24,
-                child: Icon(Icons.event_outlined),
+              SizedBox(
+                width: 48,
+                child: M3Container.sunny(
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
+                  width: 48,
+                  height: 48,
+                  child: Icon(Icons.event_outlined),
+                ),
               ),
               const SizedBox(height: 8),
               FixedTimeline.tileBuilder(

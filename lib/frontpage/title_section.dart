@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:portfolio/layout.dart';
-import 'package:portfolio/frontpage/nodegraph/butterfly_nodegraph.dart';
-import 'package:portfolio/frontpage/nodegraph/nodegraph_widget.dart';
 import 'package:portfolio/theme.dart';
 
 class TitleSection extends StatelessWidget {
@@ -23,22 +22,56 @@ class TitleSection extends StatelessWidget {
 
     return Padding(
       padding: windowSize.margin,
-      child: Column(
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildTitle(context),
-                _buildSubtitle(context),
-                const SizedBox(height: 32),
-                if (onGetInTouchPressed != null) _buildContactButton(context),
-              ],
-            ),
+      child: switch (windowSize) {
+        WindowSize.compact || WindowSize.medium => Column(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    _buildTitle(context),
+                    _buildSubtitle(context),
+                    Flexible(
+                      child: _buildImage(context),
+                    ),
+                    const SizedBox(height: 8),
+                    if (onGetInTouchPressed != null)
+                      _buildContactButton(context),
+                  ],
+                ),
+              ),
+              _buildDownArrow(context),
+            ],
           ),
-          _buildDownArrow(context),
-        ],
-      ),
+        WindowSize.expanded ||
+        WindowSize.large ||
+        WindowSize.extraLarge =>
+          Column(
+            children: [
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: _buildImage(context),
+                    ),
+                    const SizedBox(width: 24),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        _buildTitle(context),
+                        _buildSubtitle(context),
+                        const SizedBox(height: 32),
+                        if (onGetInTouchPressed != null)
+                          _buildContactButton(context),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              _buildDownArrow(context),
+            ],
+          ),
+      },
     );
   }
 
@@ -97,8 +130,7 @@ class TitleSection extends StatelessWidget {
     );
   }
 
-  // ignore: unused_element
-  Widget _buildButterfly(BuildContext context) {
+  Widget _buildImage(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.biggest.shortestSide < 240) {
@@ -107,12 +139,16 @@ class TitleSection extends StatelessWidget {
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 320),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Center(
-                child: NodegraphWidget(nodegraph: butterflyNodegraph),
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: M3Container.c12SidedCookie(
+              width: 320,
+              height: 320,
+              clipBehavior: Clip.antiAlias,
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
+              child: Image(
+                fit: BoxFit.cover,
+                image: AssetImage("assets/me/landscape2.jpg"),
               ),
             ),
           ),

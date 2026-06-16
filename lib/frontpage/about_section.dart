@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 
@@ -8,6 +9,7 @@ class Characteristic {
     required this.adjective,
     required this.title,
     required this.icon,
+    this.shape = Shapes.circle,
   });
 
   /// Adjective describing the characteristic, preceding the title.
@@ -18,6 +20,9 @@ class Characteristic {
 
   /// Icon representing the characteristic.
   final Widget icon;
+
+  /// The shape used around this characteristic.
+  final Shapes shape;
 }
 
 class AboutMeSection extends StatelessWidget {
@@ -29,16 +34,19 @@ class AboutMeSection extends StatelessWidget {
       adjective: "Swedish",
       title: "Engineering student",
       icon: Icon(Icons.school_outlined),
+      shape: Shapes.square,
     ),
     Characteristic(
       adjective: "Skilled",
       title: "Mobile developer",
       icon: Icon(Icons.code),
+      shape: Shapes.diamond,
     ),
     Characteristic(
       adjective: "Passionate",
       title: "Musician & Conductor",
       icon: Icon(Icons.music_note_outlined),
+      shape: Shapes.circle,
     ),
   ];
 
@@ -146,10 +154,17 @@ class AboutMeSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
-          radius: 32,
-          child: characteristic.icon,
+        M3Container(
+          characteristic.shape,
+          clipBehavior: Clip.antiAlias,
+          width: 64,
+          height: 64,
+          color: Theme.of(context).colorScheme.surfaceContainerLow,
+          child: IconTheme(
+            data: IconThemeData(
+                color: Theme.of(context).colorScheme.onPrimaryContainer),
+            child: characteristic.icon,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
@@ -172,9 +187,14 @@ class AboutMeSection extends StatelessWidget {
       child: Center(
         child: FittedBox(
           fit: BoxFit.cover,
-          child: CircleAvatar(
-            maxRadius: 160,
-            foregroundImage: AssetImage("assets/me/portrait2.jpg"),
+          child: M3Container.c7SidedCookie(
+            clipBehavior: Clip.antiAlias,
+            width: 320,
+            height: 320,
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            child: Image(
+              image: AssetImage("assets/me/portrait2.jpg"),
+            ),
           ),
         ),
       ),

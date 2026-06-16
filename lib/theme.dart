@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final Gradient primaryGradient = LinearGradient(
-  colors: <Color>[Colors.amber, Colors.red],
+  colors: <Color>[Colors.cyan, Colors.indigo],
 );
 
 TextStyle? descriptionTextStyle(BuildContext context) {
