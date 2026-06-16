@@ -52,18 +52,27 @@ class TitleSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Flexible(
-                      child: _buildImage(context),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: _buildImage(context),
+                      ),
                     ),
                     const SizedBox(width: 24),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        _buildTitle(context),
-                        _buildSubtitle(context),
-                        const SizedBox(height: 32),
-                        if (onGetInTouchPressed != null)
-                          _buildContactButton(context),
-                      ],
+                    Flexible(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            _buildTitle(context),
+                            _buildSubtitle(context),
+                            const SizedBox(height: 32),
+                            if (onGetInTouchPressed != null)
+                              _buildContactButton(context),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -125,7 +134,10 @@ class TitleSection extends StatelessWidget {
       child: Text(
         text,
         style: textStyle,
-        textAlign: TextAlign.center,
+        textAlign: switch (windowSize) {
+          WindowSize.compact || WindowSize.medium => TextAlign.center,
+          _ => TextAlign.start,
+        },
       ),
     );
   }
@@ -139,8 +151,8 @@ class TitleSection extends StatelessWidget {
 
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 48),
-          child: AspectRatio(
-            aspectRatio: 1,
+          child: FittedBox(
+            fit: BoxFit.cover,
             child: M3Container.c12SidedCookie(
               width: 320,
               height: 320,
@@ -158,17 +170,15 @@ class TitleSection extends StatelessWidget {
   }
 
   Widget _buildContactButton(BuildContext context) {
-    return Center(
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          padding: EdgeInsets.all(24),
-          textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(),
-        ),
-        onPressed: () {
-          onGetInTouchPressed?.call();
-        },
-        child: Text("Get in touch"),
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.all(24),
+        textStyle: Theme.of(context).textTheme.labelLarge?.copyWith(),
       ),
+      onPressed: () {
+        onGetInTouchPressed?.call();
+      },
+      child: Text("Get in touch"),
     );
   }
 
