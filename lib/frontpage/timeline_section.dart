@@ -70,6 +70,16 @@ class TimelineSection extends StatefulWidget {
 
   static final List<Event> events = [
     Event(
+      dateString: "Summer 2026",
+      title: "u-blox",
+      type: EventType.music,
+      location: "Malmö",
+      summary: "Summer job, embedded ML.",
+      description:
+          """I worked at u-blox, the global leader in positioning and wireless communication, with evaluating embedded ML for dead-reckoning.""",
+      linkUrl: "https://www.u-blox.com/en",
+    ),
+    Event(
       dateString: "Spring 2025",
       title: "Conductor in the musical 'The Sound of Music'",
       type: EventType.music,
@@ -84,27 +94,17 @@ class TimelineSection extends StatefulWidget {
       title: "Chalmers University of Technology",
       type: EventType.education,
       location: "Gothenburg",
-      summary: "Engineering Mathematics",
+      summary: "Engineering Mathematics.",
       description: """Began studies in Engineering Mathematics.""",
       linkUrl:
           "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/",
-    ),
-    Event(
-      dateString: "Spring 2024",
-      title: "Mariannelunds folkhögskola",
-      type: EventType.education,
-      location: "Mariannelund",
-      summary: "Christian Bible program, BibelTjänst",
-      description:
-          """Christian Bible studies at the Adult Education College level.""",
-      linkUrl: "https://mariannelund.nu/kurser/bibelskola/bibeltjanst/",
     ),
     Event(
       dateString: "Autumn 2023",
       title: "EC Solutions",
       type: EventType.work,
       location: "Helsingborg",
-      summary: "Consulting firm",
+      summary: "Consulting firm.",
       description:
           """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
       linkUrl: "https://www.ecsolutions.se/",
@@ -114,7 +114,7 @@ class TimelineSection extends StatefulWidget {
       title: "Arranged larp",
       type: EventType.other,
       location: "Oxdjupet, Vittsjö",
-      summary: "Arranged a larp for 30 people",
+      summary: "Arranged a larp for 30 people.",
       description:
           """An activity where 30 people engage in improvised theater and solve challenges during a day. I started it in 2021 and have organized it 3 years in a row.""",
       // TODO: Add link
@@ -140,16 +140,6 @@ class TimelineSection extends StatefulWidget {
           "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/",
     ),
     Event(
-      dateString: "Summer 2022",
-      title: "Cemetery Groundskeeper",
-      type: EventType.work,
-      location: "Kvistofta Cemetery",
-      summary: "Responsible for the maintenance of graves.",
-      description:
-          """Responsible for maintaining the grounds and caring for the graves at Kvistofta Cemetery.""",
-      linkUrl: "https://www.svenskakyrkan.se/kvistofta/kvistofta-kyrkogard",
-    ),
-    Event(
       dateString: "2021",
       title: "Award, Lund diocese",
       type: EventType.award,
@@ -164,7 +154,7 @@ class TimelineSection extends StatefulWidget {
       title: "Säkerhets-SM",
       type: EventType.coding,
       location: "Digitally",
-      summary: "Finalist in the National Security Championship",
+      summary: "Finalist in the National Security Championship.",
       description:
           """Finalist in the National Security Championship for High School Students.""",
       linkUrl: "https://sakerhetssm.se/",
@@ -184,7 +174,7 @@ class TimelineSection extends StatefulWidget {
       title: "Lars-Erik Larsson-gymnasiet",
       type: EventType.education,
       location: "Lund",
-      summary: "Natural Science, Music",
+      summary: "Natural Science, Music.",
       description: """Studied Natural Science, Music. 
 Grade: 22.41""",
       linkUrl: "https://lel.nu/",
@@ -215,7 +205,7 @@ Grade: 22.41""",
       title: "Rydebäcksskolan",
       type: EventType.education,
       location: "Rydebäck",
-      summary: "Elementary school",
+      summary: "Elementary school.",
       description:
           """Elementary school. Received all A:s (340 merit points). Completed Math 1-3c during middle school (grade A).""",
       linkUrl: "https://helsingborg.se/grundskolor/rydebacksskolan/",
