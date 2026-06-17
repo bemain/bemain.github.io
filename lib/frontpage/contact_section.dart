@@ -156,7 +156,7 @@ class ContactSection extends StatelessWidget {
     TextAlign textAlign = TextAlign.center,
   }) {
     return Text(
-      """Want to work together, or just interested in knowing more about what I do? Don't hesitate to reach out! I'm always eager to hear from and be inspired by fellow developers.""",
+      """Want to work together, or just curious about what I do? Don't hesitate to reach out! I'm always happy to connect — whether you're a developer, a fellow musician, or just curious.""",
       style: descriptionTextStyle(context),
       textAlign: textAlign,
     );

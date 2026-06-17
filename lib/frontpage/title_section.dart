@@ -115,7 +115,7 @@ class TitleSection extends StatelessWidget {
 
   Widget _buildSubtitle(
     BuildContext context, {
-    String text = "Blending elegant UI and cutting-edge technology",
+    String text = "Conducting clean code and complex math",
   }) {
     final WindowSize windowSize = WindowSize.of(context);
 

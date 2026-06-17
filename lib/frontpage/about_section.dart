@@ -31,14 +31,14 @@ class AboutMeSection extends StatelessWidget {
 
   static final List<Characteristic> characteristics = [
     Characteristic(
-      adjective: "Swedish",
+      adjective: "Curious",
       title: "Engineering student",
       icon: Icon(Icons.school_outlined),
       shape: Shapes.square,
     ),
     Characteristic(
-      adjective: "Skilled",
-      title: "Mobile developer",
+      adjective: "Creative",
+      title: "Software developer",
       icon: Icon(Icons.code),
       shape: Shapes.diamond,
     ),
@@ -119,7 +119,7 @@ class AboutMeSection extends StatelessWidget {
 
   Widget _buildDescription(BuildContext context) {
     return Text(
-      """I'm driven by the challenge of creating intuitive user experiences powered by innovative technology.""",
+      """I live for the joy of creating harmony out of chaos and building things that work beautifully.""",
       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color:
                 Theme.of(context).colorScheme.onSurfaceVariant.withAlpha(0xaa),

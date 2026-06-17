@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 
-class DesignPriciple {
+class DesignPrinciple {
   final String title;
   final String description;
   final IconData icon;
 
-  const DesignPriciple({
+  const DesignPrinciple({
     required this.title,
     required this.description,
     required this.icon,
@@ -17,23 +17,23 @@ class DesignPriciple {
 class DesignPrinciplesSection extends StatelessWidget {
   const DesignPrinciplesSection({super.key});
 
-  static final List<DesignPriciple> designPrinciples = [
-    const DesignPriciple(
+  static final List<DesignPrinciple> designPrinciples = [
+    const DesignPrinciple(
       title: "Make everything a work of art",
       description:
-          "Beauty is the thread that weaves through everything I do. It is the principle by which my brain operates and the force that drives me. It doesn't always have to be flamboyant or excessive, but it has to look good.",
+          "Beauty runs through everything I do — from the design of UI elements to the structure of musical arrangements. It doesn't have to be loud, but it has look good.",
       icon: Icons.palette_outlined,
     ),
-    const DesignPriciple(
+    const DesignPrinciple(
       title: "Less is more",
       description:
-          "Anyone can write code that is cluttered. The true challenge lies in creating software that is elegant in every aspect, from the UI down to the last line of code. Make much with little.",
+          "The real challenge isn't adding more — it's knowing what to leave out. I aim for software that is elegant at every level, from the interface down to the last line of code.",
       icon: Icons.auto_awesome_outlined,
     ),
-    const DesignPriciple(
+    const DesignPrinciple(
       title: "Usability is key",
       description:
-          "A program might have hundreds of features, but if it is hard to use it is still worthless. True power comes from making the hard things simple, and good software is intuitive, facilitating and easy to use.",
+          "Features are only as good as the experience of using them. Good software is invisible — it gets out of the way and lets people do what they came to do.",
       icon: Icons.favorite_outline,
     )
   ];
@@ -102,7 +102,7 @@ class DesignPrinciplesSection extends StatelessWidget {
 
   Widget _buildPrinciple(
     BuildContext context,
-    DesignPriciple principle, {
+    DesignPrinciple principle, {
     TextAlign alignment = TextAlign.center,
   }) {
     return Card(

@@ -75,20 +75,29 @@ class TimelineSection extends StatefulWidget {
       title: "u-blox",
       type: EventType.work,
       location: "Malmö",
-      summary: "Summer job, embedded ML for dead-reckoning.",
+      summary: "Evaluating embedded ML for dead-reckoning.",
       description:
-          """Summer job at u-blox, the global leader in positioning and wireless communication, with evaluating embedded ML for dead-reckoning.""",
+          """Evaluating embedded ML for dead-reckoning at u-blox, a global leader in positioning and wireless communication technology.""",
       linkUrl: "https://www.u-blox.com",
     ),
     Event(
-      dateString: "Spring 2025",
+      dateString: "Spring 2025, 2026",
       title: "Conductor in the musical 'The Sound of Music'",
       type: EventType.music,
       location: "Helsingborgs Stadsteater, Helsingborg",
       summary: "Conducted the band and arranged the music.",
       description:
-          """The musical Sound of Music was staged on one of Skåne's largest stages. I arranged the music for the three-hour long play and conducted the band.""",
+          """Sound of Music sold out on one of Skåne's largest stages. I arranged the music for the three-hour production and conducted the band — and liked it so much we did it again the following year.""",
       linkUrl: "https://www.facebook.com/profile.php?id=100089810478596",
+    ),
+    Event(
+      dateString: "2025 - present",
+      title: "Chairman, CKG",
+      type: EventType.education,
+      location: "Gothenburg",
+      summary: "Chairman of the student association CKG.",
+      description:
+          """Chairman of Chalmers Kristna Grupp, a student association organizing lunch lectures and community events for over 80 participants.""",
     ),
     Event(
       dateString: "2024 - present",
@@ -96,7 +105,8 @@ class TimelineSection extends StatefulWidget {
       type: EventType.education,
       location: "Gothenburg",
       summary: "Engineering Mathematics.",
-      description: """Began studies in Engineering Mathematics.""",
+      description:
+          """Studying Engineering Mathematics at Chalmers — a program combining advanced mathematics with computer science, physics, and real-world applications.""",
       linkUrl:
           "https://www.chalmers.se/utbildning/hitta-program/teknisk-matematik-civilingenjor/",
     ),
@@ -105,9 +115,9 @@ class TimelineSection extends StatefulWidget {
       title: "EC Solutions",
       type: EventType.work,
       location: "Helsingborg",
-      summary: "Consulting firm.",
+      summary: "Developed a website for Dirma in Next.js and TypeScript.",
       description:
-          """I worked in-house at the consulting firm EC Solutions to develop a digital service and website for the company Dirma using Next.js and TypeScript.""",
+          """Worked in-house at the consulting firm EC Solutions, building a digital service and website for the company Dirma using Next.js and TypeScript.""",
       linkUrl: "https://www.ecsolutions.se/",
     ),
     Event(
@@ -117,7 +127,7 @@ class TimelineSection extends StatefulWidget {
       location: "Oxdjupet, Vittsjö",
       summary: "Arranged a larp for 30 people.",
       description:
-          """An activity where 30 people engage in improvised theater and solve challenges during a day. I started it in 2021 and have organized it 4 years now.""",
+          """A day of improvised theater and puzzle-solving for 30 people in the woods. I started it in 2021 and have organized it every year since.""",
       // TODO: Add link
     ),
     Event(
@@ -127,16 +137,25 @@ class TimelineSection extends StatefulWidget {
       location: "Helsingborgs Stadsteater, Lunds Stadsteater",
       summary: "Conducted the band and arranged the music.",
       description:
-          """The Broadway musical Annie was staged in Lund and Helsingborg, and I conducted the band of 12 people and arranged much of the music. I also appeared on stage as one of the actors.""",
+          """The Broadway musical Annie was staged at theatres in both Lund and Helsingborg. I conducted a band of 12 and arranged much of the music — and also appeared on stage as one of the actors.""",
       linkUrl: "https://photos.app.goo.gl/dk2aGP8XyN8JSPWD7",
+    ),
+    Event(
+      dateString: "December 2022",
+      title: "Released Musician's Toolbox",
+      type: EventType.coding,
+      summary: "Launched my Flutter app for musicians on iOS and Android.",
+      description:
+          """Launched Musician's Toolbox, a Flutter app with everything musicians need for transcribing, practicing, and performing. Available on the App Store and Google Play, and still actively growing.""",
+      linkUrl: "https://play.google.com/store/apps/details?id=se.agardh.musbx",
     ),
     Event(
       dateString: "2022",
       title: "Award, Anderssons minnesfond",
       type: EventType.award,
-      summary: "Musical award given to talented youths.",
+      summary: "Musical scholarship for talented young musicians.",
       description:
-          """Musical award given to talented youths in the municipality of Helsingborg, to be used for continued studies in classical music.""",
+          """A musical scholarship awarded to talented young musicians in Helsingborg, to be used for continued studies in classical music.""",
       linkUrl:
           "https://stiftelsemedel.se/stiftelsen-elsa-och-hellertz-anderssons-minnesfond/",
     ),
@@ -144,9 +163,9 @@ class TimelineSection extends StatefulWidget {
       dateString: "2021",
       title: "Award, Lund diocese",
       type: EventType.award,
-      summary: "Award given to musically engaged youths.",
+      summary: "One of three recipients of the Lund diocese music scholarship.",
       description:
-          """Yearly award given to musically engaged youths in the Lund diocese.""",
+          """One of three yearly recipients of the Lund diocese music scholarship for musically engaged young people.""",
       linkUrl:
           "https://www.svenskakyrkan.se/lundsstift/nyheter/sok-stiftets-musikstipendium-for-unga",
     ),
@@ -155,9 +174,9 @@ class TimelineSection extends StatefulWidget {
       title: "Säkerhets-SM",
       type: EventType.coding,
       location: "Digitally",
-      summary: "Finalist in the National Security Championship.",
+      summary: "Finalist in the National Cybersecurity Championship.",
       description:
-          """Finalist in the National Security Championship for High School Students.""",
+          """Finalist in Sweden's National Cybersecurity Championship for high school students.""",
       linkUrl: "https://sakerhetssm.se/",
     ),
     Event(
@@ -167,17 +186,17 @@ class TimelineSection extends StatefulWidget {
       location: "Lund",
       summary: "Taught children to code.",
       description:
-          """I taught children and young people to code, something that I find both fun and important. Courses included Roblox, Minecraft, and Python. Responsibilities also included training new instructors.""",
+          """Taught children and young people to code — something I find both genuinely fun and important. Courses covered Roblox, Minecraft, and Python. Also trained new instructors.""",
       linkUrl: "https://www.hemkodat.se/",
     ),
     Event(
-      dateString: "2020 - 2023",
+      dateString: "2021 - 2023",
       title: "Lars-Erik Larsson-gymnasiet",
-      type: EventType.coding,
+      type: EventType.education,
       location: "Lund",
-      summary: "Natural Science, Music.",
-      description: """Studied Natural Science, Music. 
-Grade: 22.41""",
+      summary: "Natural science with music. Merit 22.41.",
+      description:
+          """Natural Science with Music. Graduated with a merit of 22.41, having completed Math 4–5 in year one and Specialist Mathematics in year two.""",
       linkUrl: "https://lel.nu/",
     ),
     Event(
@@ -185,9 +204,9 @@ Grade: 22.41""",
       title: "Nordiskt talangläger, AI",
       type: EventType.coding,
       location: "BTH, Karlskrona",
-      summary: "Camp for talented youths, focusing on AI and mathematics.",
+      summary: "Nordic talent camp focused on AI and mathematics.",
       description:
-          """A summer camp for gifted young individuals from across the Nordic region, with a focus on AI and mathematics.""",
+          """A summer camp for gifted students from across the Nordic countries, exploring AI and mathematics.""",
       linkUrl:
           "https://mattetalanger.ncm.gu.se/nordiskt-talanglager-inom-artificiell-intelligens/",
     ),
@@ -198,7 +217,7 @@ Grade: 22.41""",
       location: "Karlskrona",
       summary: "Summer camp for mathematically gifted children.",
       description:
-          """Summer camp for children and young people who are gifted and interested in mathematics and programming.""",
+          """A summer camp for children passionate about mathematics and programming — my first real taste of what it feels like to be in a room full of people who love the same things you do.""",
       linkUrl: "https://www.mattekollo.se/",
     ),
     Event(
@@ -206,9 +225,9 @@ Grade: 22.41""",
       title: "Rydebäcksskolan",
       type: EventType.education,
       location: "Rydebäck",
-      summary: "Elementary school.",
+      summary: "Elementary school. All A's, merit 340.",
       description:
-          """Elementary school. Received all A:s (340 merit points). Completed Math 1-3c during middle school (grade A).""",
+          """Elementary school. Received all A's (merit 340) and completed Math 1–3c during middle school.""",
       linkUrl: "https://helsingborg.se/grundskolor/rydebacksskolan/",
     )
   ];

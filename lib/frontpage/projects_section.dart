@@ -149,6 +149,7 @@ class ProjectsSection extends StatelessWidget {
           "A mobile app used during the larp I arrange yearly at Oxdjupet.",
       imageUrl: "assets/projects/oxdjupet.png",
       startDate: DateTime(2021),
+      endDate: DateTime(2025),
       links: [
         ProjectLink(
           title: "Google Play",
