@@ -73,12 +73,12 @@ class TimelineSection extends StatefulWidget {
     Event(
       dateString: "Summer 2026",
       title: "u-blox",
-      type: EventType.music,
+      type: EventType.work,
       location: "Malmö",
-      summary: "Summer job, embedded ML.",
+      summary: "Summer job, embedded ML for dead-reckoning.",
       description:
-          """I worked at u-blox, the global leader in positioning and wireless communication, with evaluating embedded ML for dead-reckoning.""",
-      linkUrl: "https://www.u-blox.com/en",
+          """Summer job at u-blox, the global leader in positioning and wireless communication, with evaluating embedded ML for dead-reckoning.""",
+      linkUrl: "https://www.u-blox.com",
     ),
     Event(
       dateString: "Spring 2025",
@@ -111,13 +111,13 @@ class TimelineSection extends StatefulWidget {
       linkUrl: "https://www.ecsolutions.se/",
     ),
     Event(
-      dateString: "2021, 2022, 2023",
+      dateString: "2021, 2022, 2023, 2025",
       title: "Arranged larp",
       type: EventType.other,
       location: "Oxdjupet, Vittsjö",
       summary: "Arranged a larp for 30 people.",
       description:
-          """An activity where 30 people engage in improvised theater and solve challenges during a day. I started it in 2021 and have organized it 3 years in a row.""",
+          """An activity where 30 people engage in improvised theater and solve challenges during a day. I started it in 2021 and have organized it 4 years now.""",
       // TODO: Add link
     ),
     Event(
@@ -173,7 +173,7 @@ class TimelineSection extends StatefulWidget {
     Event(
       dateString: "2020 - 2023",
       title: "Lars-Erik Larsson-gymnasiet",
-      type: EventType.education,
+      type: EventType.coding,
       location: "Lund",
       summary: "Natural Science, Music.",
       description: """Studied Natural Science, Music. 
@@ -183,7 +183,7 @@ Grade: 22.41""",
     Event(
       dateString: "Summer 2019",
       title: "Nordiskt talangläger, AI",
-      type: EventType.other,
+      type: EventType.coding,
       location: "BTH, Karlskrona",
       summary: "Camp for talented youths, focusing on AI and mathematics.",
       description:
@@ -194,7 +194,7 @@ Grade: 22.41""",
     Event(
       dateString: "Summer 2017",
       title: "Mattekollo",
-      type: EventType.other,
+      type: EventType.education,
       location: "Karlskrona",
       summary: "Summer camp for mathematically gifted children.",
       description:
@@ -202,7 +202,7 @@ Grade: 22.41""",
       linkUrl: "https://www.mattekollo.se/",
     ),
     Event(
-      dateString: "2011 -202",
+      dateString: "2011 - 2020",
       title: "Rydebäcksskolan",
       type: EventType.education,
       location: "Rydebäck",
