@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:collection/collection.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/frontpage/about_section.dart';
 import 'package:portfolio/frontpage/contact_section.dart';
 import 'package:portfolio/frontpage/design_principles_section.dart';
@@ -21,19 +22,19 @@ class Frontpage extends StatefulWidget {
 
   static final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
-      icon: Icon(Icons.person_outline),
+      icon: Icon(Symbols.person),
       label: Text("About me"),
     ),
     NavigationDrawerDestination(
-      icon: Icon(Icons.event),
+      icon: Icon(Symbols.event),
       label: Text("Timeline"),
     ),
     NavigationDrawerDestination(
-      icon: Icon(Icons.work_outline),
+      icon: Icon(Symbols.work),
       label: Text("Projects"),
     ),
     NavigationDrawerDestination(
-      icon: Icon(Icons.mail_outline),
+      icon: Icon(Symbols.mail),
       label: Text("Contact"),
     ),
   ];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes/flutter_m3shapes.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 
@@ -33,19 +34,19 @@ class AboutMeSection extends StatelessWidget {
     Characteristic(
       adjective: "Curious",
       title: "Engineering student",
-      icon: Icon(Icons.school_outlined),
+      icon: Icon(Symbols.school),
       shape: Shapes.square,
     ),
     Characteristic(
       adjective: "Creative",
       title: "Software developer",
-      icon: Icon(Icons.code),
+      icon: Icon(Symbols.code),
       shape: Shapes.diamond,
     ),
     Characteristic(
       adjective: "Passionate",
       title: "Musician & Conductor",
-      icon: Icon(Icons.music_note_outlined),
+      icon: Icon(Symbols.music_note),
       shape: Shapes.circle,
     ),
   ];

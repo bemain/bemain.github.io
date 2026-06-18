@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes/flutter_m3shapes.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 
@@ -188,7 +189,7 @@ class TitleSection extends StatelessWidget {
       child: IconButton(
         onPressed: onScrollDownPressed,
         icon: Icon(
-          Icons.keyboard_arrow_down,
+          Symbols.keyboard_arrow_down,
           size: 48,
         ),
       ),

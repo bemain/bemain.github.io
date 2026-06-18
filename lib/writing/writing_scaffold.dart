@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 
 class WritingScaffold extends StatelessWidget {
@@ -21,7 +22,7 @@ class WritingScaffold extends StatelessWidget {
 
   static final List<NavigationDrawerDestination> destinations = [
     NavigationDrawerDestination(
-      icon: Icon(Icons.person_outline),
+      icon: Icon(Symbols.person),
       label: Text("About me"),
     ),
   ];

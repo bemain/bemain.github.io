@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 
@@ -22,19 +23,19 @@ class DesignPrinciplesSection extends StatelessWidget {
       title: "Make everything a work of art",
       description:
           "Beauty runs through everything I do — from the design of UI elements to the structure of musical arrangements. It doesn't have to be loud, but it has look good.",
-      icon: Icons.palette_outlined,
+      icon: Symbols.palette,
     ),
     const DesignPrinciple(
       title: "Less is more",
       description:
           "The real challenge isn't adding more — it's knowing what to leave out. I aim for software that is elegant at every level, from the interface down to the last line of code.",
-      icon: Icons.auto_awesome_outlined,
+      icon: Symbols.auto_awesome,
     ),
     const DesignPrinciple(
       title: "Usability is key",
       description:
           "Features are only as good as the experience of using them. Good software is invisible — it gets out of the way and lets people do what they came to do.",
-      icon: Icons.favorite_outline,
+      icon: Symbols.favorite,
     )
   ];
 

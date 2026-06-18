@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_m3shapes/flutter_m3shapes.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:timelines_plus/timelines_plus.dart';
@@ -270,7 +271,7 @@ class _TimelineSectionState extends State<TimelineSection> {
                   color: Theme.of(context).colorScheme.surfaceContainerLow,
                   width: 48,
                   height: 48,
-                  child: Icon(Icons.event_outlined),
+                  child: Icon(Symbols.event),
                 ),
               ),
               const SizedBox(height: 8),
@@ -322,7 +323,7 @@ class _TimelineSectionState extends State<TimelineSection> {
                           isExpanded = true;
                         });
                       },
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: Icon(Symbols.arrow_drop_down),
                     ),
                   ),
                 ),
@@ -352,17 +353,17 @@ class _TimelineSectionState extends State<TimelineSection> {
   IconData _getIcon(Event event) {
     switch (event.type) {
       case EventType.education:
-        return Icons.school_outlined;
+        return Symbols.school;
       case EventType.work:
-        return Icons.work_outline;
+        return Symbols.work;
       case EventType.coding:
-        return Icons.code_outlined;
+        return Symbols.code;
       case EventType.music:
-        return Icons.music_note_outlined;
+        return Symbols.music_note;
       case EventType.award:
-        return Icons.emoji_events_outlined;
+        return Symbols.emoji_events;
       case EventType.other:
-        return Icons.radio_button_checked_outlined;
+        return Symbols.radio_button_checked;
     }
   }
 

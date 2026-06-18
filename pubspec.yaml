@@ -21,6 +21,7 @@ dependencies:
   firebase_core: ^4.4.0
   cloud_firestore: ^6.1.2
   flutter_m3shapes: ^1.0.0+2
+  material_symbols_icons: ^4.2951.0
 
 dev_dependencies:
   flutter_test:
@@ -34,7 +35,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.2
 
 flutter:
-  uses-material-design: true
+  uses-material-design: false
   assets:
     - assets/logo/
     - assets/projects/

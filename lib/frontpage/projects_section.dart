@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
 import 'package:url_launcher/link.dart';
@@ -358,7 +359,7 @@ class ProjectsSection extends StatelessWidget {
                 ),
               ),
               Icon(
-                Icons.open_in_new,
+                Symbols.open_in_new,
                 color: descriptionTextStyle(context)?.color,
               ),
             ],
@@ -396,7 +397,7 @@ class ProjectsSection extends StatelessWidget {
                   WidgetSpan(
                     alignment: PlaceholderAlignment.middle,
                     child: Icon(
-                      Icons.timeline,
+                      Symbols.timeline,
                       size: 20,
                       color: descriptionTextStyle(context)?.color,
                     ),

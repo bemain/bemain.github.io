@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:material_symbols_icons/symbols.dart';
 import 'package:portfolio/firestore.dart';
 import 'package:portfolio/layout.dart';
 import 'package:portfolio/theme.dart';
@@ -57,7 +58,7 @@ class _ArticleListState extends State<ArticleList> {
               padding: const WidgetStatePropertyAll<EdgeInsets>(
                 EdgeInsets.symmetric(horizontal: 16.0),
               ),
-              leading: Icon(Icons.search),
+              leading: Icon(Symbols.search),
               hintText: "Search moments",
               trailing: [
                 if (searchQuery.isNotEmpty)
@@ -67,7 +68,7 @@ class _ArticleListState extends State<ArticleList> {
                         searchController.clear();
                       });
                     },
-                    icon: Icon(Icons.clear),
+                    icon: Icon(Symbols.clear),
                   ),
               ],
               onChanged: (value) {
@@ -157,7 +158,7 @@ class _ArticleListState extends State<ArticleList> {
                         fit: BoxFit.cover,
                       )
                     : Icon(
-                        Icons.notes,
+                        Symbols.notes,
                         size: 48,
                       ),
               ),
@@ -204,7 +205,7 @@ class _ArticleListState extends State<ArticleList> {
                   child: Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Icon(
-                      Icons.event,
+                      Symbols.event,
                       color: descriptionTextStyle(context)?.color,
                     ),
                   ),
