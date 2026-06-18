@@ -4,7 +4,7 @@
     "start_url": ".",
     "display": "standalone",
     "background_color": "#A9A9A9",
-    "theme_color": "#FF5722",
+    "theme_color": "#F1DFDA",
     "description": "Benjamin Agardh's portfolio website.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
