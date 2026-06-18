@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const Color seedColor = Colors.deepOrange;
+
 final Gradient primaryGradient = LinearGradient(
   colors: <Color>[Colors.cyan, Colors.indigo],
 );
