@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/navigation.dart';
 
 import 'firebase_options.dart';
@@ -31,7 +30,7 @@ class MainApp extends StatelessWidget {
 
     return MaterialApp.router(
       theme: theme.copyWith(
-        textTheme: GoogleFonts.openSansTextTheme(theme.textTheme),
+        textTheme: theme.textTheme.apply(fontFamily: "OpenSans"),
       ),
       routerConfig: Navigation.router,
     );

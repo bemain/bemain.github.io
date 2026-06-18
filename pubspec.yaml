@@ -1,7 +1,7 @@
 name: portfolio
 description: "Benjamin Agardh's portfolio website"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.6.0
@@ -12,7 +12,6 @@ dependencies:
     
   flutter_markdown: ^0.7.5
   go_router: ^17.1.0
-  google_fonts: ^8.0.2
   intl: ^0.20.1
   markdown: ^7.3.0
   timelines_plus: ^1.0.6
@@ -42,4 +41,10 @@ flutter:
     - assets/me/
     - assets/writing/
     - assets/icons/
-    - assets/fonts/open_sans/
+  
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/open_sans/OpenSans-VariableFont_wdth,wght.ttf
+        - asset: assets/fonts/open_sans/OpenSans-Italic-VariableFont_wdth,wght.ttf
+          style: italic
