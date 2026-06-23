@@ -370,7 +370,7 @@ class _TimelineSectionState extends State<TimelineSection> {
   Widget _buildEventTile(BuildContext context, Event event) {
     final WindowSize windowSize = WindowSize.of(context);
     final String? description = switch (windowSize) {
-      WindowSize.compact || WindowSize.medium => event.summary,
+      WindowSize.compact => event.summary,
       _ => event.description
     };
 

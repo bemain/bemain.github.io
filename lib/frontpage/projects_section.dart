@@ -271,11 +271,15 @@ class ProjectsSection extends StatelessWidget {
                               child: _buildProjectText(context, project),
                             ),
                             const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                for (ProjectLink link in project.links)
-                                  _buildProjectLink(context, link),
-                              ],
+                            SizedBox(
+                              height: 32,
+                              child: ListView(
+                                scrollDirection: Axis.horizontal,
+                                children: [
+                                  for (ProjectLink link in project.links)
+                                    _buildProjectLink(context, link),
+                                ],
+                              ),
                             ),
                           ],
                         ),

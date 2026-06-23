@@ -52,7 +52,6 @@ class DesignPrinciplesSection extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     switch (WindowSize.of(context)) {
       case WindowSize.compact:
-      case WindowSize.medium:
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
