@@ -10,12 +10,7 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       title: json['title'] as String,
       description: json['description'] as String,
       imageUrl: json['imageUrl'] as String,
-      startDate: json['startDate'] == null
-          ? null
-          : DateTime.parse(json['startDate'] as String),
-      endDate: json['endDate'] == null
-          ? null
-          : DateTime.parse(json['endDate'] as String),
+      dateString: json['dateString'] as String?,
       links: json['links'] == null
           ? const []
           : _linksFromJson(json['links'] as List<Map<String, dynamic>>),
@@ -25,8 +20,7 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'imageUrl': instance.imageUrl,
-      'startDate': instance.startDate?.toIso8601String(),
-      'endDate': instance.endDate?.toIso8601String(),
+      'dateString': instance.dateString,
       'links': _linksToJson(instance.links),
     };
 

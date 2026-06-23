@@ -14,16 +14,9 @@ class Project {
     required this.title,
     required this.description,
     required this.imageUrl,
-    this.startDate,
-    this.endDate,
+    this.dateString,
     this.links = const [],
-  })  : // Start date must be before end date
-        assert(startDate == null ||
-            endDate == null ||
-            startDate == endDate ||
-            startDate.isBefore(endDate)),
-        // If there is an end date, there must be a start date
-        assert(startDate != null || endDate == null);
+  });
 
   /// The title of the project
   final String title;
@@ -39,11 +32,8 @@ class Project {
   @JsonKey(includeFromJson: false, includeToJson: false)
   ImageProvider get image => AssetImage(imageUrl);
 
-  /// The start date of the project
-  final DateTime? startDate;
-
-  /// The end date of the project. If null, the project is ongoing.
-  final DateTime? endDate;
+  /// A string representation of the date of the event.
+  final String? dateString;
 
   @JsonKey(fromJson: _linksFromJson, toJson: _linksToJson)
   final List<ProjectLink> links;
@@ -98,7 +88,7 @@ class ProjectsSection extends StatelessWidget {
       description:
           "A mobile app that offers everything a musician needs for transcribing, practicing and performing.",
       imageUrl: "assets/projects/treble_clef.png",
-      startDate: DateTime(2022),
+      dateString: "2022 - present",
       links: [
         ProjectLink(
           title: "Google Play",
@@ -119,8 +109,7 @@ class ProjectsSection extends StatelessWidget {
       description:
           "A website for the Swedish company Dirma, built using TypeScript and Next.js.",
       imageUrl: "assets/projects/dirma.png",
-      startDate: DateTime(2023),
-      endDate: DateTime(2023),
+      dateString: "2023",
       links: [
         ProjectLink(
           title: "Website",
@@ -134,8 +123,7 @@ class ProjectsSection extends StatelessWidget {
       description:
           "A wireless hand controller for Märklin Sprint using Bluetooth LE.",
       imageUrl: "assets/projects/car.png",
-      startDate: DateTime(2021),
-      endDate: DateTime(2022),
+      dateString: "2021 - 2022",
       links: [
         ProjectLink(
           title: "GitHub",
@@ -149,8 +137,7 @@ class ProjectsSection extends StatelessWidget {
       description:
           "A mobile app used during the larp I arrange yearly at Oxdjupet.",
       imageUrl: "assets/projects/oxdjupet.png",
-      startDate: DateTime(2021),
-      endDate: DateTime(2025),
+      dateString: "2021 - 2025",
       links: [
         ProjectLink(
           title: "Google Play",
@@ -391,7 +378,7 @@ class ProjectsSection extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
-        if (project.startDate != null)
+        if (project.dateString != null)
           Padding(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 6),
             child: RichText(
@@ -406,11 +393,7 @@ class ProjectsSection extends StatelessWidget {
                       color: descriptionTextStyle(context)?.color,
                     ),
                   ),
-                  TextSpan(text: "  ${project.startDate?.year}"),
-                  if (project.endDate != project.startDate)
-                    TextSpan(
-                      text: " - ${project.endDate?.year ?? "present"}",
-                    ),
+                  TextSpan(text: "  ${project.dateString!}"),
                 ],
               ),
             ),
